@@ -18,8 +18,7 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 [[portfolio](team/chuckyang123.md)]
 
 * Role: Deliverables and deadlines & Scheduling and tracking
-* Responsibility 1: Ensure project deliverables are done on time and in the right format. 
-* Responsibility 2: In charge of defining, assigning, and tracking project tasks.
+* Responsibilities: Data
 
 ### Jane Doe
 
