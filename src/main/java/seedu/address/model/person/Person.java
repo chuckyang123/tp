@@ -23,7 +23,7 @@ public class Person {
     private final GroupId groupId;
     private final HomeworkTracker homeworkTracker;
     private final AttendanceSheet attendanceSheet;
-    private Optional<Consultation> consultation;
+    private final Optional<Consultation> consultation;
 
     /**
      * Initializes a Person object with no consultation as default.
@@ -207,13 +207,22 @@ public class Person {
     }
 
     /**
-     * Adds a consultation to the person.
+     * Returns a new Person with added consultation.
      * @param consultation Consultation to be added.
      * @return Person with the added consultation.
      */
     public Person addConsultation(Consultation consultation) {
-        this.consultation = Optional.ofNullable(consultation);
-        return this;
+        return new Person(this.name, this.phone, this.email, this.nusnetid, this.telegram, this.groupId,
+                this.homeworkTracker, this.attendanceSheet, Optional.ofNullable(consultation));
+    }
+
+    /**
+     * Returns a new Person with deleted consultation.
+     * @return Person without consultation.
+     */
+    public Person deleteConsultation() {
+        return new Person(this.name, this.phone, this.email, this.nusnetid, this.telegram, this.groupId,
+                this.homeworkTracker, this.attendanceSheet, Optional.ofNullable(null));
     }
 
     /**

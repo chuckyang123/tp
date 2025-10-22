@@ -3,6 +3,7 @@ package seedu.address.model.person;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.commands.AddConsultationCommand.MESSAGE_STUDENT_ALREADY_HAS_CONSULTATION;
+import static seedu.address.logic.commands.DeleteConsultationCommand.MESSAGE_STUDENT_DOES_NOT_HAVE_CONSULTATION;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -113,8 +114,6 @@ public class UniquePersonList implements Iterable<Person> {
     /**
      * Adds the given {@consultation} to the person identified by the given {@nusnetid}.
      * The person must not already have an existing consultation.
-     * @param nusnetid
-     * @param consultation
      */
     public void addConsultationToPerson(Nusnetid nusnetid, Consultation consultation) {
         requireAllNonNull(nusnetid, consultation);
@@ -129,6 +128,28 @@ public class UniquePersonList implements Iterable<Person> {
             }
         }
     }
+    /**
+     * Deletes the consultation from the person identified by the given {@nusnetid}.
+     * The person must have an existing consultation.
+     * @return the deleted Consultation.
+     */
+    public Consultation deleteConsultationFromPerson(Nusnetid nusnetid) {
+        requireAllNonNull(nusnetid);
+        for (int i = 0; i < internalList.size(); i++) {
+            Person person = internalList.get(i);
+            if (person.hasSameNusnetId(nusnetid)) {
+                if (!person.hasConsultation()) {
+                    throw new IllegalArgumentException(MESSAGE_STUDENT_DOES_NOT_HAVE_CONSULTATION);
+                }
+                Consultation deletedConsultation = person.getConsultation().get();
+                Person updatedPerson = person.deleteConsultation();
+                internalList.set(i, updatedPerson);
+                return deletedConsultation;
+            }
+        }
+        return null;
+    }
+
     /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.
      */

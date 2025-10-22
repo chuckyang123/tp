@@ -75,7 +75,15 @@ public class Consultation {
     }
 
     /**
-     * Returns a string representation of the consultation time in the format "yyyy-MM-dd HH:mm to yyyy-MM-dd HH:mm".
+     * Returns true if this consultation's timing overlaps with the other consultation's timing.
+     */
+    public boolean isOverlappingConsultation(Consultation otherConsultation) {
+        return this.from.isBefore(otherConsultation.to) && otherConsultation.from.isBefore(this.to);
+    }
+
+    /**
+     * Returns a string representation of the consultation time in the format
+     * "Consultation: yyyy-MM-dd HH:mm to yyyy-MM-dd HH:mm".
      */
     public String showConsultationTime() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");

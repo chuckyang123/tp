@@ -38,6 +38,14 @@ public class UniqueConsultationList implements Iterable<Consultation> {
     }
 
     /**
+     * Returns true if the list contains a consultation that overlaps with the given argument.
+     */
+    public boolean hasOverlappingConsultation(Consultation toCheck) {
+        requireNonNull(toCheck);
+        return internalList.stream().anyMatch(toCheck::isOverlappingConsultation);
+    }
+
+    /**
      * Adds a consultation to the list.
      * The consultation must not already exist in the list.
      */

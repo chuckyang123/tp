@@ -17,19 +17,22 @@ public class HelpWindow extends UiPart<Stage> {
 
     public static final String USERGUIDE_URL = "https://ay2526s1-cs2103t-w11-1.github.io/tp/UserGuide.html";
     public static final String COMMAND_SYNTAX = "here is the list of all command syntax:\n"
-            + "- add_student: add n/NAME i/NUSNETID t/TELEGRAM g/GROUPID [p/PHONE] [e/EMAIL]\n"
-            + "- edit_student: edit INDEX [n/NAME] [i/NUSNETID] [t/TELEGRAM] [g/GROUPID] [p/PHONE] [e/EMAIL]\n"
+            + "- add_student: add_student n/NAME i/NUSNETID t/TELEGRAM g/GROUPID [p/PHONE] [e/EMAIL]\n"
+            + "- edit_student: edit_student INDEX [n/NAME] [i/NUSNETID] [t/TELEGRAM] [g/GROUPID] [p/PHONE] [e/EMAIL]\n"
             + "- delete: delete INDEX\n"
             + "- clear: clear\n"
             + "- find: find KEYWORD \n"
             + "- list: list\n"
             + "- help: help\n"
             + "- exit: exit\n"
-            + "- add_hw: add homework i/NETID a/ASSIGNMENT_ID or all a/ASSIGNMENT_ID\n"
-            + "- mark_hw: mark homework i/NUSNETID a/ASSIGNMENT_ID status/complete|incomplete|late\n"
-            + "- mark_attendance: mark attendance i/NUSNETID w/WEEK present|absent|excused\n"
+            + "- add_hw: add_hw i/NETID a/ASSIGNMENT_ID or all a/ASSIGNMENT_ID\n"
+            + "- mark_hw: mark_hw i/NUSNETID a/ASSIGNMENT_ID status/complete|incomplete|late\n"
+            + "- delete_hw: delete_hw i/NUSNETID a/ASSIGNMENT_ID\n"
+            + "- mark_attendance: mark_attendance i/NUSNETID w/WEEK STATUS(present|absent|excused)\n"
+            + "- mark_all_attendance: mark_all_attendance g/GROUP w/WEEK STATUS(present|absent|excused)\n"
             + "- create_group: create_group g/GROUPID\n"
-            + "- add_consult: add consultation i/NUSNETID from/START_TIME to/END_TIME\n";
+            + "- add_consult: add_consult i/NUSNETID from/START_TIME to/END_TIME\n"
+            + "- delete_consult: delete_consult i/NUSNETID\n";
 
     public static final String HELP_MESSAGE = "Refer to the user guide: " + USERGUIDE_URL + "\n" + COMMAND_SYNTAX;
 

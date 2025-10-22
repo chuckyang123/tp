@@ -196,15 +196,15 @@ Examples:
 
 Marks the attendance status for the specified student and week.
 
-Format: `mark_attendance i/NUSNETID week/WEEK STATUS`
+Format: `mark_attendance i/NUSNETID w/WEEK STATUS`
 
 * Marks attendance for the given student and week.
 * The `STATUS` can be one of the following: `present`, `absent`, or `excused`.
 * The NUSNET ID and week number **must be valid**.
 
 Examples:
-* `mark_attendance i/E1234567 week/3 present` marks student `E1234567` as present for week 3.
-* `mark_attendance i/E2345678 week/5 absent` marks student `E2345678` as absent for week 5.
+* `mark_attendance i/E1234567 w/3 present` marks student `E1234567` as present for week 3.
+* `mark_attendance i/E2345678 w/5 absent` marks student `E2345678` as absent for week 5.
 
 ---
 
@@ -212,15 +212,15 @@ Examples:
 
 Marks the attendance status for all the students in one tutorial group in a specified week.
 
-Format: `mark_all_attendance g/GROUP week/WEEK STATUS`
+Format: `mark_all_attendance g/GROUP w/WEEK STATUS`
 
 * Marks attendance for the given tutorial group of student and week.
 * The `STATUS` can be one of the following: `present`, `absent`, or `excused`.
 * The groupId and week number **must be valid**.
 
 Examples:
-* `mark_attendance g/T01 week/3 present` marks student `E1234567` as present for week 3.
-* `mark_attendance g/BO4 week/5 absent` marks student `E2345678` as absent for week 5.
+* `mark_attendance g/T01 w/3 present` marks student `E1234567` as present for week 3.
+* `mark_attendance g/BO4 w/5 absent` marks student `E2345678` as absent for week 5.
 
 
 ### Adding a consultation : `add_consult`
@@ -234,8 +234,20 @@ Format: `add_consult i/NUSNETID from/DATE_TIME to/DATE_TIME`
 * The start time must be **earlier** than the end time**.
 
 Examples:
-* `add_consult i/E1234567 from/20240915 14:00 to/20240915 1500` adds a consultation for student `E1234567` from 2–3 PM on 15 Sep 2024.
-* `add_consult i/E2345678 from/20240920 1000 to/20240920 1100` adds a consultation from 10–11 AM for student `E2345678`.
+* `add_consult i/E1234567 from/20240915 1400 to/20240915 1500` adds a consultation from 2–3PM on 15 Sep 2024 for student `E1234567`.
+* `add_consult i/E2345678 from/20240920 1000 to/20240920 1100` adds a consultation from 10–11AM on 20 Sep 2024 for student `E2345678`.
+
+### Deleting a consultation : `delete_consult`
+
+Deletes a consultation session for the specified student.
+
+Format: `delete_consult i/NUSNETID`
+
+* Deletes a consultation slot for the specified student.
+
+Examples:
+* `delete_consult i/E1234567` deletes consultation for student `E1234567`.
+* `delete_consult i/E2345678` deletes consultation for student `E2345678`.
 
 ---
 
@@ -333,8 +345,11 @@ Action     | Format, Examples
 **EditStudent**   | `edit_student INDEX [n/NAME] [i/NUSNETID] [t/TELEGRAM] [p/PHONE_NUMBER] [e/EMAIL]  [s/SLOT]`<br> e.g.,`edit 2 n/James Lee e/jameslee@u.nus.edu`
 **AddHomework**  | `add_hw i/NUSNETID (all for all students) a/ASSIGNMENT` <br> e.g., `add_hw i/E1234567 a/1`
 **MarkHomework**  | `mark_hw i/NUSNETID  a/ASSIGNMENT status/STATUS(complete incomplete late)` <br> e.g., `mark_hw i/E1234567 a/1 complete`
-**MarkAttendance**  | `mark_attendance i/NUSNETID week/WEEK status/STATUS(present absent excused)` <br> e.g., `mark_attendance i/E1234567 week/3 status/present`
+**DeleteHomework**  | `delete_hw i/NUSNETID ('all' for all students) a/ASSIGNMENT` <br> e.g., `delete_hw i/E1234567 a/1`
+**MarkAttendance**  | `mark_attendance i/NUSNETID w/WEEK status/STATUS(present absent excused)` <br> e.g., `mark_attendance i/E1234567 w/3 status/present`
+**MarkAllAttendance**  | `mark_all_attendance g/GROUPID w/WEEK status/STATUS(present absent excused)` <br> e.g., `mark_all_attendance g/T01 w/3 status/present`
 **AddConsultation**  | `add_consult i/NUSNETID from/DATE_TIME to/DATE_TIME` <br> e.g., `add_consult i/E1234567 from/2024-09-15 14:00 to/2024-09-15 15:00`
+**DeleteConsultation**  | `delete_consult i/NUSNETID` <br> e.g., `delete_consult i/E1234567`
 **CreateGroup**  | `create_group g/GROUPID` <br> e.g., `create_group g/T03`
 **AddToGroup**  | `add_to_group i/NUSNETID g/GROUPID` <br> e.g., `add_to_group i/E1234567 g/T03`
 **FindGroup**  | `find_group g/GROUPID` <br> e.g., `find_group g/T03`

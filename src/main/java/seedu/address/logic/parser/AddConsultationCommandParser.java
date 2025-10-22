@@ -14,7 +14,7 @@ import seedu.address.model.event.Consultation;
 import seedu.address.model.person.Nusnetid;
 
 /**
- * Parses input arguments and creates a new ConsultationCommand object
+ * Parses input arguments and creates a new AddConsultationCommand object
  */
 public class AddConsultationCommandParser implements Parser<AddConsultationCommand> {
 

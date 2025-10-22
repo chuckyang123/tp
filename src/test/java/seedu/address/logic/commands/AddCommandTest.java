@@ -164,6 +164,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public Consultation deleteConsultationFromPerson(Nusnetid nusnetid) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public ObservableList<Person> getFilteredPersonList() {
             throw new AssertionError("This method should not be called.");
         }
@@ -188,7 +193,17 @@ public class AddCommandTest {
         }
 
         @Override
+        public boolean hasOverlappingConsultation(Consultation consultation) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public void addConsultation(Consultation consultation) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void deleteConsultation(Consultation consultation) {
             throw new AssertionError("This method should not be called.");
         }
 

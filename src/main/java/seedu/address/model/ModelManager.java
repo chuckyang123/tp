@@ -92,46 +92,67 @@ public class ModelManager implements Model {
     public ReadOnlyAddressBook getAddressBook() {
         return addressBook;
     }
+
     @Override
     public boolean hasPerson(Person person) {
         requireNonNull(person);
         return addressBook.hasPerson(person);
     }
+
     @Override
     public boolean hasPerson(Nusnetid nusnetid) {
         requireNonNull(nusnetid);
         return addressBook.hasPerson(nusnetid);
     }
+
     @Override
     public boolean hasGroup(GroupId groupId) {
         requireNonNull(groupId);
         return addressBook.hasGroup(groupId);
     }
+
     @Override
     public void deletePerson(Person target) {
         addressBook.removePerson(target);
     }
+
     @Override
     public void addPerson(Person person) {
         addressBook.addPerson(person);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
     }
+
     @Override
     public void setPerson(Person target, Person editedPerson) {
         requireAllNonNull(target, editedPerson);
 
         addressBook.setPerson(target, editedPerson);
     }
+
     @Override
     public boolean hasConsultation(Consultation consultation) {
         requireNonNull(consultation);
         return addressBook.hasConsultation(consultation);
     }
+
+    @Override
+    public boolean hasOverlappingConsultation(Consultation consultation) {
+        requireNonNull(consultation);
+        return addressBook.hasOverlappingConsultation(consultation);
+    }
+
     @Override
     public void addConsultation(Consultation consultation) {
         addressBook.addConsultation(consultation);
         updateFilteredConsultationList(PREDICATE_SHOW_ALL_CONSULTATIONS);
     }
+
+    @Override
+    public void deleteConsultation(Consultation consultation) {
+        addressBook.deleteConsultation(consultation);
+        updateFilteredConsultationList(PREDICATE_SHOW_ALL_CONSULTATIONS);
+    }
+
     @Override
     public void addConsultationToPerson(Nusnetid nusnetid, Consultation consultation) {
         requireAllNonNull(nusnetid, consultation);
@@ -140,7 +161,13 @@ public class ModelManager implements Model {
         updateFilteredPersonList(predicate);
     }
 
-
+    @Override
+    public Consultation deleteConsultationFromPerson(Nusnetid nusnetid) {
+        requireAllNonNull(nusnetid);
+        Consultation deletedConsultation = addressBook.deleteConsultationFromPerson(nusnetid);
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        return deletedConsultation;
+    }
 
     //=========== Filtered Person List Accessors =============================================================
 
@@ -204,6 +231,7 @@ public class ModelManager implements Model {
                 && userPrefs.equals(otherModelManager.userPrefs)
                 && filteredPersons.equals(otherModelManager.filteredPersons);
     }
+
     @Override
     public Group getGroup(GroupId groupId) {
         requireNonNull(groupId);
