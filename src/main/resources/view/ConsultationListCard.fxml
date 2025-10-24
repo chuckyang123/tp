@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+    <VBox alignment="CENTER_LEFT" minHeight="60">
+        <padding>
+            <Insets top="5" right="5" bottom="5" left="15" />
+        </padding>
+        <!-- Top row: index + consultation time (plain text) -->
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <Label fx:id="id" styleClass="cell_big_label" />
+            <Label fx:id="consultationTime" styleClass="cell_big_label" />
+        </HBox>
+
+        <!-- Bottom row: boxed name + NUSNET ID -->
+        <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-padding: 5 0 5 0;">
+            <HBox style="-fx-background-color: #DDE6ED; -fx-background-radius: 8; -fx-padding: 3 8;"
+                  alignment="CENTER_LEFT" spacing="10">
+                <Label fx:id="studentName" styleClass="cell_big_label" style="-fx-text-fill: black; -fx-font-size: 14px;" />
+                <Label fx:id="studentNusNetId" styleClass="cell_small_label" style="-fx-text-fill: black; -fx-font-size: 14px;" />
+            </HBox>
+        </HBox>
+    </VBox>
+</HBox>

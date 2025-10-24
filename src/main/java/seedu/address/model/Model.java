@@ -74,6 +74,12 @@ public interface Model {
     boolean hasPerson(Nusnetid nusnetid);
 
     /**
+     * Returns the person with the given nusnetid.
+     * Returns null if no such person exists.
+     */
+    Person findPerson(Nusnetid nusnetid);
+
+    /**
      * Return true if a group with the same groupId as {@code groupId} exists in the address book.
      */
     boolean hasGroup(GroupId groupId);

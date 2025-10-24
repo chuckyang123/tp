@@ -49,6 +49,15 @@ public class UniquePersonList implements Iterable<Person> {
     }
 
     /**
+     * Finds and returns the person with the given Nusnetid.
+     * Returns null if no such person is found.
+     */
+    public Person find(Nusnetid toFind) {
+        requireNonNull(toFind);
+        return internalList.stream().filter(p -> p.hasSameNusnetId(toFind)).findFirst().orElse(null);
+    }
+
+    /**
      * Adds a person to the list.
      * The person must not already exist in the list.
      */

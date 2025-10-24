@@ -53,7 +53,8 @@ public class DeleteConsultationCommand extends Command {
         }
 
         model.deleteConsultation(deletedConsultation);
-        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(deletedConsultation)));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(deletedConsultation)),
+                false, false, true);
     }
 
     @Override
