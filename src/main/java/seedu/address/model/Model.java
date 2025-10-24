@@ -6,6 +6,7 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.event.Consultation;
 import seedu.address.model.person.GroupId;
 import seedu.address.model.person.Nusnetid;
@@ -90,11 +91,24 @@ public interface Model {
     void addPerson(Person person);
 
     /**
+     * Gets a person by their nusnetId.
+     * @param nusnetId the nusnetId of the person to be retrieved
+     * @return the person with the specified nusnetId
+     * @throws CommandException if no person with the given nusnetId exists in the address book
+     */
+    Person getPersonByNusnetId(Nusnetid nusnetId) throws CommandException;
+
+    /**
      * Replaces the given person {@code target} with {@code editedPerson}.
      * {@code target} must exist in the address book.
      * The person identity of {@code editedPerson} must not be the same as another existing person in the address book.
      */
     void setPerson(Person target, Person editedPerson);
+    /**
+     * Updates the groups to include the newly added person.
+     * @param person the person that was added
+     */
+    void updateGroupWhenAddPerson(Person person) throws CommandException;
 
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<Person> getFilteredPersonList();

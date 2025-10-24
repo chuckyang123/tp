@@ -13,10 +13,8 @@ import java.util.logging.Logger;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.Group;
 import seedu.address.model.Model;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
 
 /** Adds a person to the address book. */
 public class AddCommand extends Command {
@@ -67,22 +65,7 @@ public class AddCommand extends Command {
 
         model.addPerson(toAdd);
         logger.info("Successfully added new person: " + toAdd);
-
-        // Ensure the person's group exists in the model and add the student to it
-        try {
-            if (!model.hasGroup(toAdd.getGroupId())) {
-                Group newGroup = new Group(toAdd.getGroupId());
-                model.addGroup(newGroup);
-                newGroup.addStudent(toAdd);
-            } else {
-                Group group = model.getGroup(toAdd.getGroupId());
-                group.addStudent(toAdd);
-            }
-        } catch (DuplicatePersonException e) {
-            // This should not normally happen for a newly added person, but wrap just in case
-            throw new CommandException(e.getMessage());
-        }
-
+        model.updateGroupWhenAddPerson(toAdd);
         model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
 
         return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toAdd)));

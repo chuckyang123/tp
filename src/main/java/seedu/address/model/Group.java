@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import seedu.address.model.person.GroupId;
 import seedu.address.model.person.Nusnetid;
@@ -16,7 +17,7 @@ import seedu.address.model.person.UniquePersonList;
  */
 public class Group {
     private final GroupId groupId;
-    private final UniquePersonList students = new UniquePersonList();
+    private final UniquePersonList students;
 
     /**
      * Construct a group
@@ -25,6 +26,22 @@ public class Group {
     public Group(GroupId groupId) {
         requireNonNull(groupId);
         this.groupId = groupId;
+        this.students = new UniquePersonList();
+    }
+
+    /**
+     * Construct a group
+     * @param groupId A valid slot number.
+     * @param students list of students in this tutorial.
+     */
+    public Group(GroupId groupId, List<Person> students) {
+        requireNonNull(groupId);
+        requireNonNull(students);
+        this.groupId = groupId;
+        this.students = new UniquePersonList();
+        for (Person p : students) {
+            this.students.add(p);
+        }
     }
 
     /** Returns the GroupId used to identify this group. */
@@ -113,5 +130,9 @@ public class Group {
     @Override
     public int hashCode() {
         return groupId.hashCode();
+    }
+    @Override
+    public String toString() {
+        return String.format("Group: %s", groupId);
     }
 }

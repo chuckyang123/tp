@@ -12,6 +12,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.event.Consultation;
 import seedu.address.model.person.GroupId;
 import seedu.address.model.person.Nusnetid;
@@ -22,12 +23,11 @@ import seedu.address.model.person.Person;
  */
 public class ModelManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
-
+    private static final String MESSAGE_STUDENT_NOT_FOUND = "Student not found.";
     private final AddressBook addressBook;
     private final UserPrefs userPrefs;
     private final FilteredList<Person> filteredPersons;
     private final FilteredList<Consultation> filteredConsultations;
-
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
@@ -125,8 +125,32 @@ public class ModelManager implements Model {
     @Override
     public void setPerson(Person target, Person editedPerson) {
         requireAllNonNull(target, editedPerson);
-
         addressBook.setPerson(target, editedPerson);
+    }
+    /**
+     * Updates the group information when a person is added.
+     * @param person the person that was added
+     * @throws CommandException if duplicate person exception occurs
+     */
+    @Override
+    public void updateGroupWhenAddPerson(Person person) {
+        requireNonNull(person);
+        this.addressBook.updateGroupWhenAddPerson(person);
+    }
+    /**
+     * Retrieves a person by their nusnetId.
+     * @param nusnetId the nusnetId of the person to be retrieved
+     * @return the person with the specified nusnetId
+     * @throws CommandException if no person with the given nusnetId is found
+     */
+    @Override
+    public Person getPersonByNusnetId(Nusnetid nusnetId) throws CommandException {
+        requireNonNull(nusnetId);
+        assert hasPerson(nusnetId) : "Person with given nusnetId should exist in the address book.";
+        Person target = this.getFilteredPersonList()
+                .stream().filter(p -> p.getNusnetid().equals(nusnetId))
+                .findFirst().orElseThrow(() -> new CommandException(MESSAGE_STUDENT_NOT_FOUND));
+        return target;
     }
 
     @Override
@@ -192,6 +216,7 @@ public class ModelManager implements Model {
      */
     @Override
     public void addGroup(Group group) {
+        requireNonNull(group);
         addressBook.addGroup(group);
     }
 

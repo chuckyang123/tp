@@ -83,13 +83,7 @@ public class MarkHomeworkCommand extends Command {
         Person target = list.stream()
                 .filter(p -> {
                     // prefer using a dedicated nusnetId field if you have one:
-                    try {
-                        // If you have getNetId(), uncomment next line and remove the fallback
-                        // return p.getNetId().value.equalsIgnoreCase(netId);
-                    } catch (Exception e) {
-                        System.out.println("Unable to mark the homework");
-                    }
-                    // fallback: match by email or name
+
                     return p.getNusnetid().value.equalsIgnoreCase(nusnetId);
                 })
                 .findFirst()
@@ -110,7 +104,7 @@ public class MarkHomeworkCommand extends Command {
         // check if assignment exists first
         if (!target.getHomeworkTracker().hasAssignment(assignmentId)) {
             throw new CommandException(
-                    String.format("Assignment %d not found for %s. Add it first using 'addhw'.",
+                    String.format("Assignment %d not found for %s. Add it first using 'add_hw'.",
                             assignmentId, target.getName().fullName));
         }
 

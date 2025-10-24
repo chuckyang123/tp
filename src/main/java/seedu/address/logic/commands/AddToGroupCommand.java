@@ -11,7 +11,6 @@ import seedu.address.model.person.GroupId;
 import seedu.address.model.person.Nusnetid;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
  * Adds a person to a group.
@@ -23,8 +22,7 @@ public class AddToGroupCommand extends Command {
             + "Parameters: " + PREFIX_GROUP + "GROUPID " + PREFIX_NUSNETID + "NETID \n"
             + "Example: " + COMMAND_WORD + " " + PREFIX_GROUP + "T01 " + PREFIX_NUSNETID + "E1234567 \n";
 
-    public static final String MESSAGE_SUCCESS = "Student %s added to Group %s.";
-    public static final String MESSAGE_STUDENT_NOT_FOUND = "Student not found.";
+    private static final String MESSAGE_SUCCESS = "Student %s added to Group %s.";
     private final GroupId groupId;
     private final Nusnetid nusnetId;
     /**
@@ -34,26 +32,20 @@ public class AddToGroupCommand extends Command {
      * @param groupId the ID of the group to add the student to
      */
     public AddToGroupCommand(Nusnetid nusnetId, GroupId groupId) {
+        requireNonNull(nusnetId);
+        requireNonNull(groupId);
         this.nusnetId = nusnetId;
         this.groupId = groupId;
     }
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-
-        if (!model.hasPerson(nusnetId)) {
-            throw new CommandException(MESSAGE_STUDENT_NOT_FOUND);
-        }
-        Person target = model.getFilteredPersonList()
-                .stream().filter(p -> p.getNusnetid().equals(nusnetId))
-                .findFirst().orElseThrow(() -> new CommandException(MESSAGE_STUDENT_NOT_FOUND));
+        Person target = model.getPersonByNusnetId(nusnetId);
         Person updatedStudent = target.withUpdatedGroup(groupId);
         try {
             model.setPerson(target, updatedStudent);
         } catch (DuplicatePersonException e) {
             throw new CommandException(e.getMessage());
-        } catch (PersonNotFoundException e) {
-            throw new CommandException(MESSAGE_STUDENT_NOT_FOUND);
         }
         // if group does not exist, create it
         if (!model.hasGroup(groupId)) {

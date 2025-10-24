@@ -11,6 +11,9 @@ mainClassName = 'seedu.address.Main'
 sourceCompatibility = JavaVersion.VERSION_17
 targetCompatibility = JavaVersion.VERSION_17
 
+run {
+    enableAssertions = true;
+}
 repositories {
     mavenCentral()
     maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
@@ -66,7 +69,11 @@ dependencies {
 }
 
 shadowJar {
-    archiveFileName = 'addressbook.jar'
+    archiveFileName = 'soctassist.jar'
+}
+
+run {
+    enableAssertions = true
 }
 
  run{

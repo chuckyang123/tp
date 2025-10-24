@@ -174,7 +174,6 @@ public class LogicManagerTest {
         Group expectedGroup = new Group(expectedPerson.getGroupId());
         ModelManager expectedModel = new ModelManager();
         expectedModel.addPerson(expectedPerson);
-        expectedModel.addGroup(expectedGroup);
         assertCommandFailure(addCommand, CommandException.class, expectedMessage, expectedModel);
     }
 }

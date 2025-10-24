@@ -2,6 +2,9 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.logging.Logger;
+
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.CliSyntax;
 import seedu.address.model.Model;
@@ -47,6 +50,7 @@ public class AddHomeworkCommand extends Command {
     public static final String MESSAGE_SUCCESS_ALL = "Added assignment %d for all students (default incomplete).";
     public static final String MESSAGE_STUDENT_NOT_FOUND = "Student not found.";
 
+    private static final Logger logger = LogsCenter.getLogger(AddHomeworkCommand.class);
     private final String nusnetId; // can be "all" for all students
     private final int assignmentId;
 
@@ -76,6 +80,7 @@ public class AddHomeworkCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
+        logger.info("Executing AddHomeworkCommand for student: " + nusnetId);
         if (nusnetId.equalsIgnoreCase("all")) {
             // Check duplicates BEFORE modifying any student
             for (Person p : model.getFilteredPersonList()) {
@@ -109,6 +114,7 @@ public class AddHomeworkCommand extends Command {
             Person updated = target.withAddedHomework(assignmentId);
             model.setPerson(target, updated);
 
+            logger.fine("Successfully added homework " + assignmentId + " to student " + nusnetId);
             return new CommandResult(String.format(MESSAGE_SUCCESS_ONE, assignmentId, target.getName()));
         }
     }

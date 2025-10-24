@@ -28,4 +28,9 @@ public interface ReadOnlyAddressBook {
      * This list will not contain any duplicate groups.
      */
     ObservableList<Group> getGroupList();
+    /**
+     * Updates groups when a person is added.
+     * @param person the person that is added
+     */
+    void updateGroupWhenAddPerson(Person person);
 }

@@ -10,9 +10,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.Group;
 import seedu.address.model.person.GroupId;
+import seedu.address.model.person.Nusnetid;
 
 /**
  * Jackson-friendly version of {@link Group}.
+ * Two fields: groupId {@code String} and list of student nusnetids {@code List<String>}.
  */
 class JsonAdaptedGroup {
 
@@ -58,7 +60,13 @@ class JsonAdaptedGroup {
         return new GroupId(groupId);
     }
 
+    public List<Nusnetid> getStudentNusnetidsAsIds() {
+        return studentNusnetids.stream().map(Nusnetid::new).collect(Collectors.toList());
+    }
     public List<String> getStudentNusnetids() {
         return studentNusnetids;
+    }
+    public String getGroupId() {
+        return groupId;
     }
 }

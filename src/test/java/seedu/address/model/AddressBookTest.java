@@ -1,5 +1,6 @@
 package seedu.address.model;
 
+import static java.util.Objects.requireNonNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -19,6 +20,7 @@ import org.junit.jupiter.api.Test;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.event.Consultation;
+import seedu.address.model.person.GroupId;
 import seedu.address.model.person.Nusnetid;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -125,6 +127,27 @@ public class AddressBookTest {
         public List<Person> getUniquePersonList() {
             return persons;
         }
+        public void addGroup(Group g) {
+            requireNonNull(g);
+            this.groups.add(g);
+        }
+        private void addPersonToExistingGroup(Person person) {
+            GroupId groupId = person.getGroupId();
+            Group group = groups.stream()
+                    .filter(g -> g.getGroupId().equals(groupId))
+                    .findFirst().orElse(null);
+            group.addStudent(person);
+        }
+        @Override
+        public void updateGroupWhenAddPerson(Person person) {
+            requireNonNull(person);
+            if (!groups.contains(person.getGroupId())) {
+                Group newGroup = new Group(person.getGroupId());
+                this.addGroup(newGroup);
+                newGroup.addStudent(person);
+            } else {
+                addPersonToExistingGroup(person);
+            }
+        }
     }
-
 }

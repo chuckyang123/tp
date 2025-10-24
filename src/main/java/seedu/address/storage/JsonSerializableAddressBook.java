@@ -29,6 +29,8 @@ class JsonSerializableAddressBook {
     public static final String MESSAGE_DUPLICATE_GROUP = "Groups list contains duplicate group(s).";
     public static final String MESSAGE_GROUP_REFERENCES_UNKNOWN_PERSON =
             "Group references a person that does not exist in persons list.";
+    public static final String MESSAGE_GROUP_CONTAINS_INVALID_NUSNETID =
+            "Group contains invalid nusnetid(s).";
 
     private final List<JsonAdaptedPerson> persons = new ArrayList<>();
     private final List<JsonAdaptedConsultation> consultations = new ArrayList<>();
@@ -67,10 +69,12 @@ class JsonSerializableAddressBook {
     /**
      * Converts this address book into the model's {@code AddressBook} object.
      *
+     * @return AddressBook object
      * @throws IllegalValueException if there were any data constraints violated.
      */
     public AddressBook toModelType() throws IllegalValueException {
         AddressBook addressBook = new AddressBook();
+        // Convert and add all students so that groups can refer to existing students
         for (JsonAdaptedPerson jsonAdaptedPerson : persons) {
             Person person = jsonAdaptedPerson.toModelType();
             if (addressBook.hasPerson(person)) {
@@ -78,6 +82,7 @@ class JsonSerializableAddressBook {
             }
             addressBook.addPerson(person);
         }
+        // Convert and add all consultations
         for (JsonAdaptedConsultation jsonAdaptedConsultation : consultations) {
             Consultation consultation = jsonAdaptedConsultation.toModelType();
             if (addressBook.hasConsultation(consultation)) {
@@ -85,33 +90,31 @@ class JsonSerializableAddressBook {
             }
             addressBook.addConsultation(consultation);
         }
+        // Convert and add all groups after students have been added so that
+        // we can validate that each nus net id in group refers to an existing student
         List<Group> modelGroups = new ArrayList<>();
         for (JsonAdaptedGroup jsonAdaptedGroup : groups) {
-            // validate and build Group object
+            // validate and build Group object from one JsonAdaptedGroup
             GroupId modelGroupId = jsonAdaptedGroup.toModelGroupId();
-            Group modelGroup = new Group(modelGroupId);
+            List<String> nusnetidsInGroup = jsonAdaptedGroup.getStudentNusnetids();
+            ArrayList<Person> studentsInGroup = new ArrayList<>();
             // For each stored nus net id in group,
             // find the corresponding Person in addressBook and add to the group
-            for (String nusIdStr : jsonAdaptedGroup.getStudentNusnetids()) {
+            for (String nusIdStr : nusnetidsInGroup) {
                 if (nusIdStr == null) {
-                    throw new IllegalValueException("Group contains null nusnetid");
+                    throw new IllegalValueException(MESSAGE_GROUP_CONTAINS_INVALID_NUSNETID);
                 }
                 if (!Nusnetid.isValidNusnetid(nusIdStr)) {
                     throw new IllegalValueException(Nusnetid.MESSAGE_CONSTRAINTS);
                 }
-                Nusnetid modelNusnetid = new Nusnetid(nusIdStr);
-                boolean found = false;
-                for (Person p : addressBook.getPersonList()) {
-                    if (p.getNusnetid().equals(modelNusnetid)) {
-                        modelGroup.addStudent(p);
-                        found = true;
-                        break;
-                    }
-                }
-                if (!found) {
+                Person student = addressBook.getPersonByNusnetId(new Nusnetid(nusIdStr));
+                // person not found in address book
+                if (student == null) {
                     throw new IllegalValueException(MESSAGE_GROUP_REFERENCES_UNKNOWN_PERSON);
                 }
+                studentsInGroup.add(student);
             }
+            Group modelGroup = new Group(modelGroupId, studentsInGroup);
             modelGroups.add(modelGroup);
         }
 

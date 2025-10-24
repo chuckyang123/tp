@@ -133,7 +133,7 @@ public class JsonAdaptedPersonTest {
     }
 
     @Test
-    public void toModelType_invalidSlot_throwsIllegalValueException() {
+    public void toModelType_invalidGroupId_throwsIllegalValueException() {
         List<JsonAdaptedAttendance> emptyAttendanceSheet = List.of();
         JsonAdaptedPerson person =
                 new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_NUSNETID,

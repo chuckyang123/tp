@@ -16,7 +16,8 @@ public class CreateGroupCommand extends Command {
             + ": Creates a new group identified by the given group id. "
             + "Parameters: " + PREFIX_GROUP + "GROUPID "
             + "Example: " + COMMAND_WORD + " " + PREFIX_GROUP + "T12";
-
+    public static final String MESSAGE_DUPLICATE_GROUP = "Group %s already exists!";
+    public static final String MESSAGE_SUCCESS = "New group %s created";
     private final GroupId groupId;
 
     /**
@@ -34,11 +35,11 @@ public class CreateGroupCommand extends Command {
         boolean duplicate = model.getGroupList().stream()
             .anyMatch(g -> g.getGroupId().equals(groupId));
         if (duplicate) {
-            return new CommandResult(String.format("Group %s already exists!", groupId));
+            return new CommandResult(String.format(MESSAGE_DUPLICATE_GROUP, groupId));
         }
         // Create a new group with the given id
         Group newGroup = new Group(groupId);
         model.addGroup(newGroup);
-        return new CommandResult(String.format("New group %s created", groupId));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, groupId));
     }
 }

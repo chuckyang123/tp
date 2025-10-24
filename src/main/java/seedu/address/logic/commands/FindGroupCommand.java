@@ -4,7 +4,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_GROUP;
 
 import java.util.function.Predicate;
 
-import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.model.Model;
 import seedu.address.model.person.GroupId;
@@ -59,6 +58,6 @@ public class FindGroupCommand extends Command {
     }
     @Override
     public String toString() {
-        return new ToStringBuilder(this).add("predicate", predicate).toString();
+        return String.format("FindGroupCommand{groupId=%s}", groupId.toString());
     }
 }

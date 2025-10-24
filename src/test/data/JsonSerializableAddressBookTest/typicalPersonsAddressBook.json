@@ -13,7 +13,7 @@
     "email" : "johnd@u.nus.edu",
     "nusnetid": "E1234568",
     "telegram": "@benson",
-    "groupId": "T02"
+    "groupId": "T01"
   }, {
     "name" : "Carl Kurz",
     "phone" : "95352563",
@@ -49,5 +49,25 @@
     "nusnetid": "E1234560",
     "telegram": "@besttttttt",
     "groupId": "T048"
+  } ],
+  "consultations" : [ ],
+  "groups" : [ {
+    "groupId" : "T01",
+    "studentNusnetids" : [ "E1234567", "E1234568" ]
+  }, {
+    "groupId" : "T11",
+    "studentNusnetids" : [ "E1234566" ]
+  }, {
+    "groupId" : "T12",
+    "studentNusnetids" : [ "E1234561" ]
+  }, {
+    "groupId" : "T15",
+    "studentNusnetids" : [ "E1234569" ]
+  }, {
+    "groupId" : "T18",
+    "studentNusnetids" : [ "E1234562" ]
+  }, {
+    "groupId" : "T048",
+    "studentNusnetids" : [ "E1234560" ]
   } ]
 }

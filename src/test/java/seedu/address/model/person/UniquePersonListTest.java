@@ -57,9 +57,12 @@ public class UniquePersonListTest {
     }
 
     @Test
-    public void add_duplicatePerson_throwsDuplicatePersonException() {
+    public void add_duplicatePerson_void() {
         uniquePersonList.add(ALICE);
-        assertThrows(DuplicatePersonException.class, () -> uniquePersonList.add(ALICE));
+        System.out.println(uniquePersonList);
+        assertEquals(uniquePersonList.toArrayList().stream()
+                .filter(p -> p.getNusnetid().equals(ALICE.getNusnetid())).count(),
+                1);
     }
 
     @Test
