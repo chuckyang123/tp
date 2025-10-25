@@ -149,6 +149,11 @@ public class ModelManager implements Model {
         requireNonNull(person);
         this.addressBook.updateGroupWhenAddPerson(person);
     }
+    @Override
+    public void updateGroupWhenEditPersonId(Person oldPerson) {
+        requireAllNonNull(oldPerson);
+        this.addressBook.updateGroupWhenEditPerson(oldPerson);
+    }
     /**
      * Retrieves a person by their nusnetId.
      * @param nusnetId the nusnetId of the person to be retrieved
