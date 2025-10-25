@@ -32,5 +32,4 @@ public class CreateGroupCommandParser implements Parser<CreateGroupCommand> {
     private static boolean argPrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
         return java.util.stream.Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
     }
-
 }
