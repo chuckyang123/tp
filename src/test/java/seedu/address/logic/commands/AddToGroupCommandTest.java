@@ -109,6 +109,10 @@ public class AddToGroupCommandTest {
             throw new AssertionError("This method should not be called.");
         }
         @Override
+        public void updateGroupWhenEditPersonId(Person oldPerson) {
+            throw new AssertionError("This method should not be called.");
+        }
+        @Override
         public void addConsultationToPerson(Nusnetid nusnetid, Consultation consultation) {
             throw new AssertionError("This method should not be called.");
         }
