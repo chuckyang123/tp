@@ -115,6 +115,7 @@ public interface Model {
      * @param person the person that was added
      */
     void updateGroupWhenAddPerson(Person person) throws CommandException;
+    void updateGroupWhenEditPersonId(Person oldPerson) throws CommandException;
 
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<Person> getFilteredPersonList();

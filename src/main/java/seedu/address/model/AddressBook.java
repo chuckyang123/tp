@@ -299,4 +299,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         Group group = groups.getGroup(person.getGroupId());
         group.removeStudent(person.getNusnetid());
     }
+    /**
+     * Updates the group when a person's details are edited.
+     * @param oldPerson the person before editing
+     */
+    public void updateGroupWhenEditPerson(Person oldPerson) {
+        requireNonNull(oldPerson);
+        removePersonFromExistingGroup(oldPerson);
+    }
 }
