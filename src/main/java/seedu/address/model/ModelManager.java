@@ -4,12 +4,14 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.nio.file.Path;
+import java.util.Comparator;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -28,6 +30,7 @@ public class ModelManager implements Model {
     private final UserPrefs userPrefs;
     private final FilteredList<Person> filteredPersons;
     private final FilteredList<Consultation> filteredConsultations;
+    private final SortedList<Consultation> sortedConsultations;
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
@@ -40,6 +43,9 @@ public class ModelManager implements Model {
         this.userPrefs = new UserPrefs(userPrefs);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         filteredConsultations = new FilteredList<>(this.addressBook.getConsultationList());
+        sortedConsultations = new SortedList<>(filteredConsultations);
+        // Set comparator to sort by start time
+        sortedConsultations.setComparator(Comparator.comparing(Consultation::getFrom));
     }
 
     public ModelManager() {
@@ -106,6 +112,12 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public Person findPerson(Nusnetid nusnetid) {
+        requireNonNull(nusnetid);
+        return addressBook.findPerson(nusnetid);
+    }
+
+    @Override
     public boolean hasGroup(GroupId groupId) {
         requireNonNull(groupId);
         return addressBook.hasGroup(groupId);
@@ -136,6 +148,11 @@ public class ModelManager implements Model {
     public void updateGroupWhenAddPerson(Person person) {
         requireNonNull(person);
         this.addressBook.updateGroupWhenAddPerson(person);
+    }
+    @Override
+    public void updateGroupWhenEditPersonId(Person oldPerson) {
+        requireAllNonNull(oldPerson);
+        this.addressBook.updateGroupWhenEditPerson(oldPerson);
     }
     /**
      * Retrieves a person by their nusnetId.
@@ -181,8 +198,7 @@ public class ModelManager implements Model {
     public void addConsultationToPerson(Nusnetid nusnetid, Consultation consultation) {
         requireAllNonNull(nusnetid, consultation);
         addressBook.addConsultationToPerson(nusnetid, consultation);
-        Predicate<Person> predicate = person -> person.hasSameNusnetId(nusnetid);
-        updateFilteredPersonList(predicate);
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
     }
 
     @Override
@@ -232,7 +248,7 @@ public class ModelManager implements Model {
      */
     @Override
     public ObservableList<Consultation> getFilteredConsultationList() {
-        return filteredConsultations;
+        return sortedConsultations;
     }
 
     @Override

@@ -127,6 +127,15 @@ public class AddressBook implements ReadOnlyAddressBook {
         return persons.contains(nusnetid);
     }
     /**
+     * Returns the person with the given nusnetid.
+     * Returns null if no such person exists.
+     */
+    public Person findPerson(Nusnetid nusnetid) {
+        requireNonNull(nusnetid);
+        return persons.find(nusnetid);
+    }
+
+    /**
      * Adds a person to the address book.
      * The person must not already exist in the address book.
      */
@@ -244,7 +253,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
     @Override
     public ObservableList<Group> getGroupList() {
-        return groups.asUnmodifiableObservableList();
+        return this.groups.asUnmodifiableObservableList();
     }
     @Override
     public boolean equals(Object other) {
@@ -259,8 +268,8 @@ public class AddressBook implements ReadOnlyAddressBook {
 
         AddressBook otherAddressBook = (AddressBook) other;
         return this.getPersonList().equals(otherAddressBook.getPersonList())
-                && this.getConsultationList().equals(otherAddressBook.getConsultationList())
-                && this.getGroupList().equals(otherAddressBook.getGroupList());
+            && this.getConsultationList().equals(otherAddressBook.getConsultationList())
+            && this.groups.equals(otherAddressBook.groups);
     }
     @Override
     public int hashCode() {
@@ -289,5 +298,13 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void removePersonFromExistingGroup(Person person) {
         Group group = groups.getGroup(person.getGroupId());
         group.removeStudent(person.getNusnetid());
+    }
+    /**
+     * Updates the group when a person's details are edited.
+     * @param oldPerson the person before editing
+     */
+    public void updateGroupWhenEditPerson(Person oldPerson) {
+        requireNonNull(oldPerson);
+        removePersonFromExistingGroup(oldPerson);
     }
 }

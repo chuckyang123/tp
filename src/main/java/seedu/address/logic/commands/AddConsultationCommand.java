@@ -63,7 +63,7 @@ public class AddConsultationCommand extends Command {
         }
 
         model.addConsultation(toAdd);
-        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toAdd)));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toAdd)), false, false, true);
     }
 
     @Override

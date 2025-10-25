@@ -32,6 +32,7 @@ public class MainWindow extends UiPart<Stage> {
 
     // Independent Ui parts residing in this Ui container
     private PersonListPanel personListPanel;
+    private ConsultationListPanel consultationListPanel;
     private ResultDisplay resultDisplay;
     private HelpWindow helpWindow;
 
@@ -168,6 +169,24 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     /**
+     * Switches to person list view.
+     */
+    public void showPersonList() {
+        personListPanelPlaceholder.getChildren().clear();
+        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
+        personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+    }
+
+    /**
+     * Switches to consultation list view.
+     */
+    public void showConsultationList() {
+        personListPanelPlaceholder.getChildren().clear();
+        consultationListPanel = new ConsultationListPanel(logic.getFilteredConsultationList(), logic.getModel());
+        personListPanelPlaceholder.getChildren().add(consultationListPanel.getRoot());
+    }
+
+    /**
      * Executes the command and returns the result.
      *
      * @see seedu.address.logic.Logic#execute(String)
@@ -184,6 +203,13 @@ public class MainWindow extends UiPart<Stage> {
 
             if (commandResult.isExit()) {
                 handleExit();
+            }
+
+            // Switch view based on command result
+            if (commandResult.isShowConsultations()) {
+                showConsultationList();
+            } else {
+                showPersonList();
             }
 
             return commandResult;
