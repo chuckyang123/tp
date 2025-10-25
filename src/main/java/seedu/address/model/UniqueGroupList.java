@@ -2,6 +2,7 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
@@ -86,12 +87,13 @@ public class UniqueGroupList implements Iterable<Group> {
             return false;
         }
         UniqueGroupList otherList = (UniqueGroupList) other;
-        return this.internalList.equals(otherList.internalList);
+        return new HashSet<>(this.internalList)
+                .equals(new HashSet<>(otherList.internalList));
     }
 
     @Override
     public int hashCode() {
-        return internalList.hashCode();
+        return new HashSet<>(internalList).hashCode();
     }
     @Override
     public String toString() {

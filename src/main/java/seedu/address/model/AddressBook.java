@@ -253,7 +253,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
     @Override
     public ObservableList<Group> getGroupList() {
-        return groups.asUnmodifiableObservableList();
+        return this.groups.asUnmodifiableObservableList();
     }
     @Override
     public boolean equals(Object other) {
@@ -268,8 +268,8 @@ public class AddressBook implements ReadOnlyAddressBook {
 
         AddressBook otherAddressBook = (AddressBook) other;
         return this.getPersonList().equals(otherAddressBook.getPersonList())
-                && this.getConsultationList().equals(otherAddressBook.getConsultationList())
-                && this.getGroupList().equals(otherAddressBook.getGroupList());
+            && this.getConsultationList().equals(otherAddressBook.getConsultationList())
+            && this.groups.equals(otherAddressBook.groups);
     }
     @Override
     public int hashCode() {
