@@ -16,6 +16,8 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
+import java.time.LocalDateTime;
+
 import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.index.Index;
@@ -25,6 +27,8 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.event.Consultation;
+import seedu.address.model.person.Nusnetid;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
@@ -149,6 +153,48 @@ public class EditCommandTest {
                 new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB).build());
 
         assertCommandFailure(editCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void execute_editNusnetId_updatesConsultationList() throws Exception {
+        // Setup: Get the first person and their NUSNET ID
+        Person personToEdit = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Nusnetid oldNusnetid = personToEdit.getNusnetid();
+        Nusnetid newNusnetid = new Nusnetid("E9999999");
+        
+        // Create a consultation for the person with old NUSNET ID
+        LocalDateTime from = LocalDateTime.of(2025, 11, 1, 10, 0);
+        LocalDateTime to = LocalDateTime.of(2025, 11, 1, 11, 0);
+        Consultation consultation = new Consultation(oldNusnetid, from, to);
+        
+        // Add consultation to the model (both global list and to the person)
+        model.addConsultation(consultation);
+        model.addConsultationToPerson(oldNusnetid, consultation);
+        
+        // Execute: Edit the person's NUSNET ID
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder()
+                .withNusnetid(newNusnetid.value).build();
+        EditCommand editCommand = new EditCommand(INDEX_FIRST_PERSON, descriptor);
+        editCommand.execute(model);
+        
+        // Verify: Check that no consultation with old NUSNET ID exists in the list
+        boolean hasOldIdConsultation = model.getFilteredConsultationList().stream()
+                .anyMatch(c -> c.getNusnetid().equals(oldNusnetid));
+        assertFalse(hasOldIdConsultation, 
+                "No consultation with old NUSNET ID should exist");
+        
+        // Verify: Check that a consultation with new NUSNET ID exists in the list
+        boolean hasNewIdConsultation = model.getFilteredConsultationList().stream()
+                .anyMatch(c -> c.getNusnetid().equals(newNusnetid));
+        assertTrue(hasNewIdConsultation, 
+                "A consultation with new NUSNET ID should exist");
+        
+        // Verify: The person's consultation should also be updated
+        Person editedPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        assertTrue(editedPerson.getConsultation().isPresent(), 
+                "Person should still have a consultation");
+        assertEquals(newNusnetid, editedPerson.getConsultation().get().getNusnetid(),
+                "Person's consultation should have the new NUSNET ID");
     }
 
     @Test

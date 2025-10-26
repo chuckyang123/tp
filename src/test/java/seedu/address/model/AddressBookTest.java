@@ -98,6 +98,50 @@ public class AddressBookTest {
         assertEquals(expected, addressBook.toString());
     }
 
+    @Test
+    public void updateConsultationsForEditedPerson_updatesGlobalAndPersonConsultations() {
+        // Setup: Create a person with E1111111 and add to address book
+        Nusnetid oldNusnetid = new Nusnetid("E1111111");
+        Nusnetid newNusnetid = new Nusnetid("E2222222");
+        Person person = new PersonBuilder().withNusnetid(oldNusnetid.value).build();
+        addressBook.addPerson(person);
+        
+        // Create a consultation for the person with old NUSNET ID
+        java.time.LocalDateTime from = java.time.LocalDateTime.of(2025, 11, 1, 10, 0);
+        java.time.LocalDateTime to = java.time.LocalDateTime.of(2025, 11, 1, 11, 0);
+        Consultation consultation = new Consultation(oldNusnetid, from, to);
+        
+        // Add consultation to global list and to the person
+        addressBook.addConsultation(consultation);
+        addressBook.addConsultationToPerson(oldNusnetid, consultation);
+        
+        // Update the person with the new NUSNET ID (this must be done BEFORE calling updateConsultationsForEditedPerson)
+        Person updatedPerson = new PersonBuilder(person).withNusnetid(newNusnetid.value).build();
+        addressBook.setPerson(person, updatedPerson);
+        
+        // Execute: Update consultations from old to new NUSNET ID
+        addressBook.updateConsultationsForEditedPerson(oldNusnetid, newNusnetid);
+        
+        // Verify: No consultation with old NUSNET ID should exist in the list
+        boolean hasOldIdConsultation = addressBook.getConsultationList().stream()
+                .anyMatch(c -> c.getNusnetid().equals(oldNusnetid));
+        assertFalse(hasOldIdConsultation, 
+                "No consultation with old NUSNET ID should exist");
+        
+        // Verify: A consultation with new NUSNET ID should exist in the list
+        boolean hasNewIdConsultation = addressBook.getConsultationList().stream()
+                .anyMatch(c -> c.getNusnetid().equals(newNusnetid));
+        assertTrue(hasNewIdConsultation, 
+                "A consultation with new NUSNET ID should exist");
+        
+        // Verify: Person's consultation is updated
+        Person retrievedPerson = addressBook.findPerson(newNusnetid);
+        assertTrue(retrievedPerson.getConsultation().isPresent(), 
+                "Person should still have a consultation");
+        assertEquals(newNusnetid, retrievedPerson.getConsultation().get().getNusnetid(),
+                "Person's consultation should have the new NUSNET ID");
+    }
+
     /**
      * A stub ReadOnlyAddressBook whose persons list can violate interface constraints.
      */

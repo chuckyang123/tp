@@ -278,4 +278,12 @@ public class ModelManager implements Model {
         requireNonNull(groupId);
         return addressBook.getGroup(groupId);
     }
+
+    @Override
+    public void updateConsultationsForEditedPerson(Nusnetid oldNusnetid, Nusnetid newNusnetid) {
+        requireAllNonNull(oldNusnetid, newNusnetid);
+        addressBook.updateConsultationsForEditedPerson(oldNusnetid, newNusnetid);
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        updateFilteredConsultationList(PREDICATE_SHOW_ALL_CONSULTATIONS);
+    }
 }
