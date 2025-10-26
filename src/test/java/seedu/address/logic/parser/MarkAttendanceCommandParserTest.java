@@ -19,7 +19,8 @@ public class MarkAttendanceCommandParserTest {
     @Test
     public void parse_validArgs_success() {
         // Single student
-        assertParseSuccess(parser, " i/" + VALID_NUSNETID_AMY + " w/" + VALID_WEEK_1 + " " + VALID_STATUS_PRESENT ,
+        assertParseSuccess(parser, " i/" + VALID_NUSNETID_AMY + " w/" + VALID_WEEK_1
+                        + " status/" + VALID_STATUS_PRESENT ,
                 new MarkAttendanceCommand(VALID_NUSNETID_AMY, 2, VALID_STATUS_PRESENT));
     }
 

@@ -2,12 +2,14 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Objects;
 import java.util.logging.Logger;
 
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.CliSyntax;
 import seedu.address.model.Model;
+import seedu.address.model.person.Nusnetid;
 import seedu.address.model.person.Person;
 
 /**
@@ -34,8 +36,7 @@ public class AddHomeworkCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a homework to a student or to all students.\n"
             + "Parameters: "
-            + CliSyntax.PREFIX_NUSNETID + "NUSNET_ID "
-            + "or all "
+            + CliSyntax.PREFIX_NUSNETID + "NUSNET_ID or " + CliSyntax.PREFIX_NUSNETID + "all "
             + CliSyntax.PREFIX_ASSIGNMENT + "ASSIGNMENT_ID\n"
             + "Example (single): " + COMMAND_WORD + " "
             + CliSyntax.PREFIX_NUSNETID
@@ -51,8 +52,9 @@ public class AddHomeworkCommand extends Command {
     public static final String MESSAGE_STUDENT_NOT_FOUND = "Student not found.";
 
     private static final Logger logger = LogsCenter.getLogger(AddHomeworkCommand.class);
-    private final String nusnetId; // can be "all" for all students
+    private final Nusnetid nusnetId; // can be "all" for all students
     private final int assignmentId;
+    private final boolean isAll;
 
     /**
      * Creates an {@code AddHomeworkCommand} to add a homework to a student or all students.
@@ -60,9 +62,10 @@ public class AddHomeworkCommand extends Command {
      * @param nusnetId the nusnetId ID of the target student, or "all" to apply to all students
      * @param assignmentId the ID of the assignment to add
      */
-    public AddHomeworkCommand(String nusnetId, int assignmentId) {
+    public AddHomeworkCommand(Nusnetid nusnetId, int assignmentId, boolean isAll) {
         this.nusnetId = nusnetId;
         this.assignmentId = assignmentId;
+        this.isAll = isAll;
     }
 
     /**
@@ -80,8 +83,9 @@ public class AddHomeworkCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
-        logger.info("Executing AddHomeworkCommand for student: " + nusnetId);
-        if (nusnetId.equalsIgnoreCase("all")) {
+        String idForLog = isAll ? "all" : (nusnetId != null ? nusnetId.value : "null");
+        logger.info("Executing AddHomeworkCommand for: " + idForLog);
+        if (isAll) {
             // Check duplicates BEFORE modifying any student
             for (Person p : model.getFilteredPersonList()) {
                 if (p.getHomeworkTracker().contains(assignmentId)) {
@@ -97,7 +101,7 @@ public class AddHomeworkCommand extends Command {
             return new CommandResult(String.format(MESSAGE_SUCCESS_ALL, assignmentId));
         } else {
             Person target = model.getFilteredPersonList().stream()
-                    .filter(p -> p.getNusnetid().value.equalsIgnoreCase(nusnetId))
+                    .filter(p -> p.getNusnetid().equals(nusnetId))
                     .findFirst()
                     .orElse(null);
 
@@ -126,14 +130,15 @@ public class AddHomeworkCommand extends Command {
         if (!(other instanceof AddHomeworkCommand)) {
             return false;
         }
-        AddHomeworkCommand otherCommand = (AddHomeworkCommand) other;
-        return this.nusnetId.equals(otherCommand.nusnetId)
-                && this.assignmentId == otherCommand.assignmentId;
+        AddHomeworkCommand o = (AddHomeworkCommand) other;
+        return this.assignmentId == o.assignmentId
+                && this.isAll == o.isAll
+                && Objects.equals(this.nusnetId, o.nusnetId);
     }
 
     @Override
     public int hashCode() {
-        return nusnetId.hashCode() * 31 + assignmentId;
+        return Objects.hash(nusnetId, assignmentId, isAll);
     }
 
 }

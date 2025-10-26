@@ -9,6 +9,7 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSucces
 import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.commands.AddHomeworkCommand;
+import seedu.address.model.person.Nusnetid;
 
 public class AddHomeworkCommandParserTest {
 
@@ -18,14 +19,14 @@ public class AddHomeworkCommandParserTest {
     public void parse_validArgs_success() {
         // Single student
         assertParseSuccess(parser, " i/" + VALID_NUSNETID_AMY + " a/" + VALID_ASSIGNMENT_1,
-                new AddHomeworkCommand(VALID_NUSNETID_AMY, 1));
+                new AddHomeworkCommand(new Nusnetid(VALID_NUSNETID_AMY), 1, false));
     }
 
     @Test
     public void parse_validArgsAllStudents_success() {
-        // All students
+        // All students must use i/all
         assertParseSuccess(parser, " i/all a/2",
-                new AddHomeworkCommand("all", 2));
+                new AddHomeworkCommand(null, 2, true));
     }
 
     @Test
@@ -45,8 +46,8 @@ public class AddHomeworkCommandParserTest {
 
     @Test
     public void parse_invalidNusnetId_failure() {
-        // parser only checks format, so invalid characters or empty NUSNET ID
+        // Empty NUSNET ID should be rejected by the parser
         assertParseFailure(parser, " i/ a/1",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddHomeworkCommand.MESSAGE_USAGE));
+                Nusnetid.MESSAGE_CONSTRAINTS);
     }
 }

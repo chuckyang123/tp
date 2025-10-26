@@ -19,7 +19,7 @@ public class MarkAllAttendanceCommandParserTest {
     @Test
     public void parse_validArgs_success() {
         // Single student
-        assertParseSuccess(parser, " g/" + VALID_GROUP_1 + " w/" + VALID_WEEK_1 + " " + VALID_STATUS_PRESENT ,
+        assertParseSuccess(parser, " g/" + VALID_GROUP_1 + " w/" + VALID_WEEK_1 + " status/" + VALID_STATUS_PRESENT ,
                 new MarkAllAttendanceCommand(VALID_GROUP_1, 2, VALID_STATUS_PRESENT));
     }
 
