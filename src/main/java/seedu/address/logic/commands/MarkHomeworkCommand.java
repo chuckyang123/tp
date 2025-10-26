@@ -8,6 +8,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.CliSyntax;
 import seedu.address.model.Model;
 import seedu.address.model.person.HomeworkTracker;
+import seedu.address.model.person.Nusnetid;
 import seedu.address.model.person.Person;
 
 
@@ -45,7 +46,7 @@ public class MarkHomeworkCommand extends Command {
     public static final String MESSAGE_INVALID_ASSIGNMENT = "Assignment not found.";
     public static final String MESSAGE_INVALID_STATUS = "Please enter complete/incomplete/late only.";
 
-    private final String nusnetId;
+    private final Nusnetid nusnetId;
     private final int assignmentId;
     private final String status;
 
@@ -56,7 +57,7 @@ public class MarkHomeworkCommand extends Command {
      * @param assignmentId the assignment ID to update
      * @param status the new status ("complete", "incomplete", or "late")
      */
-    public MarkHomeworkCommand(String nusnetId, int assignmentId, String status) {
+    public MarkHomeworkCommand(Nusnetid nusnetId, int assignmentId, String status) {
         this.nusnetId = nusnetId;
         this.assignmentId = assignmentId;
         this.status = status;
@@ -79,13 +80,9 @@ public class MarkHomeworkCommand extends Command {
 
         List<Person> list = model.getFilteredPersonList();
 
-        // find by nusnetId — adapt depending on your Person fields.
+        // find by nusnetId
         Person target = list.stream()
-                .filter(p -> {
-                    // prefer using a dedicated nusnetId field if you have one:
-
-                    return p.getNusnetid().value.equalsIgnoreCase(nusnetId);
-                })
+                .filter(p -> p.getNusnetid().equals(nusnetId))
                 .findFirst()
                 .orElse(null);
 

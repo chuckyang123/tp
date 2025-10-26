@@ -9,6 +9,7 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSucces
 import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.commands.DeleteHomeworkCommand;
+import seedu.address.model.person.Nusnetid;
 
 public class DeleteHomeworkCommandParserTest {
 
@@ -18,14 +19,14 @@ public class DeleteHomeworkCommandParserTest {
     public void parse_validArgs_success() {
         // Single student
         assertParseSuccess(parser, " i/" + VALID_NUSNETID_AMY + " a/" + VALID_ASSIGNMENT_1,
-                new DeleteHomeworkCommand(VALID_NUSNETID_AMY, 1));
+                new DeleteHomeworkCommand(new Nusnetid(VALID_NUSNETID_AMY), 1, false));
     }
 
     @Test
     public void parse_validArgsAllStudents_success() {
         // All students
         assertParseSuccess(parser, " i/all a/2",
-                new DeleteHomeworkCommand("all", 2));
+                new DeleteHomeworkCommand(null, 2, true));
     }
 
     @Test
@@ -45,29 +46,28 @@ public class DeleteHomeworkCommandParserTest {
 
     @Test
     public void parse_invalidNusnetId_failure() {
-        // parser only checks format, so invalid characters or empty NUSNET ID
         assertParseFailure(parser, " i/ a/1",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteHomeworkCommand.MESSAGE_USAGE));
+                Nusnetid.MESSAGE_CONSTRAINTS);
     }
 
     @Test
     public void parse_boundaryAssignmentId_success() {
         assertParseSuccess(parser, "i/" + VALID_NUSNETID_AMY + " a/1",
-                new DeleteHomeworkCommand(VALID_NUSNETID_AMY, 1));
-        assertParseSuccess(parser, "all a/3",
-                new DeleteHomeworkCommand("all", 3));
+                new DeleteHomeworkCommand(new Nusnetid(VALID_NUSNETID_AMY), 1, false));
+        assertParseSuccess(parser, "i/all a/3",
+                new DeleteHomeworkCommand(null, 3, true));
     }
 
     @Test
     public void parse_caseInsensitiveAll_success() {
-        assertParseSuccess(parser, "ALL a/2",
-                new DeleteHomeworkCommand("all", 2));
+        assertParseSuccess(parser, "i/ALL a/2",
+                new DeleteHomeworkCommand(null, 2, true));
     }
 
     @Test
     public void parse_extraWhitespace_success() {
         assertParseSuccess(parser, "   i/" + VALID_NUSNETID_AMY + "   a/2   ",
-                new DeleteHomeworkCommand(VALID_NUSNETID_AMY, 2));
+                new DeleteHomeworkCommand(new Nusnetid(VALID_NUSNETID_AMY), 2, false));
     }
 
     @Test
