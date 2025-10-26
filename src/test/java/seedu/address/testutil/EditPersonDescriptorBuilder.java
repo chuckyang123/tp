@@ -34,7 +34,6 @@ public class EditPersonDescriptorBuilder {
         descriptor.setEmail(person.getEmail().orElse(null));
         descriptor.setNusnetid(person.getNusnetid());
         descriptor.setTelegram(person.getTelegram());
-        descriptor.setGroupId(person.getGroupId());
     }
 
     /**
@@ -74,14 +73,6 @@ public class EditPersonDescriptorBuilder {
      */
     public EditPersonDescriptorBuilder withTelegram(String telegram) {
         descriptor.setTelegram(new Telegram(telegram));
-        return this;
-    }
-
-    /**
-     * Sets the {@code Telegram} of the {@code EditPersonDescriptor} that we are building.
-     */
-    public EditPersonDescriptorBuilder withSlot(String groupid) {
-        descriptor.setGroupId(new GroupId(groupid));
         return this;
     }
 

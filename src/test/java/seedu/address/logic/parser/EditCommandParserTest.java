@@ -14,7 +14,6 @@ import static seedu.address.logic.commands.CommandTestUtil.NUSNETID_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.NUSNETID_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.SLOT_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.TELEGRAM_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.TELEGRAM_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
@@ -22,10 +21,8 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NUSNETID_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_SLOT_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TELEGRAM_AMY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_GROUP;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NUSNETID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TELEGRAM;
@@ -87,7 +84,6 @@ public class EditCommandParserTest {
         assertParseFailure(parser, "1" + INVALID_PHONE_DESC, Phone.MESSAGE_CONSTRAINTS); // invalid phone
         assertParseFailure(parser, "1" + INVALID_EMAIL_DESC, Email.MESSAGE_CONSTRAINTS); // invalid email
         assertParseFailure(parser, "1" + INVALID_NUSNETID_DESC, Nusnetid.MESSAGE_CONSTRAINTS); // invalid nusnetid
-        assertParseFailure(parser, "1" + INVALID_SLOT_DESC, GroupId.MESSAGE_CONSTRAINTS); // invalid slot
         assertParseFailure(parser, "1" + INVALID_TELEGRAM_DESC, Telegram.MESSAGE_CONSTRAINTS); // invalid telegram
 
         // invalid phone followed by valid email
@@ -103,11 +99,11 @@ public class EditCommandParserTest {
     public void parse_allFieldsSpecified_success() {
         Index targetIndex = INDEX_SECOND_PERSON;
         String userInput = targetIndex.getOneBased() + PHONE_DESC_BOB + TELEGRAM_DESC_AMY
-                + EMAIL_DESC_AMY + NUSNETID_DESC_AMY + NAME_DESC_AMY + SLOT_DESC_AMY;
+                + EMAIL_DESC_AMY + NUSNETID_DESC_AMY + NAME_DESC_AMY ;
 
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_AMY).withNusnetid(VALID_NUSNETID_AMY)
-                .withTelegram(VALID_TELEGRAM_AMY).withSlot(VALID_SLOT_AMY).build();
+                .withTelegram(VALID_TELEGRAM_AMY).build();
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
 
         assertParseSuccess(parser, userInput, expectedCommand);
@@ -116,10 +112,10 @@ public class EditCommandParserTest {
     @Test
     public void parse_someFieldsSpecified_success() {
         Index targetIndex = INDEX_FIRST_PERSON;
-        String userInput = targetIndex.getOneBased() + EMAIL_DESC_AMY + SLOT_DESC_AMY;
+        String userInput = targetIndex.getOneBased() + EMAIL_DESC_AMY ;
 
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder()
-                .withEmail(VALID_EMAIL_AMY).withSlot(VALID_SLOT_AMY).build();
+                .withEmail(VALID_EMAIL_AMY).build();
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
 
         assertParseSuccess(parser, userInput, expectedCommand);
@@ -158,11 +154,6 @@ public class EditCommandParserTest {
         expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
-        // slot
-        userInput = targetIndex.getOneBased() + SLOT_DESC_AMY;
-        descriptor = new EditPersonDescriptorBuilder().withSlot(VALID_SLOT_AMY).build();
-        expectedCommand = new EditCommand(targetIndex, descriptor);
-        assertParseSuccess(parser, userInput, expectedCommand);
     }
 
     @Test
@@ -183,12 +174,12 @@ public class EditCommandParserTest {
 
         // mulltiple valid fields repeated
         userInput = targetIndex.getOneBased() + PHONE_DESC_AMY + NUSNETID_DESC_AMY + EMAIL_DESC_AMY
-                + PHONE_DESC_AMY + NUSNETID_DESC_AMY + EMAIL_DESC_AMY + SLOT_DESC_AMY + SLOT_DESC_AMY
-                + TELEGRAM_DESC_AMY + TELEGRAM_DESC_BOB + NUSNETID_DESC_BOB + EMAIL_DESC_BOB;
+                + PHONE_DESC_AMY + NUSNETID_DESC_AMY + EMAIL_DESC_AMY + TELEGRAM_DESC_AMY
+                + TELEGRAM_DESC_BOB + NUSNETID_DESC_BOB + EMAIL_DESC_BOB;
 
         assertParseFailure(parser, userInput,
                 Messages.getErrorMessageForDuplicatePrefixes(PREFIX_PHONE, PREFIX_EMAIL,
-                        PREFIX_NUSNETID, PREFIX_TELEGRAM, PREFIX_GROUP));
+                        PREFIX_NUSNETID, PREFIX_TELEGRAM));
 
         // multiple invalid values
         userInput = targetIndex.getOneBased() + INVALID_PHONE_DESC + INVALID_NUSNETID_DESC

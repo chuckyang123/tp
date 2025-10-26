@@ -71,10 +71,10 @@ public class CommandTestUtil {
     static {
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
                 .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withNusnetid(VALID_NUSNETID_AMY)
-                .withTelegram(VALID_TELEGRAM_AMY).withSlot(VALID_SLOT_AMY).build();
+                .withTelegram(VALID_TELEGRAM_AMY).build();
         DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withNusnetid(VALID_NUSNETID_BOB)
-                .withTelegram(VALID_TELEGRAM_BOB).withSlot(VALID_SLOT_BOB).build();
+                .withTelegram(VALID_TELEGRAM_BOB).build();
     }
 
     //for homework testing:

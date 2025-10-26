@@ -2,7 +2,6 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_GROUP;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NUSNETID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
@@ -42,7 +41,6 @@ public class EditCommand extends Command {
             + "[" + PREFIX_NAME + "NAME] "
             + "[" + PREFIX_NUSNETID + "NUSNETID] "
             + "[" + PREFIX_TELEGRAM + "TELEGRAM]"
-            + "[" + PREFIX_GROUP + "GROUPID]"
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] " + "\n"
             + "Example: " + COMMAND_WORD + " 1 "
@@ -107,7 +105,7 @@ public class EditCommand extends Command {
                 ? null : editPersonDescriptor.getEmail().orElse(personToEdit.getEmail().orElse(null));
         Nusnetid updatedNusnetid = editPersonDescriptor.getNusnetid().orElse(personToEdit.getNusnetid());
         Telegram updatedTelegram = editPersonDescriptor.getTelegram().orElse(personToEdit.getTelegram());
-        GroupId updatedGroupId = editPersonDescriptor.getGroupId().orElse(personToEdit.getGroupId());
+        GroupId updatedGroupId = personToEdit.getGroupId();
         AttendanceSheet attendanceSheet = personToEdit.getAttendanceSheet();
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedNusnetid, updatedTelegram, updatedGroupId,
@@ -148,7 +146,6 @@ public class EditCommand extends Command {
         private Email email;
         private Nusnetid nusnetid;
         private Telegram telegram;
-        private GroupId groupId;
 
         public EditPersonDescriptor() {}
 
@@ -162,14 +159,13 @@ public class EditCommand extends Command {
             setEmail(toCopy.email);
             setNusnetid(toCopy.nusnetid);
             setTelegram(toCopy.telegram);
-            setGroupId(toCopy.groupId);
         }
 
         /**
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, nusnetid, telegram, groupId) || phone == null || email == null;
+            return CollectionUtil.isAnyNonNull(name, nusnetid, telegram) || phone == null || email == null;
         }
 
         public void setName(Name name) {
@@ -207,13 +203,6 @@ public class EditCommand extends Command {
             this.telegram = telegram;
         }
 
-        public Optional<GroupId> getGroupId() {
-            return Optional.ofNullable(groupId);
-        }
-        public void setGroupId(GroupId groupId) {
-            this.groupId = groupId;
-        }
-
         @Override
         public boolean equals(Object other) {
             if (other == this) {
@@ -229,8 +218,7 @@ public class EditCommand extends Command {
                     && Objects.equals(phone, o.phone)
                     && Objects.equals(email, o.email)
                     && Objects.equals(nusnetid, o.nusnetid)
-                    && Objects.equals(telegram, o.telegram)
-                    && Objects.equals(groupId, o.groupId);
+                    && Objects.equals(telegram, o.telegram);
         }
 
         @Override
@@ -241,7 +229,6 @@ public class EditCommand extends Command {
                     .add("email", email)
                     .add("nusnetid", nusnetid)
                     .add("telegram", telegram)
-                    .add("groupId", groupId)
                     .toString();
         }
     }

@@ -57,9 +57,6 @@ public class EditPersonDescriptorTest {
         editedAmy = new EditPersonDescriptorBuilder(DESC_AMY).withTelegram(VALID_TELEGRAM_BOB).build();
         assertFalse(DESC_AMY.equals(editedAmy));
 
-        // different slot -> returns false
-        editedAmy = new EditPersonDescriptorBuilder(DESC_AMY).withSlot(VALID_SLOT_BOB).build();
-        assertFalse(DESC_AMY.equals(editedAmy));
     }
 
     @Test
@@ -70,8 +67,7 @@ public class EditPersonDescriptorTest {
                 + editPersonDescriptor.getPhone().orElse(null) + ", email="
                 + editPersonDescriptor.getEmail().orElse(null) + ", nusnetid="
                 + editPersonDescriptor.getNusnetid().orElse(null) + ", telegram="
-                + editPersonDescriptor.getTelegram().orElse(null) + ", groupId="
-                + editPersonDescriptor.getGroupId().orElse(null) + "}";
+                + editPersonDescriptor.getTelegram().orElse(null)  + "}";
         assertEquals(expected, editPersonDescriptor.toString());
     }
 }

@@ -339,10 +339,10 @@ Furthermore, certain edits can cause the AddressBook to behave in unexpected way
 
 Action     | Format, Examples
 -----------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------
-**AddStudent**    | `add_student n/NAME  i/NUSNETID t/TELEGRAM s/SLOT [p/PHONE_NUMBER] [e/EMAIL] ` <br> e.g., `add n/James Ho  i/E1234567 tg/@jame s/T02 [p/22224444] [e/jamesho@u.nus.edu]`
+**AddStudent**    | `add_student n/NAME  i/NUSNETID t/TELEGRAM g/GROUPID [p/PHONE_NUMBER] [e/EMAIL] ` <br> e.g., `add n/James Ho  i/E1234567 tg/@jame g/T02 [p/22224444] [e/jamesho@u.nus.edu]`
 **Clear**  | `clear`
 **Delete** | `delete INDEX`<br> e.g., `delete 3`
-**EditStudent**   | `edit_student INDEX [n/NAME] [i/NUSNETID] [t/TELEGRAM] [p/PHONE_NUMBER] [e/EMAIL]  [s/SLOT]`<br> e.g.,`edit 2 n/James Lee e/jameslee@u.nus.edu`
+**EditStudent**   | `edit_student INDEX [n/NAME] [i/NUSNETID] [t/TELEGRAM] [p/PHONE_NUMBER] [e/EMAIL] `<br> e.g.,`edit 2 n/James Lee e/jameslee@u.nus.edu`
 **AddHomework**  | `add_hw i/NUSNETID (all for all students) a/ASSIGNMENT` <br> e.g., `add_hw i/E1234567 a/1`
 **MarkHomework**  | `mark_hw i/NUSNETID  a/ASSIGNMENT status/STATUS(complete incomplete late)` <br> e.g., `mark_hw i/E1234567 a/1 complete`
 **DeleteHomework**  | `delete_hw i/NUSNETID (all for all students) a/ASSIGNMENT` <br> e.g., `delete_hw i/E1234567 a/1`
