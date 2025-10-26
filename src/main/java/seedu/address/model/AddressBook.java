@@ -344,7 +344,8 @@ public class AddressBook implements ReadOnlyAddressBook {
 
         // Also update any consultation stored within persons (in UniquePersonList)
         // For each person that had the old nusnetid, find and update their consultation as well
-        // Note: UniquePersonList manages person-level consultations via addConsultationToPerson/deleteConsultationFromPerson
+        // Note: UniquePersonList manages person-level consultations
+        // via addConsultationToPerson/deleteConsultationFromPerson
         // We will iterate through persons and for matching nusnetid update the person entry.
         List<Person> personsToUpdate = persons.toList().stream()
                 .filter(p -> p.getNusnetid().equals(oldNusnetid) && p.hasConsultation())

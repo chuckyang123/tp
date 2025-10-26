@@ -20,6 +20,7 @@ import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.event.Consultation;
 import seedu.address.model.person.AttendanceSheet;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.GroupId;
@@ -28,7 +29,6 @@ import seedu.address.model.person.Nusnetid;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Telegram;
-import seedu.address.model.event.Consultation;
 
 /**
  * Edits the details of an existing person in the address book.
@@ -204,7 +204,8 @@ public class EditCommand extends Command {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, nusnetid, telegram, phone, email) || phone == null || email == null;
+            return CollectionUtil.isAnyNonNull(name, nusnetid, telegram, phone, email)
+                    || phone == null || email == null;
         }
 
         public void setName(Name name) {
