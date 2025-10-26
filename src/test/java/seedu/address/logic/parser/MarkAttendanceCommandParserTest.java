@@ -11,6 +11,7 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSucces
 import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.commands.MarkAttendanceCommand;
+import seedu.address.model.person.Nusnetid;
 
 public class MarkAttendanceCommandParserTest {
 
@@ -20,7 +21,7 @@ public class MarkAttendanceCommandParserTest {
     public void parse_validArgs_success() {
         // Single student
         assertParseSuccess(parser, " i/" + VALID_NUSNETID_AMY + " w/" + VALID_WEEK_1 + " " + VALID_STATUS_PRESENT ,
-                new MarkAttendanceCommand(VALID_NUSNETID_AMY, 2, VALID_STATUS_PRESENT));
+                new MarkAttendanceCommand(new Nusnetid(VALID_NUSNETID_AMY), 2, VALID_STATUS_PRESENT));
     }
 
 

@@ -10,6 +10,7 @@ import seedu.address.model.Group;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.person.GroupId;
+import seedu.address.model.person.Nusnetid;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.PersonBuilder;
 
@@ -40,7 +41,7 @@ public class MarkAllAttendanceCommandTest {
                 "T01", "present", 2);
         assertEquals(expectedMessage, command.execute(model).getFeedbackToUser());
         Person updatedAlice = model.getFilteredPersonList().stream()
-                .filter(p -> p.getNusnetid().value.equals("E1234567")).findFirst().orElseThrow();
+                .filter(p -> p.getNusnetid().equals(new Nusnetid("E1234567"))).findFirst().orElse(null);
         assertEquals(true, updatedAlice.getAttendanceSheet().getAttendanceForWeek(2).isPresent());
         assertEquals("present", updatedAlice
                 .getAttendanceSheet()

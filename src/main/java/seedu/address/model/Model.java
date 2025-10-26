@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.event.Consultation;
+import seedu.address.model.person.AttendanceStatus;
 import seedu.address.model.person.GroupId;
 import seedu.address.model.person.Nusnetid;
 import seedu.address.model.person.Person;
@@ -125,7 +126,23 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
-
+    /**
+     * Marks attendance for the person with the given nusnetId for the specified week and status.
+     * @param nusnetId the nusnetId of the person whose attendance is to be marked
+     * @param week the week number for which attendance is to be marked
+     * @param status the attendance status to be marked
+     * @return the updated person with the marked attendance
+     * @throws CommandException if no person with the given nusnetId exists in the address book
+     */
+    Person markAttendance(Nusnetid nusnetId, int week, AttendanceStatus status) throws CommandException;
+    /**
+     * Marks attendance for all persons in the specified group for the given week and status.
+     * @param groupId the groupId of the group whose members' attendance is to be marked
+     * @param week the week number for which attendance is to be marked
+     * @param status the attendance status to be marked
+     * @throws CommandException if no group with the given groupId exists in the address book
+     */
+    void markAllAttendance(GroupId groupId, int week, AttendanceStatus status) throws CommandException;
     /**
      * Returns true if a consultation equivalent to {@code consultation} exists in the address book.
      */

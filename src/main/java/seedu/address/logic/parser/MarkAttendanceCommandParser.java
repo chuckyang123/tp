@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 
 import seedu.address.logic.commands.MarkAttendanceCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.Nusnetid;
 
 /**
  * Parses input arguments and creates a new {@link MarkAttendanceCommand} object.
@@ -45,10 +46,11 @@ public class MarkAttendanceCommandParser implements Parser<MarkAttendanceCommand
             throw new ParseException(MarkAttendanceCommand.MESSAGE_INVALID_WEEK);
         }
         String nusnetId = matcher.group("nusnetId");
+        Nusnetid nusnetIdCreated = new Nusnetid(nusnetId);
         String status = matcher.group("status").toLowerCase();
         if (!status.equals("present") && !status.equals("absent") && !status.equals("excused")) {
             throw new ParseException(MarkAttendanceCommand.MESSAGE_INVALID_STATUS);
         }
-        return new MarkAttendanceCommand(nusnetId, week, status);
+        return new MarkAttendanceCommand(nusnetIdCreated, week, status);
     }
 }

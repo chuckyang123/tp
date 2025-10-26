@@ -167,7 +167,15 @@ public class AddCommandTest {
         public void setPerson(Person target, Person editedPerson) {
             throw new AssertionError("This method should not be called.");
         }
-
+        @Override
+        public Person markAttendance(Nusnetid nusnetid, int week, seedu.address.model.person.AttendanceStatus status)
+                throws CommandException {
+            throw new AssertionError("This method should not be called.");
+        }
+        @Override
+        public void markAllAttendance(GroupId groupId, int week, seedu.address.model.person.AttendanceStatus status) {
+            throw new AssertionError("This method should not be called.");
+        }
         @Override
         public void addConsultationToPerson(Nusnetid nusnetid, Consultation consultation) {
             throw new AssertionError("This method should not be called.");
