@@ -122,6 +122,10 @@ public class AddToGroupCommandTest {
         public void markHomework(Nusnetid nusnetId, int assignmentId, String status) throws CommandException {
             throw new AssertionError("This method should not be called.");
         }
+        @Override
+        public Person getPersonByNusnetIdFullList(Nusnetid nusnetId) throws CommandException {
+            throw new AssertionError("This method should not be called.");
+        }
 
         @Override
         public void updateGroupWhenEditPersonId(Person oldPerson) {

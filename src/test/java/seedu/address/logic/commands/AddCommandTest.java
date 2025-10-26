@@ -256,6 +256,11 @@ public class AddCommandTest {
         public Person getPersonByNusnetId(Nusnetid nusnetid) {
             throw new AssertionError("This method should not be called.");
         }
+
+        @Override
+        public Person getPersonByNusnetIdFullList(Nusnetid nusnetId) throws CommandException {
+            throw new AssertionError("This method should not be called.");
+        }
     }
 
     /**

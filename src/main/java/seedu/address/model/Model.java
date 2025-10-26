@@ -105,6 +105,13 @@ public interface Model {
     Person getPersonByNusnetId(Nusnetid nusnetId) throws CommandException;
 
     /**
+     * Retrieves a person by their nusnetId in the Unique Person List
+     * @param nusnetId the nusnetId of the person to be retrieved
+     * @return the person with the specified nusnetId
+     * @throws CommandException if no person with the given nusnetId is found
+     */
+    Person getPersonByNusnetIdFullList(Nusnetid nusnetId) throws CommandException;
+    /**
      * Replaces the given person {@code target} with {@code editedPerson}.
      * {@code target} must exist in the address book.
      * The person identity of {@code editedPerson} must not be the same as another existing person in the address book.

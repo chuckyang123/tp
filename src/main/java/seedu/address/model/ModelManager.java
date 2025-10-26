@@ -140,6 +140,7 @@ public class ModelManager implements Model {
     public void setPerson(Person target, Person editedPerson) {
         requireAllNonNull(target, editedPerson);
         addressBook.setPerson(target, editedPerson);
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
     }
     /**
      * Updates the group information when a person is added.
@@ -167,6 +168,22 @@ public class ModelManager implements Model {
         requireNonNull(nusnetId);
         assert hasPerson(nusnetId) : "Person with given nusnetId should exist in the address book.";
         Person target = this.getFilteredPersonList()
+                .stream().filter(p -> p.getNusnetid().equals(nusnetId))
+                .findFirst().orElseThrow(() -> new CommandException(MESSAGE_STUDENT_NOT_FOUND));
+        return target;
+    }
+
+    /**
+     * Retrieves a person by their nusnetId in the Unique Person List
+     * @param nusnetId the nusnetId of the person to be retrieved
+     * @return the person with the specified nusnetId
+     * @throws CommandException if no person with the given nusnetId is found
+     */
+    @Override
+    public Person getPersonByNusnetIdFullList(Nusnetid nusnetId) throws CommandException {
+        requireNonNull(nusnetId);
+        assert hasPerson(nusnetId) : "Person with given nusnetId should exist in the address book.";
+        Person target = this.addressBook.getUniquePersonList()
                 .stream().filter(p -> p.getNusnetid().equals(nusnetId))
                 .findFirst().orElseThrow(() -> new CommandException(MESSAGE_STUDENT_NOT_FOUND));
         return target;
@@ -232,14 +249,14 @@ public class ModelManager implements Model {
     public void addHomework(Nusnetid nusnetId, int assignmentId) throws CommandException {
         if (nusnetId == null) {
             // add homework to all students
-            for (Person p : getFilteredPersonList()) {
+            for (Person p : addressBook.getUniquePersonList()) {
                 if (p.getHomeworkTracker().contains(assignmentId)) {
                     throw new CommandException(
                             String.format("Assignment %d already exists for %s.", assignmentId, p.getName().fullName)
                     );
                 }
             }
-            for (Person p : getFilteredPersonList()) {
+            for (Person p : this.addressBook.getUniquePersonList()) {
                 setPerson(p, p.withAddedHomework(assignmentId));
             }
             return;
@@ -247,7 +264,7 @@ public class ModelManager implements Model {
 
         Person target;
         try {
-            target = getPersonByNusnetId(nusnetId); // may throw AssertionError currently
+            target = getPersonByNusnetIdFullList(nusnetId); // may throw AssertionError currently
         } catch (AssertionError e) {
             throw new CommandException(AddHomeworkCommand.MESSAGE_STUDENT_NOT_FOUND);
         }
@@ -264,14 +281,14 @@ public class ModelManager implements Model {
     public void deleteHomework(Nusnetid nusnetId, int assignmentId) throws CommandException {
         if (nusnetId == null) {
             // delete homework for all students
-            for (Person p : getFilteredPersonList()) {
+            for (Person p : addressBook.getUniquePersonList()) {
                 if (!p.getHomeworkTracker().contains(assignmentId)) {
                     throw new CommandException(
                             String.format("Assignment %d not found for %s.", assignmentId, p.getName())
                     );
                 }
             }
-            for (Person p : getFilteredPersonList()) {
+            for (Person p : addressBook.getUniquePersonList()) {
                 setPerson(p, p.withDeletedHomework(assignmentId));
             }
             return;
@@ -280,7 +297,7 @@ public class ModelManager implements Model {
         // single student
         Person target;
         try {
-            target = getPersonByNusnetId(nusnetId); // may throw AssertionError currently
+            target = getPersonByNusnetIdFullList(nusnetId); // may throw AssertionError currently
         } catch (AssertionError e) {
             throw new CommandException(AddHomeworkCommand.MESSAGE_STUDENT_NOT_FOUND);
         }
@@ -302,7 +319,7 @@ public class ModelManager implements Model {
 
         Person target;
         try {
-            target = getPersonByNusnetId(nusnetId); // may throw AssertionError currently
+            target = getPersonByNusnetIdFullList(nusnetId); // may throw AssertionError currently
         } catch (AssertionError e) {
             throw new CommandException(AddHomeworkCommand.MESSAGE_STUDENT_NOT_FOUND);
         }
