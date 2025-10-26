@@ -74,11 +74,9 @@ public class MarkHomeworkCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-
+        model.markHomework(nusnetId, assignmentId, status);
         // fetch the student to get the name
         Person targetPerson = model.getPersonByNusnetId(nusnetId);
-        model.markHomework(nusnetId, assignmentId, status);
-
         return new CommandResult(String.format(MESSAGE_SUCCESS, assignmentId, targetPerson.getName(), status));
     }
 

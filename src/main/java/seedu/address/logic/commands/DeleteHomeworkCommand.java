@@ -48,22 +48,23 @@ public class DeleteHomeworkCommand extends Command {
         this.assignmentId = assignmentId;
         this.isAll = isAll;
     }
+
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        requireNonNull(model);
+
+        model.deleteHomework(isAll ? null : nusnetId, assignmentId);
 
         if (isAll) {
-            model.deleteHomework(null, assignmentId);
             return new CommandResult(String.format(MESSAGE_DELETE_HOMEWORK_ALL_SUCCESS, assignmentId));
         } else {
-            // single student
-            Person targetPerson = model.getPersonByNusnetId(nusnetId); // fetch student
-            model.deleteHomework(nusnetId, assignmentId);
+            // safely fetch the student after deletion succeeded
+            Person targetPerson = model.getPersonByNusnetId(nusnetId);
             return new CommandResult(String.format(MESSAGE_DELETE_HOMEWORK_SUCCESS, assignmentId,
                     targetPerson.getName()));
         }
     }
+
 
     @Override
     public boolean equals(Object other) {

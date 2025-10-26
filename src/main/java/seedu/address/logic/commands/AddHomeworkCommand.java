@@ -90,9 +90,9 @@ public class AddHomeworkCommand extends Command {
             model.addHomework(null, assignmentId);
             return new CommandResult(String.format(MESSAGE_SUCCESS_ALL, assignmentId));
         } else {
+            model.addHomework(nusnetId, assignmentId);
             // single student
             Person targetPerson = model.getPersonByNusnetId(nusnetId); // fetch the Person
-            model.addHomework(nusnetId, assignmentId);
             return new CommandResult(String.format(MESSAGE_SUCCESS_ONE, assignmentId, targetPerson.getName()));
         }
     }

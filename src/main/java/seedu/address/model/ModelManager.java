@@ -245,9 +245,10 @@ public class ModelManager implements Model {
             return;
         }
 
-        // single student logic
-        Person target = getPersonByNusnetId(nusnetId);
-        if (target == null) {
+        Person target;
+        try {
+            target = getPersonByNusnetId(nusnetId); // may throw AssertionError currently
+        } catch (AssertionError e) {
             throw new CommandException(AddHomeworkCommand.MESSAGE_STUDENT_NOT_FOUND);
         }
         if (target.getHomeworkTracker().contains(assignmentId)) {
@@ -277,7 +278,13 @@ public class ModelManager implements Model {
         }
 
         // single student
-        Person target = getPersonByNusnetId(nusnetId); // will assert if student does not exist
+        Person target;
+        try {
+            target = getPersonByNusnetId(nusnetId); // may throw AssertionError currently
+        } catch (AssertionError e) {
+            throw new CommandException(AddHomeworkCommand.MESSAGE_STUDENT_NOT_FOUND);
+        }
+
         if (!target.getHomeworkTracker().contains(assignmentId)) {
             throw new CommandException(
                     String.format("Assignment %d not found for %s.", assignmentId, target.getName())
@@ -293,7 +300,12 @@ public class ModelManager implements Model {
         requireNonNull(nusnetId);
         requireNonNull(status);
 
-        Person target = getPersonByNusnetId(nusnetId);
+        Person target;
+        try {
+            target = getPersonByNusnetId(nusnetId); // may throw AssertionError currently
+        } catch (AssertionError e) {
+            throw new CommandException(AddHomeworkCommand.MESSAGE_STUDENT_NOT_FOUND);
+        }
 
         if (!HomeworkTracker.isValidAssignmentId(assignmentId)) {
             throw new CommandException("Invalid assignment ID.");
