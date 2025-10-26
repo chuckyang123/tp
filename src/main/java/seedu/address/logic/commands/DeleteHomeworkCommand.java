@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 
 import java.util.List;
+import java.util.Objects;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.CliSyntax;
@@ -20,8 +21,7 @@ public class DeleteHomeworkCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes a homework entry for a student or all students.\n"
             + "Parameters: "
-            + CliSyntax.PREFIX_NUSNETID + "NUSNET_ID "
-            + "or all "
+            + CliSyntax.PREFIX_NUSNETID + "NUSNET_ID or " + CliSyntax.PREFIX_NUSNETID + "all "
             + CliSyntax.PREFIX_ASSIGNMENT + "ASSIGNMENT_ID\n"
             + "Example (single): " + COMMAND_WORD + " "
             + CliSyntax.PREFIX_NUSNETID + "E1234567 "
@@ -35,20 +35,19 @@ public class DeleteHomeworkCommand extends Command {
     public static final String MESSAGE_PERSON_NOT_FOUND = "No person with NUSNET ID '%s' found.";
     public static final String MESSAGE_HOMEWORK_NOT_FOUND = "Homework %d does not exist.";
 
-    private final String nusnetIdInput;
+    private final Nusnetid nusnetId; // null when isAll == true
     private final int assignmentId;
+    private final boolean isAll;
 
     /**
      * Creates a {@code DeleteHomeworkCommand} to delete the specified homework assignment
-     * from the person identified by the given NUSNET ID.
-     *
-     * @param nusnetIdInput NUSNET ID of the person whose homework is to be deleted. Must not be {@code null}.
-     * @param assignmentId ID of the homework assignment to delete.
+     * from the person identified by the given NUSNET ID, or from all students when isAll is true.
      */
-    public DeleteHomeworkCommand(String nusnetIdInput, int assignmentId) {
-        requireNonNull(nusnetIdInput);
-        this.nusnetIdInput = nusnetIdInput;
+    public DeleteHomeworkCommand(Nusnetid nusnetId, int assignmentId, boolean isAll) {
+        requireNonNull(assignmentId);
+        this.nusnetId = nusnetId;
         this.assignmentId = assignmentId;
+        this.isAll = isAll;
     }
 
     @Override
@@ -56,13 +55,15 @@ public class DeleteHomeworkCommand extends Command {
         requireNonNull(model);
 
         // Case: delete for ALL students
-        if (nusnetIdInput.equalsIgnoreCase("all")) {
+        if (isAll) {
             List<Person> lastShownList = model.getFilteredPersonList();
 
             for (Person student : lastShownList) {
                 if (!student.getHomeworkTracker().contains(assignmentId)) {
                     throw new CommandException(String.format(MESSAGE_HOMEWORK_NOT_FOUND, assignmentId));
                 }
+            }
+            for (Person student : lastShownList) {
                 Person updated = student.withDeletedHomework(assignmentId);
                 model.setPerson(student, updated);
             }
@@ -70,12 +71,15 @@ public class DeleteHomeworkCommand extends Command {
         }
 
         // Case: delete for a single student
-        Nusnetid nusnetid = new Nusnetid(nusnetIdInput);
         List<Person> list = model.getFilteredPersonList();
         Person target = list.stream()
-                .filter(person -> person.hasSameNusnetId(nusnetid))
+                .filter(person -> person.getNusnetid().equals(nusnetId))
                 .findFirst()
-                .orElseThrow(() -> new CommandException(String.format(MESSAGE_PERSON_NOT_FOUND, nusnetIdInput)));
+                .orElse(null);
+
+        if (target == null) {
+            throw new CommandException(String.format(MESSAGE_PERSON_NOT_FOUND, nusnetId.value));
+        }
 
         if (!target.getHomeworkTracker().contains(assignmentId)) {
             throw new CommandException(String.format(MESSAGE_HOMEWORK_NOT_FOUND, assignmentId));
@@ -88,9 +92,20 @@ public class DeleteHomeworkCommand extends Command {
 
     @Override
     public boolean equals(Object other) {
-        return other == this // short circuit
-                || (other instanceof DeleteHomeworkCommand
-                && nusnetIdInput.equals(((DeleteHomeworkCommand) other).nusnetIdInput)
-                && assignmentId == ((DeleteHomeworkCommand) other).assignmentId);
+        if (other == this) {
+            return true;
+        }
+        if (!(other instanceof DeleteHomeworkCommand)) {
+            return false;
+        }
+        DeleteHomeworkCommand o = (DeleteHomeworkCommand) other;
+        return this.assignmentId == o.assignmentId
+                && this.isAll == o.isAll
+                && Objects.equals(this.nusnetId, o.nusnetId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(nusnetId, assignmentId, isAll);
     }
 }
