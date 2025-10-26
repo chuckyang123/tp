@@ -6,6 +6,7 @@ import static seedu.address.testutil.Assert.assertThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.person.Nusnetid;
@@ -43,6 +44,6 @@ public class AddHomeworkCommandTest {
     @Test
     public void execute_studentNotFound_throwsCommandException() {
         AddHomeworkCommand command = new AddHomeworkCommand(new Nusnetid("E0000000"), 1, false);
-        assertThrows(AssertionError.class, () -> command.execute(model));
+        assertThrows(CommandException.class, () -> command.execute(model));
     }
 }

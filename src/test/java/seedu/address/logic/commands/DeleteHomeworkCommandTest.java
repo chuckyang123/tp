@@ -58,7 +58,7 @@ public class DeleteHomeworkCommandTest {
     @Test
     public void execute_studentNotFound_throwsCommandException() {
         DeleteHomeworkCommand command = new DeleteHomeworkCommand(new Nusnetid("E9999999"), 1, false);
-        assertThrows(AssertionError.class, () -> command.execute(model));
+        assertThrows(CommandException.class, () -> command.execute(model));
     }
 
     @Test
