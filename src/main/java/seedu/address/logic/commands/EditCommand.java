@@ -11,7 +11,9 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.logging.Logger;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.commons.util.ToStringBuilder;
@@ -26,6 +28,7 @@ import seedu.address.model.person.Nusnetid;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Telegram;
+import seedu.address.model.event.Consultation;
 
 /**
  * Edits the details of an existing person in the address book.
@@ -50,6 +53,8 @@ public class EditCommand extends Command {
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
+
+    private static final Logger logger = LogsCenter.getLogger(EditCommand.class);
 
     private final Index index;
     private final EditPersonDescriptor editPersonDescriptor;
@@ -85,7 +90,17 @@ public class EditCommand extends Command {
         // First remove the old person's membership from their existing group (handles nusnetid or group changes)
         model.updateGroupWhenEditPersonId(personToEdit);
 
+        // If the nusnetid changed, update any consultations that reference the old nusnetid
+        if (!personToEdit.getNusnetid().equals(editedPerson.getNusnetid())) {
+            Nusnetid oldId = personToEdit.getNusnetid();
+            Nusnetid newId = editedPerson.getNusnetid();
+            logger.info(String.format("Detected NUSNETID change: %s -> %s. Updating consultations.",
+                    oldId.value, newId.value));
+            model.updateConsultationsForEditedPerson(oldId, newId);
+        }
+
         model.setPerson(personToEdit, editedPerson);
+        logger.fine(() -> "Updated person in model: " + editedPerson.getNusnetid().value);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         model.updateGroupWhenAddPerson(editedPerson);
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson)));
@@ -108,8 +123,32 @@ public class EditCommand extends Command {
         GroupId updatedGroupId = personToEdit.getGroupId();
         AttendanceSheet attendanceSheet = personToEdit.getAttendanceSheet();
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedNusnetid, updatedTelegram, updatedGroupId,
-                personToEdit.getHomeworkTracker(), attendanceSheet);
+        // Build Optional<Phone> and Optional<Email> following existing semantics:
+        java.util.Optional<Phone> phoneOptional;
+        if (updatedPhone == null) {
+            phoneOptional = Optional.ofNullable(updatedPhone);
+        } else {
+            phoneOptional = java.util.Optional.ofNullable(updatedPhone);
+        }
+        java.util.Optional<Email> emailOptional;
+        if (updatedEmail == null) {
+            emailOptional = Optional.ofNullable(updatedEmail);
+        } else {
+            emailOptional = java.util.Optional.ofNullable(updatedEmail);
+        }
+
+        // Preserve and, if necessary, update the person's consultation to use the new nusnetid
+        java.util.Optional<Consultation> consultationOptional = personToEdit.getConsultation()
+                .map(oldConsult -> {
+                    if (oldConsult.getNusnetid().equals(updatedNusnetid)) {
+                        return oldConsult;
+                    } else {
+                        return new Consultation(updatedNusnetid, oldConsult.getFrom(), oldConsult.getTo());
+                    }
+                });
+
+        return new Person(updatedName, phoneOptional, emailOptional, updatedNusnetid, updatedTelegram, updatedGroupId,
+                personToEdit.getHomeworkTracker(), attendanceSheet, consultationOptional);
     }
 
     @Override
