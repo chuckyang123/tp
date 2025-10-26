@@ -8,6 +8,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.CliSyntax;
 import seedu.address.model.Model;
 import seedu.address.model.person.HomeworkTracker;
+import seedu.address.model.person.Nusnetid;
 import seedu.address.model.person.Person;
 
 
@@ -34,18 +35,18 @@ public class MarkHomeworkCommand extends Command {
             + "Parameters: "
             + CliSyntax.PREFIX_NUSNETID + "NUSNET_ID "
             + CliSyntax.PREFIX_ASSIGNMENT + "ASSIGNMENT_ID "
-            + CliSyntax.PREFIX_HWSTATUS + "<complete|incomplete|late>\n"
+            + CliSyntax.PREFIX_STATUS + "<complete|incomplete|late>\n"
             + "Example: " + COMMAND_WORD + " "
             + CliSyntax.PREFIX_NUSNETID + "E1234567 "
             + CliSyntax.PREFIX_ASSIGNMENT + "1 "
-            + CliSyntax.PREFIX_HWSTATUS + "complete";
+            + CliSyntax.PREFIX_STATUS + "complete";
 
     public static final String MESSAGE_SUCCESS = "Assignment %d for %s marked %s.";
     public static final String MESSAGE_STUDENT_NOT_FOUND = "Student not found.";
     public static final String MESSAGE_INVALID_ASSIGNMENT = "Assignment not found.";
     public static final String MESSAGE_INVALID_STATUS = "Please enter complete/incomplete/late only.";
 
-    private final String nusnetId;
+    private final Nusnetid nusnetId;
     private final int assignmentId;
     private final String status;
 
@@ -56,7 +57,7 @@ public class MarkHomeworkCommand extends Command {
      * @param assignmentId the assignment ID to update
      * @param status the new status ("complete", "incomplete", or "late")
      */
-    public MarkHomeworkCommand(String nusnetId, int assignmentId, String status) {
+    public MarkHomeworkCommand(Nusnetid nusnetId, int assignmentId, String status) {
         this.nusnetId = nusnetId;
         this.assignmentId = assignmentId;
         this.status = status;
@@ -79,13 +80,9 @@ public class MarkHomeworkCommand extends Command {
 
         List<Person> list = model.getFilteredPersonList();
 
-        // find by nusnetId — adapt depending on your Person fields.
+        // find by nusnetId
         Person target = list.stream()
-                .filter(p -> {
-                    // prefer using a dedicated nusnetId field if you have one:
-
-                    return p.getNusnetid().value.equalsIgnoreCase(nusnetId);
-                })
+                .filter(p -> p.getNusnetid().equals(nusnetId))
                 .findFirst()
                 .orElse(null);
 
