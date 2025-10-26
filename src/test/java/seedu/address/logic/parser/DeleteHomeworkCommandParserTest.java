@@ -26,7 +26,7 @@ public class DeleteHomeworkCommandParserTest {
     public void parse_validArgsAllStudents_success() {
         // All students
         assertParseSuccess(parser, " i/all a/2",
-                new DeleteHomeworkCommand(null, 2,true));
+                new DeleteHomeworkCommand(null, 2, true));
     }
 
     @Test
@@ -53,7 +53,7 @@ public class DeleteHomeworkCommandParserTest {
     @Test
     public void parse_boundaryAssignmentId_success() {
         assertParseSuccess(parser, "i/" + VALID_NUSNETID_AMY + " a/1",
-                new DeleteHomeworkCommand(new Nusnetid(VALID_NUSNETID_AMY), 1,false));
+                new DeleteHomeworkCommand(new Nusnetid(VALID_NUSNETID_AMY), 1, false));
         assertParseSuccess(parser, "i/all a/3",
                 new DeleteHomeworkCommand(null, 3, true));
     }
