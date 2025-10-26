@@ -184,4 +184,16 @@ public interface Model {
      * @return the group with the specified groupId
      */
     Group getGroup(GroupId groupId);
+
+    /**
+     * Updates all consultations when a person's NUSNET ID is edited.
+     * This updates both the global consultation list and the consultation stored in the person.
+     * Default implementation does nothing (for test compatibility).
+     *
+     * @param oldNusnetid the old NUSNET ID before the edit
+     * @param newNusnetid the new NUSNET ID after the edit
+     */
+    default void updateConsultationsForEditedPerson(Nusnetid oldNusnetid, Nusnetid newNusnetid) {
+        // Default no-op implementation for test compatibility
+    }
 }

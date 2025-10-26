@@ -11,7 +11,9 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.logging.Logger;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.commons.util.ToStringBuilder;
@@ -51,6 +53,8 @@ public class EditCommand extends Command {
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
 
+    private static final Logger logger = LogsCenter.getLogger(EditCommand.class);
+
     private final Index index;
     private final EditPersonDescriptor editPersonDescriptor;
 
@@ -69,9 +73,12 @@ public class EditCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
+        logger.info("Executing EditCommand for person at index: " + index.getOneBased());
+        
         List<Person> lastShownList = model.getFilteredPersonList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
+            logger.warning("Invalid person index: " + index.getOneBased());
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
@@ -79,15 +86,49 @@ public class EditCommand extends Command {
         Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
 
         if (!personToEdit.isSamePerson(editedPerson) && model.hasPerson(editedPerson)) {
+            logger.warning("Attempted to edit person to a duplicate: " + editedPerson.getNusnetid());
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        }
+
+        // Check if NUSNET ID has changed
+        Nusnetid oldNusnetid = personToEdit.getNusnetid();
+        Nusnetid newNusnetid = editedPerson.getNusnetid();
+        boolean nusnetidChanged = !oldNusnetid.equals(newNusnetid);
+        
+        if (nusnetidChanged) {
+            logger.info("NUSNET ID change detected - Old ID: " + oldNusnetid + ", New ID: " + newNusnetid);
+            
+            // Count consultations before update
+            long consultationCountBefore = model.getFilteredConsultationList().stream()
+                    .filter(c -> c.getNusnetid().equals(oldNusnetid))
+                    .count();
+            
+            logger.info("Found " + consultationCountBefore + " consultation(s) to update");
         }
 
         // First remove the old person's membership from their existing group (handles nusnetid or group changes)
         model.updateGroupWhenEditPersonId(personToEdit);
 
         model.setPerson(personToEdit, editedPerson);
+        
+        // After updating the person, update consultations if NUSNET ID changed
+        if (nusnetidChanged) {
+            // Update consultations for the edited person
+            logger.info("Invoking updateConsultationsForEditedPerson");
+            model.updateConsultationsForEditedPerson(oldNusnetid, newNusnetid);
+            
+            // Count consultations after update
+            long consultationCountAfter = model.getFilteredConsultationList().stream()
+                    .filter(c -> c.getNusnetid().equals(newNusnetid))
+                    .count();
+            
+            logger.info("Successfully updated " + consultationCountAfter + " consultation(s) to new NUSNET ID");
+        }
+        
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         model.updateGroupWhenAddPerson(editedPerson);
+        
+        logger.info("Successfully completed edit operation for person: " + editedPerson.getNusnetid());
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson)));
     }
 

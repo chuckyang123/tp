@@ -1,6 +1,7 @@
 package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Comparator;
 import java.util.List;
@@ -306,5 +307,40 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void updateGroupWhenEditPerson(Person oldPerson) {
         requireNonNull(oldPerson);
         removePersonFromExistingGroup(oldPerson);
+    }
+
+    /**
+     * Updates all consultations when a person's NUSNET ID is edited.
+     * This updates both the global consultation list and the consultation stored in the person.
+     * This method should be called AFTER the person's NUSNET ID has been updated via setPerson.
+     *
+     * @param oldNusnetid the old NUSNET ID before the edit
+     * @param newNusnetid the new NUSNET ID after the edit
+     */
+    public void updateConsultationsForEditedPerson(Nusnetid oldNusnetid, Nusnetid newNusnetid) {
+        requireAllNonNull(oldNusnetid, newNusnetid);
+        
+        // Find all consultations with the old NUSNET ID
+        List<Consultation> consultationsToUpdate = consultations.asUnmodifiableObservableList().stream()
+                .filter(c -> c.getNusnetid().equals(oldNusnetid))
+                .collect(Collectors.toList());
+        
+        // Update each consultation in the global list
+        for (Consultation oldConsultation : consultationsToUpdate) {
+            // Create a new consultation with the updated NUSNET ID
+            Consultation updatedConsultation = new Consultation(
+                newNusnetid,
+                oldConsultation.getFrom(),
+                oldConsultation.getTo()
+            );
+            consultations.setConsultation(oldConsultation, updatedConsultation);
+            
+            // Update the consultation stored in the person (person now has new ID)
+            Person person = findPerson(newNusnetid);
+            if (person != null) {
+                // Add the updated consultation to the person
+                persons.addConsultationToPerson(newNusnetid, updatedConsultation);
+            }
+        }
     }
 }
