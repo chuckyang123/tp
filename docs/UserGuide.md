@@ -82,7 +82,6 @@ Format: `add_student n/NAME i/NUSNETID t/TELEGRAM g/GROUPID  [p/PHONE_NUMBER] [e
 <box type="tip" seamless>
 
 **Tip:** Phone and email are optional. You can omit either or both when adding a person.
-A person can have any number of tags (including 0).
 </box>
 
 Examples:
@@ -100,12 +99,13 @@ Format: `list`
 
 Edits an existing person in the ADDRESS book.
 
-Format: `edit INDEX [n/NAME] [i/NUSNETID]  [t/TELEGRAM] [g/GROUPID] [p/PHONE] [e/EMAIL]`
+Format: `edit INDEX [n/NAME] [i/NUSNETID]  [t/TELEGRAM] [p/PHONE] [e/EMAIL]`
 
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * Phone and email are optional. You can remove them by omitting these fields in your edit command.
+* You can not use this command to change a person's tutorial group. Use the `add_to_group` command instead.
 
 
 Examples:
@@ -156,7 +156,7 @@ Format: `add_hw i/NUSNETID (use 'all' for all students) a/ASSIGNMENT`
 
 Examples:
 * `add_hw i/E1234567 a/1` adds assignment 1 for the student with NUSNET ID `E1234567`.
-* `add_hw i/all a/2` adds assignment 2 for all students.
+* `add_hw all a/2` adds assignment 2 for all students.
 
 ---
 
@@ -188,7 +188,7 @@ Format: `delete_hw i/NUSNETID (use 'all' for all students) a/ASSIGNMENT`
 
 Examples:
 * `delete_hw i/E1234567 a/1` deletes assignment 1 for the student with NUSNET ID `E1234567`.
-* `delete_hw i/all a/2` deletes assignment 2 for all students.
+* `delete_hw all a/2` deletes assignment 2 for all students.
 
 ---
 
