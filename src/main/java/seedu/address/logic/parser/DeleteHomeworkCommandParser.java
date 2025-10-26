@@ -29,7 +29,8 @@ public class DeleteHomeworkCommandParser implements Parser<DeleteHomeworkCommand
         try {
             argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NUSNETID, PREFIX_ASSIGNMENT);
         } catch (ParseException e) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteHomeworkCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    DeleteHomeworkCommand.MESSAGE_USAGE));
         }
 
         String assignmentRaw = argMultimap.getValue(PREFIX_ASSIGNMENT)
@@ -38,7 +39,8 @@ public class DeleteHomeworkCommandParser implements Parser<DeleteHomeworkCommand
                 .trim();
         // Reject extra tokens after a/ by requiring digits only
         if (!assignmentRaw.matches("\\d+")) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteHomeworkCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    DeleteHomeworkCommand.MESSAGE_USAGE));
         }
 
         int assignmentId;
