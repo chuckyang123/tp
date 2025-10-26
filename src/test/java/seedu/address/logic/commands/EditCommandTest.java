@@ -17,8 +17,6 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.time.LocalDateTime;
-import seedu.address.model.event.Consultation;
-import seedu.address.model.person.Nusnetid;
 
 import org.junit.jupiter.api.Test;
 
@@ -29,6 +27,8 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.event.Consultation;
+import seedu.address.model.person.Nusnetid;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
@@ -211,7 +211,8 @@ public class EditCommandTest {
         boolean hasOld = model.getAddressBook().getConsultationList().stream()
                 .anyMatch(c -> c.getNusnetid().equals(oldId) && c.getFrom().equals(from) && c.getTo().equals(to));
         boolean hasNew = model.getAddressBook().getConsultationList().stream()
-                .anyMatch(c -> c.getNusnetid().value.equals(newIdStr) && c.getFrom().equals(from) && c.getTo().equals(to));
+                .anyMatch(c -> c.getNusnetid().value.equals(newIdStr)
+                        && c.getFrom().equals(from) && c.getTo().equals(to));
         assertFalse(hasOld);
         assertTrue(hasNew);
 

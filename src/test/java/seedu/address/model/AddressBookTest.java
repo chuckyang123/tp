@@ -120,8 +120,8 @@ public class AddressBookTest {
         boolean hasNew = ab.getConsultationList().stream()
                 .anyMatch(x -> x.getNusnetid().value.equals("E2222222")
                         && x.getFrom().equals(from) && x.getTo().equals(to));
-        //Consultation newc = ab.getConsultationList().stream().filter(x -> x.getNusnetid().value.equals("E2222222")).findFirst().get();
-        System.out.println(ab.getConsultationList().stream().map(Consultation::toString).reduce("", (a, b) -> a + "\n" + b));
+        System.out.println(ab.getConsultationList().stream().map(Consultation::toString)
+                .reduce("", (a, b) -> a + "\n" + b));
         assertFalse(hasOld);
         assertTrue(hasNew);
 
