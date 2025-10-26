@@ -40,7 +40,7 @@ public class EditCommand extends Command {
             + "Parameters: INDEX (must be a positive integer) "
             + "[" + PREFIX_NAME + "NAME] "
             + "[" + PREFIX_NUSNETID + "NUSNETID] "
-            + "[" + PREFIX_TELEGRAM + "TELEGRAM]"
+            + "[" + PREFIX_TELEGRAM + "TELEGRAM] "
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] " + "\n"
             + "Example: " + COMMAND_WORD + " 1 "
@@ -165,7 +165,7 @@ public class EditCommand extends Command {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, nusnetid, telegram) || phone == null || email == null;
+            return CollectionUtil.isAnyNonNull(name, nusnetid, telegram, phone, email) || phone == null || email == null;
         }
 
         public void setName(Name name) {
