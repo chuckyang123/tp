@@ -110,6 +110,35 @@ public interface Model {
      * The person identity of {@code editedPerson} must not be the same as another existing person in the address book.
      */
     void setPerson(Person target, Person editedPerson);
+
+    /**
+     * Adds a homework assignment to a student or all students.
+     *
+     * @param nusnetId the nusnetId of the target student, or "all" to apply to all students
+     * @param assignmentId the ID of the assignment to add
+     * @throws CommandException if student not found or homework already exists
+     */
+    void addHomework(Nusnetid nusnetId, int assignmentId) throws CommandException;
+
+    /**
+     * Deletes a homework assignment for a student or all students.
+     *
+     * @param nusnetId the NUSNET ID of the target student, or "all" to apply to all students
+     * @param assignmentId the ID of the assignment to delete
+     * @throws CommandException if student not found or homework does not exist
+     */
+    void deleteHomework(Nusnetid nusnetId, int assignmentId) throws CommandException;
+
+    /**
+     * Marks a homework assignment for a student with the given status.
+     *
+     * @param nusnetId the NUSNET ID of the target student
+     * @param assignmentId the ID of the assignment to mark
+     * @param status the new status ("complete", "incomplete", or "late")
+     * @throws CommandException if student not found, assignment does not exist, or status is invalid
+     */
+    void markHomework(Nusnetid nusnetId, int assignmentId, String status) throws CommandException;
+
     /**
      * Updates the groups to include the newly added person.
      * @param person the person that was added

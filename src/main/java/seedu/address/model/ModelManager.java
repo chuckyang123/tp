@@ -14,9 +14,11 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.logic.commands.AddHomeworkCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.event.Consultation;
 import seedu.address.model.person.GroupId;
+import seedu.address.model.person.HomeworkTracker;
 import seedu.address.model.person.Nusnetid;
 import seedu.address.model.person.Person;
 
@@ -224,6 +226,88 @@ public class ModelManager implements Model {
     public void updateFilteredPersonList(Predicate<Person> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
+    }
+
+    @Override
+    public void addHomework(Nusnetid nusnetId, int assignmentId) throws CommandException {
+        if (nusnetId == null) {
+            // add homework to all students
+            for (Person p : getFilteredPersonList()) {
+                if (p.getHomeworkTracker().contains(assignmentId)) {
+                    throw new CommandException(
+                            String.format("Assignment %d already exists for %s.", assignmentId, p.getName().fullName)
+                    );
+                }
+            }
+            for (Person p : getFilteredPersonList()) {
+                setPerson(p, p.withAddedHomework(assignmentId));
+            }
+            return;
+        }
+
+        // single student logic
+        Person target = getPersonByNusnetId(nusnetId);
+        if (target == null) {
+            throw new CommandException(AddHomeworkCommand.MESSAGE_STUDENT_NOT_FOUND);
+        }
+        if (target.getHomeworkTracker().contains(assignmentId)) {
+            throw new CommandException(
+                    String.format("Assignment %d already exists for %s.", assignmentId, target.getName())
+            );
+        }
+
+        setPerson(target, target.withAddedHomework(assignmentId));
+    }
+
+    @Override
+    public void deleteHomework(Nusnetid nusnetId, int assignmentId) throws CommandException {
+        if (nusnetId == null) {
+            // delete homework for all students
+            for (Person p : getFilteredPersonList()) {
+                if (!p.getHomeworkTracker().contains(assignmentId)) {
+                    throw new CommandException(
+                            String.format("Assignment %d not found for %s.", assignmentId, p.getName())
+                    );
+                }
+            }
+            for (Person p : getFilteredPersonList()) {
+                setPerson(p, p.withDeletedHomework(assignmentId));
+            }
+            return;
+        }
+
+        // single student
+        Person target = getPersonByNusnetId(nusnetId); // will assert if student does not exist
+        if (!target.getHomeworkTracker().contains(assignmentId)) {
+            throw new CommandException(
+                    String.format("Assignment %d not found for %s.", assignmentId, target.getName())
+            );
+        }
+
+        setPerson(target, target.withDeletedHomework(assignmentId));
+    }
+
+
+    @Override
+    public void markHomework(Nusnetid nusnetId, int assignmentId, String status) throws CommandException {
+        requireNonNull(nusnetId);
+        requireNonNull(status);
+
+        Person target = getPersonByNusnetId(nusnetId);
+
+        if (!HomeworkTracker.isValidAssignmentId(assignmentId)) {
+            throw new CommandException("Invalid assignment ID.");
+        }
+        if (!HomeworkTracker.isValidStatus(status)) {
+            throw new CommandException("Invalid status: use complete/incomplete/late.");
+        }
+        if (!target.getHomeworkTracker().hasAssignment(assignmentId)) {
+            throw new CommandException(
+                    String.format("Assignment %d not found for %s. Add it first using 'add_hw'.",
+                            assignmentId, target.getName().fullName));
+        }
+
+        setPerson(target, target.withUpdatedHomework(assignmentId, status));
     }
 
     /**

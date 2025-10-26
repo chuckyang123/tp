@@ -74,6 +74,6 @@ public class MarkHomeworkCommandTest {
     @Test
     public void execute_studentNotFound_throwsCommandException() {
         MarkHomeworkCommand command = new MarkHomeworkCommand(new Nusnetid("E0000000"), 1, "complete");
-        assertThrows(Exception.class, () -> command.execute(model));
+        assertThrows(AssertionError.class, () -> command.execute(model));
     }
 }

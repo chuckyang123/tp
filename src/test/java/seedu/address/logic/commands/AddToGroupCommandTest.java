@@ -108,6 +108,21 @@ public class AddToGroupCommandTest {
         public void setPerson(Person target, Person editedPerson) {
             throw new AssertionError("This method should not be called.");
         }
+
+        @Override
+        public void addHomework(Nusnetid nusnetId, int assignmentId) throws CommandException {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void deleteHomework(Nusnetid nusnetId, int assignmentId) throws CommandException {
+            throw new AssertionError("This method should not be called.");
+        }
+        @Override
+        public void markHomework(Nusnetid nusnetId, int assignmentId, String status) throws CommandException {
+            throw new AssertionError("This method should not be called.");
+        }
+
         @Override
         public void updateGroupWhenEditPersonId(Person oldPerson) {
             throw new AssertionError("This method should not be called.");
