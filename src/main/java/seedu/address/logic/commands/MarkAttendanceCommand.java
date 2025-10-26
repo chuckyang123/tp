@@ -2,10 +2,15 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NUSNETID;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_WEEK;
+
 import java.util.List;
 import java.util.function.Predicate;
 
 import seedu.address.logic.commands.exceptions.CommandException;
+
 import seedu.address.model.Model;
 import seedu.address.model.person.Attendance;
 import seedu.address.model.person.AttendanceSheet;
@@ -29,8 +34,9 @@ public class MarkAttendanceCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Marks the attendance of a person identified "
             + "by their index number in the displayed person list. "
-            + "Parameters: i/<NET id> w/<week> <present|absent|excused> \n"
-            + "Example: " + COMMAND_WORD + " i/E1234567 w/3" + " present";
+            + "Parameters: i/<NET id> w/<week> status/<present|absent|excused> \n"
+            + "Example: " + COMMAND_WORD + " " + PREFIX_NUSNETID + "E1234567" + PREFIX_WEEK + "3"
+            + PREFIX_STATUS + "present";
 
     public static final String MESSAGE_MARK_ATTENDANCE_SUCCESS = "Marked attendance for %1$s: %2$s in week %3$d.";
     public static final String MESSAGE_STUDENT_NOT_FOUND = "Student not found.";

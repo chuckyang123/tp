@@ -34,11 +34,11 @@ public class MarkHomeworkCommand extends Command {
             + "Parameters: "
             + CliSyntax.PREFIX_NUSNETID + "NUSNET_ID "
             + CliSyntax.PREFIX_ASSIGNMENT + "ASSIGNMENT_ID "
-            + CliSyntax.PREFIX_HWSTATUS + "<complete|incomplete|late>\n"
+            + CliSyntax.PREFIX_STATUS + "<complete|incomplete|late>\n"
             + "Example: " + COMMAND_WORD + " "
             + CliSyntax.PREFIX_NUSNETID + "E1234567 "
             + CliSyntax.PREFIX_ASSIGNMENT + "1 "
-            + CliSyntax.PREFIX_HWSTATUS + "complete";
+            + CliSyntax.PREFIX_STATUS + "complete";
 
     public static final String MESSAGE_SUCCESS = "Assignment %d for %s marked %s.";
     public static final String MESSAGE_STUDENT_NOT_FOUND = "Student not found.";

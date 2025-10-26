@@ -196,15 +196,15 @@ Examples:
 
 Marks the attendance status for the specified student and week.
 
-Format: `mark_attendance i/NUSNETID w/WEEK STATUS`
+Format: `mark_attendance i/NUSNETID w/WEEK status/STATUS`
 
 * Marks attendance for the given student and week.
 * The `STATUS` can be one of the following: `present`, `absent`, or `excused`.
 * The NUSNET ID and week number **must be valid**.
 
 Examples:
-* `mark_attendance i/E1234567 w/3 present` marks student `E1234567` as present for week 3.
-* `mark_attendance i/E2345678 w/5 absent` marks student `E2345678` as absent for week 5.
+* `mark_attendance i/E1234567 w/3 status/present` marks student `E1234567` as present for week 3.
+* `mark_attendance i/E2345678 w/5 status/absent` marks student `E2345678` as absent for week 5.
 
 ---
 
@@ -212,15 +212,15 @@ Examples:
 
 Marks the attendance status for all the students in one tutorial group in a specified week.
 
-Format: `mark_all_attendance g/GROUP w/WEEK STATUS`
+Format: `mark_all_attendance g/GROUP w/WEEK status/STATUS`
 
 * Marks attendance for the given tutorial group of student and week.
 * The `STATUS` can be one of the following: `present`, `absent`, or `excused`.
 * The groupId and week number **must be valid**.
 
 Examples:
-* `mark_attendance g/T01 w/3 present` marks student `E1234567` as present for week 3.
-* `mark_attendance g/BO4 w/5 absent` marks student `E2345678` as absent for week 5.
+* `mark_attendance g/T01 w/3 status/present` marks student `E1234567` as present for week 3.
+* `mark_attendance g/BO4 w/5 status/absent` marks student `E2345678` as absent for week 5.
 
 
 ### Adding a consultation : `add_consult`
@@ -346,8 +346,8 @@ Action     | Format, Examples
 **AddHomework**  | `add_hw i/NUSNETID (all for all students) a/ASSIGNMENT` <br> e.g., `add_hw i/E1234567 a/1`
 **MarkHomework**  | `mark_hw i/NUSNETID  a/ASSIGNMENT status/STATUS(complete incomplete late)` <br> e.g., `mark_hw i/E1234567 a/1 complete`
 **DeleteHomework**  | `delete_hw i/NUSNETID (all for all students) a/ASSIGNMENT` <br> e.g., `delete_hw i/E1234567 a/1`
-**MarkAttendance**  | `mark_attendance i/NUSNETID w/WEEK STATUS(present absent excused)` <br> e.g., `mark_attendance i/E1234567 w/3 present`
-**MarkAllAttendance**  | `mark_all_attendance g/GROUPID w/WEEK STATUS(present absent excused)` <br> e.g., `mark_all_attendance g/T01 w/3 present`
+**MarkAttendance**  | `mark_attendance i/NUSNETID w/WEEK status/STATUS(present absent excused)` <br> e.g., `mark_attendance i/E1234567 w/3 status/present`
+**MarkAllAttendance**  | `mark_all_attendance g/GROUPID w/WEEK status/STATUS(present absent excused)` <br> e.g., `mark_all_attendance g/T01 w/3 satus/present`
 **AddConsultation**  | `add_consult i/NUSNETID from/DATE_TIME to/DATE_TIME` <br> e.g., `add_consult i/E1234567 from/20240915 1400 to/20240915 1500`
 **DeleteConsultation**  | `delete_consult i/NUSNETID` <br> e.g., `delete_consult i/E1234567`
 **CreateGroup**  | `create_group g/GROUPID` <br> e.g., `create_group g/T03`
