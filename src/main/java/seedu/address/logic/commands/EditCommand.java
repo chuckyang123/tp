@@ -120,22 +120,15 @@ public class EditCommand extends Command {
                 ? null : editPersonDescriptor.getEmail().orElse(personToEdit.getEmail().orElse(null));
         Nusnetid updatedNusnetid = editPersonDescriptor.getNusnetid().orElse(personToEdit.getNusnetid());
         Telegram updatedTelegram = editPersonDescriptor.getTelegram().orElse(personToEdit.getTelegram());
-        GroupId updatedGroupId = personToEdit.getGroupId();
+        GroupId groupId = personToEdit.getGroupId();
         AttendanceSheet attendanceSheet = personToEdit.getAttendanceSheet();
 
         // Build Optional<Phone> and Optional<Email> following existing semantics:
         java.util.Optional<Phone> phoneOptional;
-        if (updatedPhone == null) {
-            phoneOptional = Optional.ofNullable(updatedPhone);
-        } else {
-            phoneOptional = java.util.Optional.ofNullable(updatedPhone);
-        }
+        phoneOptional = java.util.Optional.ofNullable(updatedPhone);
+
         java.util.Optional<Email> emailOptional;
-        if (updatedEmail == null) {
-            emailOptional = Optional.ofNullable(updatedEmail);
-        } else {
-            emailOptional = java.util.Optional.ofNullable(updatedEmail);
-        }
+        emailOptional = Optional.ofNullable(updatedEmail);
 
         // Preserve and, if necessary, update the person's consultation to use the new nusnetid
         java.util.Optional<Consultation> consultationOptional = personToEdit.getConsultation()
@@ -147,7 +140,7 @@ public class EditCommand extends Command {
                     }
                 });
 
-        return new Person(updatedName, phoneOptional, emailOptional, updatedNusnetid, updatedTelegram, updatedGroupId,
+        return new Person(updatedName, phoneOptional, emailOptional, updatedNusnetid, updatedTelegram, groupId,
                 personToEdit.getHomeworkTracker(), attendanceSheet, consultationOptional);
     }
 
