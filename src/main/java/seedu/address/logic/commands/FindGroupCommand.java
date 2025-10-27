@@ -19,6 +19,7 @@ public class FindGroupCommand extends Command {
             + ": Finds all students whose group IDs match the input group id \n"
             + "Parameters: GROUP ID\n"
             + "Example: " + COMMAND_WORD + " " + PREFIX_GROUP + " T01";
+    private static final String MESSAGE_GROUP_NOT_FOUND = "No student with this group ID found";
     private final GroupId groupId;
     private final Predicate<Person> predicate;
     /**
@@ -36,10 +37,14 @@ public class FindGroupCommand extends Command {
      */
     @Override
     public CommandResult execute(Model model) {
-        model.updateFilteredPersonList(predicate);
-        return new CommandResult(String.format(
-                Messages.MESSAGE_PERSONS_LISTED_OVERVIEW,
-                model.getFilteredPersonList().size()));
+        if (model.hasGroup(groupId)) {
+            model.updateFilteredPersonList(predicate);
+            return new CommandResult(String.format(
+                    Messages.MESSAGE_PERSONS_LISTED_OVERVIEW,
+                    model.getFilteredPersonList().size()));
+        } else {
+            return new CommandResult(MESSAGE_GROUP_NOT_FOUND);
+        }
     }
     /**
      * Checks equality between this FindGroupCommand and another object.
