@@ -37,8 +37,8 @@ public class CommandTestUtil {
     public static final String VALID_NUSNETID_BOB = "E2222222";
     public static final String VALID_TELEGRAM_AMY = "@Alicccc";
     public static final String VALID_TELEGRAM_BOB = "@Bobbbb";
-    public static final String VALID_SLOT_AMY = "T01";
-    public static final String VALID_SLOT_BOB = "T02";
+    public static final String VALID_GROUPID_AMY = "T01";
+    public static final String VALID_GROUPID_BOB = "T02";
 
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;
@@ -50,8 +50,8 @@ public class CommandTestUtil {
     public static final String NUSNETID_DESC_BOB = " " + PREFIX_NUSNETID + VALID_NUSNETID_BOB;
     public static final String TELEGRAM_DESC_AMY = " " + PREFIX_TELEGRAM + VALID_TELEGRAM_AMY;
     public static final String TELEGRAM_DESC_BOB = " " + PREFIX_TELEGRAM + VALID_TELEGRAM_BOB;
-    public static final String SLOT_DESC_AMY = " " + PREFIX_GROUP + VALID_SLOT_AMY;
-    public static final String SLOT_DESC_BOB = " " + PREFIX_GROUP + VALID_SLOT_BOB;
+    public static final String GROUPID_DESC_AMY = " " + PREFIX_GROUP + VALID_GROUPID_AMY;
+    public static final String GROUPID_DESC_BOB = " " + PREFIX_GROUP + VALID_GROUPID_BOB;
 
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones
@@ -71,10 +71,10 @@ public class CommandTestUtil {
     static {
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
                 .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withNusnetid(VALID_NUSNETID_AMY)
-                .withTelegram(VALID_TELEGRAM_AMY).withSlot(VALID_SLOT_AMY).build();
+                .withTelegram(VALID_TELEGRAM_AMY).withSlot(VALID_GROUPID_AMY).build();
         DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withNusnetid(VALID_NUSNETID_BOB)
-                .withTelegram(VALID_TELEGRAM_BOB).withSlot(VALID_SLOT_BOB).build();
+                .withTelegram(VALID_TELEGRAM_BOB).withSlot(VALID_GROUPID_BOB).build();
     }
 
     //for homework testing:

@@ -25,6 +25,7 @@ public class CreateGroupCommand extends Command {
      */
     public CreateGroupCommand(GroupId groupId) {
         requireNonNull(groupId);
+        assert GroupId.isValidGroupId(groupId);
         this.groupId = groupId;
     }
 

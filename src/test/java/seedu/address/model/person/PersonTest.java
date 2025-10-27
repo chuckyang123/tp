@@ -4,10 +4,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_GROUPID_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NUSNETID_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_SLOT_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TELEGRAM_BOB;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BOB;
@@ -29,13 +29,13 @@ public class PersonTest {
 
         // same name, all other attributes different -> returns false
         Person editedAlice = new PersonBuilder(ALICE).withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB)
-                .withNusnetid(VALID_NUSNETID_BOB).withGroup(VALID_SLOT_BOB).withTelegram(VALID_TELEGRAM_BOB).build();
+                .withNusnetid(VALID_NUSNETID_BOB).withGroup(VALID_GROUPID_BOB).withTelegram(VALID_TELEGRAM_BOB).build();
         assertFalse(ALICE.isSamePerson(editedAlice));
 
         // same nusnetid, all other attributes different -> returns true
         editedAlice = new PersonBuilder(ALICE).withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB)
-                .withGroup(VALID_SLOT_BOB).withTelegram(VALID_TELEGRAM_BOB).build();
+                .withGroup(VALID_GROUPID_BOB).withTelegram(VALID_TELEGRAM_BOB).build();
         assertTrue(ALICE.isSamePerson(editedAlice));
 
         // different nusnetid, all other attributes same -> returns false
@@ -79,7 +79,7 @@ public class PersonTest {
         assertFalse(ALICE.equals(editedAlice));
 
         // different slot -> returns false
-        editedAlice = new PersonBuilder(ALICE).withGroup(VALID_SLOT_BOB).build();
+        editedAlice = new PersonBuilder(ALICE).withGroup(VALID_GROUPID_BOB).build();
         assertFalse(ALICE.equals(editedAlice));
 
         // different telegram -> returns false

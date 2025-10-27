@@ -25,7 +25,7 @@ public class FindGroupCommandTest {
         assertEquals(findFirstCommand, findSecondCommand);
 
         // same values -> returns true
-        FindGroupCommand findFirstCommandCopy = new FindGroupCommand(new GroupId("B010"));
+        FindGroupCommand findFirstCommandCopy = new FindGroupCommand(new GroupId("B10"));
         assertNotEquals(findFirstCommand, findFirstCommandCopy);
 
         // different types -> returns false

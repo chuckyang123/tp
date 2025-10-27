@@ -2,14 +2,14 @@ package seedu.address.testutil;
 
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_GROUPID_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_GROUPID_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NUSNETID_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NUSNETID_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_SLOT_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_SLOT_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TELEGRAM_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TELEGRAM_BOB;
 
@@ -43,22 +43,22 @@ public class TypicalPersons {
     public static final Person FIONA = new PersonBuilder().withName("Fiona Kunz").withPhone("9482427")
             .withEmail("lydia@u.nus.edu").withNusnetid("E1234561").withTelegram("@KKK0").withGroup("T12").build();
     public static final Person GEORGE = new PersonBuilder().withName("George Best").withPhone("9482442")
-            .withEmail("anna@u.nus.edu").withNusnetid("E1234560").withTelegram("@besttttttt").withGroup("T048").build();
+            .withEmail("anna@u.nus.edu").withNusnetid("E1234560").withTelegram("@besttttttt").withGroup("T48").build();
 
     // Manually added
     public static final Person HOON = new PersonBuilder().withName("Hoon Meier").withPhone("8482424")
             .withEmail("stefan@u.nus.edu").withNusnetid("E1234565").withTelegram("@Meierddd").withGroup("T48").build();
     public static final Person IDA = new PersonBuilder().withName("Ida Mueller").withPhone("8482131")
-            .withEmail("hans@u.nus.edu").withNusnetid("E1234564").withTelegram("@Mueller").withGroup("T100").build();
+            .withEmail("hans@u.nus.edu").withNusnetid("E1234564").withTelegram("@Mueller").withGroup("T10").build();
 
     // Manually added - Person's details found in {@code CommandTestUtil}
     public static final Person AMY = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
             .withEmail(VALID_EMAIL_AMY).withNusnetid(VALID_NUSNETID_AMY)
-            .withTelegram(VALID_TELEGRAM_AMY).withGroup(VALID_SLOT_AMY).build();
+            .withTelegram(VALID_TELEGRAM_AMY).withGroup(VALID_GROUPID_AMY).build();
     public static final Person BOB = new PersonBuilder().withName(VALID_NAME_BOB)
             .withPhone(VALID_PHONE_BOB)
             .withEmail(VALID_EMAIL_BOB).withNusnetid(VALID_NUSNETID_BOB)
-            .withTelegram(VALID_TELEGRAM_BOB).withGroup(VALID_SLOT_BOB).build();
+            .withTelegram(VALID_TELEGRAM_BOB).withGroup(VALID_GROUPID_BOB).build();
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
 
