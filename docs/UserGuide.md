@@ -4,9 +4,9 @@
   pageNav: 3
 ---
 
-# SoCAssist User Guide
+# SoCTAssist User Guide
 
-SoCAssist is a **desktop app for managing contacts, optimized for use via a  Line Interface** (CLI) while still having
+SoCTAssist is a **desktop app for managing contacts, optimized for use via a  Line Interface** (CLI) while still having
 the benefits of a Graphical User Interface (GUI). If you can type fast, SoCAssist can get your contact management tasks
 done faster than traditional GUI apps.
 
@@ -22,7 +22,7 @@ done faster than traditional GUI apps.
 
 1. Download the latest `.jar` file from [here](https://github.com/AY2526S1-CS2103T-W11-1/tp/releases/tag/v1.3).
 
-1. Copy the file to the folder you want to use as the _home folder_ for your SoCAssist.
+1. Copy the file to the folder you want to use as the _home folder_ for your SoCTAssist.
 
 1. Open a command terminal, using command `cd` + the path to get into the folder you put the jar file in, and use the `java -jar SoCTAssist.jar` command to run the application.<br>
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
@@ -69,10 +69,10 @@ done faster than traditional GUI apps.
 ### Viewing help : `help`
 
 Shows a message explaining how to access the help page.
+Format: `help`
 
 ![help message](images/helpMessage.png)
 
-Format: `help`
 ### Adding a person: `add_student`
 
 Adds a person to the address book.
