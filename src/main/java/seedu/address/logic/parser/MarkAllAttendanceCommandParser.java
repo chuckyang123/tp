@@ -53,10 +53,6 @@ public class MarkAllAttendanceCommandParser implements Parser<MarkAllAttendanceC
         } catch (NumberFormatException e) {
             throw new ParseException(MarkAllAttendanceCommand.MESSAGE_INVALID_WEEK);
         }
-        if (week < 2 || week > 13) {
-            throw new ParseException(MarkAllAttendanceCommand.MESSAGE_INVALID_WEEK);
-        }
-
         String statusRaw = argMultimap.getValue(CliSyntax.PREFIX_STATUS)
                 .orElseThrow(() -> new ParseException(
                         String.format(MESSAGE_INVALID_COMMAND_FORMAT, MarkAllAttendanceCommand.MESSAGE_USAGE)))

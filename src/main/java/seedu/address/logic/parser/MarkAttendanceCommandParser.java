@@ -54,10 +54,6 @@ public class MarkAttendanceCommandParser implements Parser<MarkAttendanceCommand
         } catch (NumberFormatException e) {
             throw new ParseException(MarkAttendanceCommand.MESSAGE_INVALID_WEEK);
         }
-        if (week < 2 || week > 13) {
-            throw new ParseException(MarkAttendanceCommand.MESSAGE_INVALID_WEEK);
-        }
-
         String statusRaw = argMultimap.getValue(CliSyntax.PREFIX_STATUS)
                 .orElseThrow(() -> new ParseException(
                         String.format(MESSAGE_INVALID_COMMAND_FORMAT, MarkAttendanceCommand.MESSAGE_USAGE)))
@@ -68,7 +64,7 @@ public class MarkAttendanceCommandParser implements Parser<MarkAttendanceCommand
             throw new ParseException(MarkAttendanceCommand.MESSAGE_INVALID_STATUS);
         }
 
-        return new MarkAttendanceCommand(nusnetId, week, normalizedStatus);
+        return new MarkAttendanceCommand(new Nusnetid(nusnetId), week, normalizedStatus);
     }
 
     private String normalizeStatus(String statusRaw) {

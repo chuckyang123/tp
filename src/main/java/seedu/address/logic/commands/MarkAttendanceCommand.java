@@ -29,7 +29,7 @@ public class MarkAttendanceCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Marks the attendance of a person identified "
             + "by their index number in the displayed person list. "
             + "Parameters: i/<NET id> w/<week> status/<present|absent|excused> \n"
-            + "Example: " + COMMAND_WORD + " " + PREFIX_NUSNETID + "E1234567" + PREFIX_WEEK + "3"
+            + "Example: " + COMMAND_WORD + " " + PREFIX_NUSNETID + "E1234567 " + PREFIX_WEEK + "3 "
             + PREFIX_STATUS + "present";
 
     public static final String MESSAGE_MARK_ATTENDANCE_SUCCESS = "Marked attendance for %1$s: %2$s in week %3$d.";
