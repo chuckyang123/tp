@@ -1,10 +1,12 @@
 package seedu.address.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -17,15 +19,22 @@ public class CreateGroupCommandTest {
     public void execute_validGroupId_groupCreated() {
         GroupId groupId = new GroupId("T99");
         CreateGroupCommand command = new CreateGroupCommand(groupId);
-        command.execute(model);
+        try {
+            command.execute(model);
+        } catch (CommandException e) {
+            throw new AssertionError("CommandException not expected");
+        }
         assert(model.hasGroup(groupId));
     }
     @Test
     public void execute_duplicateGroupId_throwsException() {
         GroupId groupId = new GroupId("T01"); // Assuming T01 already exists
         CreateGroupCommand command = new CreateGroupCommand(groupId);
-        CommandResult expectedCommandResult = new CommandResult(
-                String.format(CreateGroupCommand.MESSAGE_DUPLICATE_GROUP, groupId));
-        assertEquals(command.execute(model), expectedCommandResult);
+        try {
+            command.execute(model);
+            throw new AssertionError("Expected CommandException not thrown");
+        } catch (CommandException e) {
+            assertEquals(String.format(CreateGroupCommand.MESSAGE_DUPLICATE_GROUP, groupId), e.getMessage());
+        }
     }
 }

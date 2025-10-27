@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_GROUP;
 
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Group;
 import seedu.address.model.Model;
 import seedu.address.model.person.GroupId;
@@ -30,17 +31,14 @@ public class CreateGroupCommand extends Command {
     }
 
     @Override
-    public CommandResult execute(Model model) {
+    public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        // Check for duplicate group id
-        boolean duplicate = model.getGroupList().stream()
-            .anyMatch(g -> g.getGroupId().equals(groupId));
-        if (duplicate) {
-            return new CommandResult(String.format(MESSAGE_DUPLICATE_GROUP, groupId));
+        if (!model.hasGroup(groupId)) {
+            throw new CommandException(MESSAGE_DUPLICATE_GROUP);
+        } else {
+            Group newGroup = new Group(groupId);
+            model.addGroup(newGroup);
+            return new CommandResult(String.format(MESSAGE_SUCCESS, groupId));
         }
-        // Create a new group with the given id
-        Group newGroup = new Group(groupId);
-        model.addGroup(newGroup);
-        return new CommandResult(String.format(MESSAGE_SUCCESS, groupId));
     }
 }
