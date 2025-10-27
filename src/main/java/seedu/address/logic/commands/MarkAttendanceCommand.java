@@ -13,7 +13,7 @@ import seedu.address.model.person.Person;
 
 /**
  * Marks a student's attendance status.
- * This command updates the attendance status for a specific week for a student identified by their NUSNET ID.
+ * This command updates the attendance status for a specific week for a student identified by their NUSNETID.
  * Valid statuses are "present", "absent", or "excused".
  * </p>
  *
@@ -27,7 +27,7 @@ public class MarkAttendanceCommand extends Command {
     public static final String COMMAND_WORD = "mark_attendance";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Marks the attendance of a person identified "
-            + "by their index number in the displayed person list. "
+            + "by their their NUSNETID. "
             + "Parameters: i/<NET id> w/<week> status/<present|absent|excused> \n"
             + "Example: " + COMMAND_WORD + " " + PREFIX_NUSNETID + "E1234567 " + PREFIX_WEEK + "3 "
             + PREFIX_STATUS + "present";
@@ -40,7 +40,7 @@ public class MarkAttendanceCommand extends Command {
 
     private final Nusnetid nusnetId;
     private final int week;
-    private final String attendanceStatus;
+    private final AttendanceStatus attendanceStatus;
 
 
     /**
@@ -50,7 +50,7 @@ public class MarkAttendanceCommand extends Command {
      * @param week the week number to update
      * @param attendanceStatus the new attendance status ("present", "absent", or "excused")
      */
-    public MarkAttendanceCommand(Nusnetid nusnetId, int week, String attendanceStatus) {
+    public MarkAttendanceCommand(Nusnetid nusnetId, int week, AttendanceStatus attendanceStatus) {
         this.week = week;
         this.nusnetId = nusnetId;
         this.attendanceStatus = attendanceStatus;
@@ -59,20 +59,12 @@ public class MarkAttendanceCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        if (week < 2 || week > 13) {
-            throw new CommandException(MESSAGE_INVALID_WEEK);
-        }
-        AttendanceStatus status = AttendanceStatus.fromString(attendanceStatus);
-        if (status == null) {
-            throw new CommandException(MESSAGE_INVALID_STATUS);
-        }
-        if (!model.hasPerson(this.nusnetId)) {
+        if (!model.hasPerson(nusnetId)) {
             throw new CommandException(MESSAGE_STUDENT_NOT_FOUND);
         }
-
-        Person updatedStudent = model.markAttendance(this.nusnetId, this.week, status);
+        Person updatedStudent = model.markAttendance(this.nusnetId, this.week, attendanceStatus);
         return new CommandResult(String.format(MESSAGE_MARK_ATTENDANCE_SUCCESS,
-                updatedStudent.getName(), status.getStatus(), week));
+                updatedStudent.getName(), attendanceStatus.getStatus(), week));
     }
     @Override
     public boolean equals(Object other) {

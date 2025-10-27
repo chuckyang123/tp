@@ -10,6 +10,7 @@ import seedu.address.model.Model;
 import seedu.address.model.person.AttendanceStatus;
 import seedu.address.model.person.GroupId;
 
+
 /**
  * Marks the attendance of all students in a specified group for a given week.
  * This command allows batch updating of attendance status (present, absent, or excused)
@@ -36,14 +37,15 @@ public class MarkAllAttendanceCommand extends Command {
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_GROUP + "T02 " + PREFIX_WEEK + "3 " + PREFIX_STATUS + "present";
 
-    public static final String MESSAGE_MARK_ATTENDANCE_SUCCESS = "Marked attendance for Group %1$s: %2$s in week %3$d.";
+    public static final String MESSAGE_MARK_ATTENDANCE_SUCCESS = "Marked attendance for Group %1$s: "
+            + "%2$s in week %3$d.\n";
     public static final String MESSAGE_GROUP_NOT_FOUND = "Group not found.";
     public static final String MESSAGE_INVALID_WEEK = "Invalid Week.";
     public static final String MESSAGE_INVALID_STATUS = "Please enter present/absent/excused only.";
 
-    private final String groupId;
+    private final GroupId groupId;
     private final int week;
-    private final String attendanceStatus;
+    private final AttendanceStatus attendanceStatus;
 
 
     /**
@@ -53,7 +55,7 @@ public class MarkAllAttendanceCommand extends Command {
      * @param week the week number to update
      * @param attendanceStatus the new attendance status ("present", "absent", or "excused")
      */
-    public MarkAllAttendanceCommand(String groupId, int week, String attendanceStatus) {
+    public MarkAllAttendanceCommand(GroupId groupId, int week, AttendanceStatus attendanceStatus) {
         this.week = week;
         this.groupId = groupId;
         this.attendanceStatus = attendanceStatus;
@@ -68,27 +70,12 @@ public class MarkAllAttendanceCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-
-        if (week < 2 || week > 13) {
-            throw new CommandException(MESSAGE_INVALID_WEEK);
-        }
-
-        AttendanceStatus status = AttendanceStatus.fromString(attendanceStatus);
-        if (status == null) {
-            throw new CommandException(MESSAGE_INVALID_STATUS);
-        }
-        GroupId targetGroupId;
-        if (GroupId.isValidGroupId(groupId)) {
-            targetGroupId = new GroupId(groupId);
-        } else {
-            throw new CommandException(GroupId.MESSAGE_CONSTRAINTS);
-        }
-        if (!model.hasGroup(targetGroupId)) {
+        if (!model.hasGroup(groupId)) {
             throw new CommandException(MESSAGE_GROUP_NOT_FOUND);
         }
-        model.markAllAttendance(targetGroupId, week, status);
+        model.markAllAttendance(groupId, week, attendanceStatus);
         return new CommandResult(String.format(MESSAGE_MARK_ATTENDANCE_SUCCESS,
-                    groupId, status.getStatus(), week));
+                    groupId, attendanceStatus.getStatus(), week));
     }
 
     @Override

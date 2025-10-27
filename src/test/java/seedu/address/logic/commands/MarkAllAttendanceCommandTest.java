@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import seedu.address.model.Group;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
+import seedu.address.model.person.AttendanceStatus;
 import seedu.address.model.person.GroupId;
 import seedu.address.model.person.Nusnetid;
 import seedu.address.model.person.Person;
@@ -36,7 +37,8 @@ public class MarkAllAttendanceCommandTest {
 
     @Test
     public void execute_markAllAttendance_success() throws Exception {
-        MarkAllAttendanceCommand command = new MarkAllAttendanceCommand("T01", 2, "present");
+        MarkAllAttendanceCommand command = new MarkAllAttendanceCommand(new GroupId("T01"), 2,
+                AttendanceStatus.fromString("present"));
         String expectedMessage = String.format(MarkAllAttendanceCommand.MESSAGE_MARK_ATTENDANCE_SUCCESS,
                 "T01", "present", 2);
         assertEquals(expectedMessage, command.execute(model).getFeedbackToUser());
@@ -60,7 +62,8 @@ public class MarkAllAttendanceCommandTest {
 
     @Test
     public void execute_groupNotFound_throwsCommandException() {
-        MarkAllAttendanceCommand command = new MarkAllAttendanceCommand("T02", 1, "present");
+        MarkAllAttendanceCommand command = new MarkAllAttendanceCommand(new GroupId("T02"), 1,
+                AttendanceStatus.fromString("present"));
         assertThrows(Exception.class, () -> command.execute(model));
     }
 }
