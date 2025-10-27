@@ -37,8 +37,8 @@ public class MarkAllAttendanceCommandTest {
 
     @Test
     public void execute_markAllAttendance_success() throws Exception {
-        MarkAllAttendanceCommand command = new MarkAllAttendanceCommand(new GroupId("T01"), 2,
-                AttendanceStatus.fromString("present"));
+        MarkAllAttendanceCommand command = new MarkAllAttendanceCommand(new GroupId("T01"),
+                2, AttendanceStatus.fromString("present"));
         String expectedMessage = String.format(MarkAllAttendanceCommand.MESSAGE_MARK_ATTENDANCE_SUCCESS,
                 "T01", "present", 2);
         assertEquals(expectedMessage, command.execute(model).getFeedbackToUser());

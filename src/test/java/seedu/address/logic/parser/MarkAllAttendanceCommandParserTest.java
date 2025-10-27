@@ -8,7 +8,6 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_WEEK_1;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
-
 import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.commands.MarkAllAttendanceCommand;
@@ -23,7 +22,8 @@ public class MarkAllAttendanceCommandParserTest {
     public void parse_validArgs_success() {
         // Single student
         assertParseSuccess(parser, " g/" + VALID_GROUP_1 + " w/" + VALID_WEEK_1 + " status/" + VALID_STATUS_PRESENT ,
-                new MarkAllAttendanceCommand(new GroupId(VALID_GROUP_1), 2, AttendanceStatus.fromString(VALID_STATUS_PRESENT)));
+                new MarkAllAttendanceCommand(new GroupId(VALID_GROUP_1),
+                        2, AttendanceStatus.fromString(VALID_STATUS_PRESENT)));
     }
 
 
