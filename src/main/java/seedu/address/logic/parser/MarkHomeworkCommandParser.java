@@ -1,12 +1,14 @@
 package seedu.address.logic.parser;
 
+import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ASSIGNMENT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NUSNETID;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 
 import seedu.address.logic.commands.MarkHomeworkCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.Nusnetid;
 
 /**
  * Parses input arguments and creates a new {@link MarkHomeworkCommand} object.
@@ -25,39 +27,49 @@ import seedu.address.logic.parser.exceptions.ParseException;
  * }</pre>
  */
 public class MarkHomeworkCommandParser implements Parser<MarkHomeworkCommand> {
-    private static final Pattern MARK_COMMAND_FORMAT = Pattern.compile(
-            "i/(?<nusnetId>\\S+)\\s+a/(?<assignmentId>\\d+)\\s+status/(?<status>\\S+)", Pattern.CASE_INSENSITIVE);
 
-    /**
-     * Parses the given {@code String} of arguments in the context of the MarkHomeworkCommand
-     * and returns a {@link MarkHomeworkCommand} object for execution.
-     *
-     * @param args the input arguments string
-     * @return a {@link MarkHomeworkCommand} representing the parsed input
-     * @throws ParseException if the input does not conform to the expected format,
-     *                        or if the assignment ID is not a valid integer
-     */
     @Override
     public MarkHomeworkCommand parse(String args) throws ParseException {
-        final Matcher matcher = MARK_COMMAND_FORMAT.matcher(args.trim());
-        if (!matcher.matches()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MarkHomeworkCommand.MESSAGE_USAGE));
+        requireNonNull(args);
+
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args,
+                PREFIX_NUSNETID, PREFIX_ASSIGNMENT, PREFIX_STATUS);
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NUSNETID, PREFIX_ASSIGNMENT, PREFIX_STATUS);
+
+        String nusnetIdRaw = argMultimap.getValue(PREFIX_NUSNETID)
+                .orElseThrow(() -> new ParseException(
+                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, MarkHomeworkCommand.MESSAGE_USAGE)))
+                .trim();
+        Nusnetid nusnetId;
+        try {
+            nusnetId = new Nusnetid(nusnetIdRaw);
+        } catch (IllegalArgumentException e) {
+            throw new ParseException(Nusnetid.MESSAGE_CONSTRAINTS);
         }
 
-        String nusnetId = matcher.group("nusnetId");
+        String assignmentRaw = argMultimap.getValue(PREFIX_ASSIGNMENT)
+                .orElseThrow(() -> new ParseException(
+                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, MarkHomeworkCommand.MESSAGE_USAGE)))
+                .trim();
         int assignmentId;
         try {
-            assignmentId = Integer.parseInt(matcher.group("assignmentId"));
-            if (assignmentId < 1 || assignmentId > 3) {
-                throw new ParseException("Assignment id must be between 1 and 3.");
-            }
+            assignmentId = Integer.parseInt(assignmentRaw);
         } catch (NumberFormatException e) {
             throw new ParseException("Assignment id must be an integer between 1 and 3.");
         }
-        String status = matcher.group("status").toLowerCase();
+        if (assignmentId < 1 || assignmentId > 3) {
+            throw new ParseException("Assignment id must be between 1 and 3.");
+        }
+
+        String status = argMultimap.getValue(PREFIX_STATUS)
+                .orElseThrow(() -> new ParseException(
+                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, MarkHomeworkCommand.MESSAGE_USAGE)))
+                .trim().toLowerCase();
+
         if (!status.equals("complete") && !status.equals("incomplete") && !status.equals("late")) {
             throw new ParseException("Status must be one of: complete, incomplete, late.");
         }
+
         return new MarkHomeworkCommand(nusnetId, assignmentId, status);
     }
 }

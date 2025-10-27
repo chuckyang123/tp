@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
+import seedu.address.model.person.Nusnetid;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.PersonBuilder;
 
@@ -32,7 +33,7 @@ public class MarkHomeworkCommandTest {
 
     @Test
     public void execute_markHomeworkComplete_success() throws Exception {
-        MarkHomeworkCommand command = new MarkHomeworkCommand("E1234567", 1, "complete");
+        MarkHomeworkCommand command = new MarkHomeworkCommand(new Nusnetid("E1234567"), 1, "complete");
         String expectedMessage = String.format(MarkHomeworkCommand.MESSAGE_SUCCESS,
                 1, "Alice", "complete");
         assertEquals(expectedMessage, command.execute(model).getFeedbackToUser());
@@ -45,7 +46,7 @@ public class MarkHomeworkCommandTest {
 
     @Test
     public void execute_markHomeworkLate_success() throws Exception {
-        MarkHomeworkCommand command = new MarkHomeworkCommand("E1234568", 1, "late");
+        MarkHomeworkCommand command = new MarkHomeworkCommand(new Nusnetid("E1234568"), 1, "late");
         String expectedMessage = String.format(MarkHomeworkCommand.MESSAGE_SUCCESS,
                 1, "Bob", "late");
         assertEquals(expectedMessage, command.execute(model).getFeedbackToUser());
@@ -59,20 +60,20 @@ public class MarkHomeworkCommandTest {
     @Test
     public void execute_markHomeworkNotAdded_throwsCommandException() {
         // Homework 2 is not added yet
-        MarkHomeworkCommand command = new MarkHomeworkCommand("E1234567", 2, "complete");
+        MarkHomeworkCommand command = new MarkHomeworkCommand(new Nusnetid("E1234567"), 2, "complete");
         assertThrows(Exception.class, () -> command.execute(model));
     }
 
     @Test
     public void execute_invalidStatus_throwsCommandException() {
         // Invalid status
-        MarkHomeworkCommand command = new MarkHomeworkCommand("E1234567", 1, "finished");
+        MarkHomeworkCommand command = new MarkHomeworkCommand(new Nusnetid("E1234567"), 1, "finished");
         assertThrows(Exception.class, () -> command.execute(model));
     }
 
     @Test
     public void execute_studentNotFound_throwsCommandException() {
-        MarkHomeworkCommand command = new MarkHomeworkCommand("E0000000", 1, "complete");
+        MarkHomeworkCommand command = new MarkHomeworkCommand(new Nusnetid("E0000000"), 1, "complete");
         assertThrows(Exception.class, () -> command.execute(model));
     }
 }
