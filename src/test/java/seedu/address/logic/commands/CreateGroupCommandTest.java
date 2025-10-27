@@ -15,7 +15,7 @@ public class CreateGroupCommandTest {
     private Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
     @Test
     public void execute_validGroupId_groupCreated() {
-        GroupId groupId = new GroupId("T999");
+        GroupId groupId = new GroupId("T99");
         CreateGroupCommand command = new CreateGroupCommand(groupId);
         command.execute(model);
         assert(model.hasGroup(groupId));

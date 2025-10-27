@@ -11,7 +11,6 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Nusnetid;
 import seedu.address.model.person.Phone;
-import seedu.address.model.person.Slot;
 import seedu.address.model.person.Telegram;
 
 
@@ -119,29 +118,6 @@ public class ParserUtilTest {
         String addressWithWhitespace = WHITESPACE + VALID_NUSNETID + WHITESPACE;
         Nusnetid expectedNusnetid = new Nusnetid(VALID_NUSNETID);
         assertEquals(expectedNusnetid, ParserUtil.parseNusnetid(addressWithWhitespace));
-    }
-
-    @Test
-    public void parseSlot_null_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> ParserUtil.parseSlot((String) null));
-    }
-
-    @Test
-    public void parseSlot_invalidValue_throwsParseException() {
-        assertThrows(ParseException.class, () -> ParserUtil.parseSlot(INVALID_SLOT));
-    }
-
-    @Test
-    public void parseSlot_validValueWithoutWhitespace_returnsSlot() throws Exception {
-        Slot expectedSlot = new Slot(VALID_SLOT);
-        assertEquals(expectedSlot, ParserUtil.parseSlot(VALID_SLOT));
-    }
-
-    @Test
-    public void parseSlot_validValueWithWhitespace_returnsTrimmedSlot() throws Exception {
-        String slotWithWhitespace = WHITESPACE + VALID_SLOT + WHITESPACE;
-        Slot expectedSlot = new Slot(VALID_SLOT);
-        assertEquals(expectedSlot, ParserUtil.parseSlot(slotWithWhitespace));
     }
 
     @Test

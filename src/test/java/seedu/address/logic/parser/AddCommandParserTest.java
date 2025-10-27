@@ -3,6 +3,8 @@ package seedu.address.logic.parser;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.GROUPID_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.GROUPID_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_NUSNETID_DESC;
@@ -17,15 +19,13 @@ import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.PREAMBLE_NON_EMPTY;
 import static seedu.address.logic.commands.CommandTestUtil.PREAMBLE_WHITESPACE;
-import static seedu.address.logic.commands.CommandTestUtil.SLOT_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.SLOT_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.TELEGRAM_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.TELEGRAM_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_GROUPID_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NUSNETID_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_SLOT_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TELEGRAM_BOB;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_GROUP;
@@ -59,13 +59,13 @@ public class AddCommandParserTest {
         Person expectedPerson = new PersonBuilder(BOB).build();
         // whitespace only preamble
         assertParseSuccess(parser, PREAMBLE_WHITESPACE + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                + NUSNETID_DESC_BOB + TELEGRAM_DESC_BOB + SLOT_DESC_BOB, new AddCommand(expectedPerson));
+                + NUSNETID_DESC_BOB + TELEGRAM_DESC_BOB + GROUPID_DESC_BOB, new AddCommand(expectedPerson));
     }
 
     @Test
     public void parse_repeatedNonTagValue_failure() {
         String validExpectedPersonString = NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                + NUSNETID_DESC_BOB + TELEGRAM_DESC_BOB + SLOT_DESC_BOB;
+                + NUSNETID_DESC_BOB + TELEGRAM_DESC_BOB + GROUPID_DESC_BOB;
 
         // multiple names
         assertParseFailure(parser, NAME_DESC_AMY + validExpectedPersonString,
@@ -84,7 +84,7 @@ public class AddCommandParserTest {
                 Messages.getErrorMessageForDuplicatePrefixes(PREFIX_NUSNETID));
 
         // multiple slots
-        assertParseFailure(parser, SLOT_DESC_AMY + validExpectedPersonString,
+        assertParseFailure(parser, GROUPID_DESC_AMY + validExpectedPersonString,
                 Messages.getErrorMessageForDuplicatePrefixes(PREFIX_GROUP));
 
         // multiple telegrams
@@ -94,7 +94,7 @@ public class AddCommandParserTest {
         // multiple fields repeated
         assertParseFailure(parser,
                 validExpectedPersonString + PHONE_DESC_AMY + EMAIL_DESC_AMY + NAME_DESC_AMY + NUSNETID_DESC_AMY
-                        + TELEGRAM_DESC_AMY + SLOT_DESC_AMY + validExpectedPersonString,
+                        + TELEGRAM_DESC_AMY + GROUPID_DESC_AMY + validExpectedPersonString,
                 Messages.getErrorMessageForDuplicatePrefixes(PREFIX_NAME, PREFIX_NUSNETID,
                         PREFIX_EMAIL, PREFIX_PHONE, PREFIX_GROUP, PREFIX_TELEGRAM));
 
@@ -158,46 +158,46 @@ public class AddCommandParserTest {
 
         // missing name prefix
         assertParseFailure(parser, VALID_NAME_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + NUSNETID_DESC_BOB
-                + TELEGRAM_DESC_BOB + SLOT_DESC_BOB, expectedMessage);
+                + TELEGRAM_DESC_BOB + GROUPID_DESC_BOB, expectedMessage);
 
         // missing nusnetid prefix
         assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + VALID_NUSNETID_BOB
-                + TELEGRAM_DESC_BOB + SLOT_DESC_BOB, expectedMessage);
+                + TELEGRAM_DESC_BOB + GROUPID_DESC_BOB, expectedMessage);
 
         // missing telegram prefix
         assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + NUSNETID_DESC_BOB
-                + VALID_TELEGRAM_BOB + SLOT_DESC_BOB, expectedMessage);
+                + VALID_TELEGRAM_BOB + GROUPID_DESC_BOB, expectedMessage);
 
         // missing slot prefix
         assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + NUSNETID_DESC_BOB
-                + TELEGRAM_DESC_BOB + VALID_SLOT_BOB, expectedMessage);
+                + TELEGRAM_DESC_BOB + VALID_GROUPID_BOB, expectedMessage);
 
         // all prefixes missing
         assertParseFailure(parser, VALID_NAME_BOB + VALID_PHONE_BOB + VALID_EMAIL_BOB + VALID_NUSNETID_BOB
-                + VALID_TELEGRAM_BOB + VALID_SLOT_BOB, expectedMessage);
+                + VALID_TELEGRAM_BOB + VALID_GROUPID_BOB, expectedMessage);
     }
 
     @Test
     public void parse_invalidValue_failure() {
         // invalid name
         assertParseFailure(parser, INVALID_NAME_DESC + PHONE_DESC_BOB + EMAIL_DESC_BOB + NUSNETID_DESC_BOB
-                + TELEGRAM_DESC_BOB + SLOT_DESC_BOB, Name.MESSAGE_CONSTRAINTS);
+                + TELEGRAM_DESC_BOB + GROUPID_DESC_BOB, Name.MESSAGE_CONSTRAINTS);
 
         // invalid phone
         assertParseFailure(parser, NAME_DESC_BOB + INVALID_PHONE_DESC + EMAIL_DESC_BOB + NUSNETID_DESC_BOB
-                + TELEGRAM_DESC_BOB + SLOT_DESC_BOB, Phone.MESSAGE_CONSTRAINTS);
+                + TELEGRAM_DESC_BOB + GROUPID_DESC_BOB, Phone.MESSAGE_CONSTRAINTS);
 
         // invalid email
         assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + INVALID_EMAIL_DESC + NUSNETID_DESC_BOB
-                + TELEGRAM_DESC_BOB + SLOT_DESC_BOB, Email.MESSAGE_CONSTRAINTS);
+                + TELEGRAM_DESC_BOB + GROUPID_DESC_BOB, Email.MESSAGE_CONSTRAINTS);
 
         // invalid nusnetid
         assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + INVALID_NUSNETID_DESC
-                + TELEGRAM_DESC_BOB + SLOT_DESC_BOB, Nusnetid.MESSAGE_CONSTRAINTS);
+                + TELEGRAM_DESC_BOB + GROUPID_DESC_BOB, Nusnetid.MESSAGE_CONSTRAINTS);
 
         // invalid telegram
         assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + NUSNETID_DESC_BOB
-                + INVALID_TELEGRAM_DESC + SLOT_DESC_BOB, Telegram.MESSAGE_CONSTRAINTS);
+                + INVALID_TELEGRAM_DESC + GROUPID_DESC_BOB, Telegram.MESSAGE_CONSTRAINTS);
 
         // invalid slot
         assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + NUSNETID_DESC_BOB
@@ -205,11 +205,11 @@ public class AddCommandParserTest {
 
         // two invalid values, only first invalid value reported
         assertParseFailure(parser, INVALID_NAME_DESC + PHONE_DESC_BOB + EMAIL_DESC_BOB + INVALID_NUSNETID_DESC
-                + TELEGRAM_DESC_BOB + SLOT_DESC_BOB, Name.MESSAGE_CONSTRAINTS);
+                + TELEGRAM_DESC_BOB + GROUPID_DESC_BOB, Name.MESSAGE_CONSTRAINTS);
 
         // non-empty preamble
         assertParseFailure(parser, PREAMBLE_NON_EMPTY + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                + NUSNETID_DESC_BOB + TELEGRAM_DESC_BOB + SLOT_DESC_BOB,
+                + NUSNETID_DESC_BOB + TELEGRAM_DESC_BOB + GROUPID_DESC_BOB,
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
     }
 }

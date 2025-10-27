@@ -33,7 +33,15 @@ public class GroupId {
     public static boolean isValidGroupId(String test) {
         return test.matches(VALIDATION_REGEX);
     }
-
+    /**
+     * Check if the given group id is valid.
+     * @param test group id to be checked
+     * @return boolean valid or not
+     */
+    public static boolean isValidGroupId(GroupId test) {
+        requireNonNull(test);
+        return test.value.matches(VALIDATION_REGEX);
+    }
     @Override
     public String toString() {
         return value;
