@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
+import seedu.address.model.person.Nusnetid;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.PersonBuilder;
 
@@ -32,7 +33,7 @@ public class DeleteHomeworkCommandTest {
 
     @Test
     public void execute_deleteSingleHomework_success() throws Exception {
-        DeleteHomeworkCommand command = new DeleteHomeworkCommand("E1234567", 1);
+        DeleteHomeworkCommand command = new DeleteHomeworkCommand(new Nusnetid("E1234567"), 1, false);
         String expectedMessage = String.format(DeleteHomeworkCommand.MESSAGE_DELETE_HOMEWORK_SUCCESS, 1, "Alice");
         assertEquals(expectedMessage, command.execute(model).getFeedbackToUser());
 
@@ -44,7 +45,7 @@ public class DeleteHomeworkCommandTest {
 
     @Test
     public void execute_deleteHomeworkFromAll_success() throws Exception {
-        DeleteHomeworkCommand command = new DeleteHomeworkCommand("all", 1);
+        DeleteHomeworkCommand command = new DeleteHomeworkCommand(null, 1, true);
         String expectedMessage = String.format(DeleteHomeworkCommand.MESSAGE_DELETE_HOMEWORK_ALL_SUCCESS, 1);
         assertEquals(expectedMessage, command.execute(model).getFeedbackToUser());
 
@@ -56,14 +57,14 @@ public class DeleteHomeworkCommandTest {
 
     @Test
     public void execute_studentNotFound_throwsCommandException() {
-        DeleteHomeworkCommand command = new DeleteHomeworkCommand("E9999999", 1);
+        DeleteHomeworkCommand command = new DeleteHomeworkCommand(new Nusnetid("E9999999"), 1, false);
         assertThrows(CommandException.class, () -> command.execute(model));
     }
 
     @Test
     public void execute_homeworkNotFound_throwsCommandException() {
         // Alice has homework 1, try deleting homework 2
-        DeleteHomeworkCommand command = new DeleteHomeworkCommand("E1234567", 2);
+        DeleteHomeworkCommand command = new DeleteHomeworkCommand(new Nusnetid("E1234567"), 2, false);
         assertThrows(CommandException.class, () -> command.execute(model));
     }
 }
