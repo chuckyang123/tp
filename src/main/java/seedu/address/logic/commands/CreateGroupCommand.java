@@ -29,12 +29,17 @@ public class CreateGroupCommand extends Command {
         assert GroupId.isValidGroupId(groupId);
         this.groupId = groupId;
     }
-
+    /**
+     * Executes the command and returns the result message.
+     * @param model {@code Model} which the command should operate on.
+     * @return the command result message.
+     * @throws CommandException if the group already exists.
+     */
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        if (!model.hasGroup(groupId)) {
-            throw new CommandException(MESSAGE_DUPLICATE_GROUP);
+        if (model.hasGroup(groupId)) {
+            throw new CommandException(String.format(MESSAGE_DUPLICATE_GROUP, groupId));
         } else {
             Group newGroup = new Group(groupId);
             model.addGroup(newGroup);

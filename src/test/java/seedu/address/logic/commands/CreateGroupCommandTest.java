@@ -1,7 +1,6 @@
 package seedu.address.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import org.junit.jupiter.api.Test;
@@ -17,7 +16,7 @@ public class CreateGroupCommandTest {
     private Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
     @Test
     public void execute_validGroupId_groupCreated() {
-        GroupId groupId = new GroupId("T99");
+        GroupId groupId = new GroupId("B90");
         CreateGroupCommand command = new CreateGroupCommand(groupId);
         try {
             command.execute(model);
@@ -32,7 +31,7 @@ public class CreateGroupCommandTest {
         CreateGroupCommand command = new CreateGroupCommand(groupId);
         try {
             command.execute(model);
-            throw new AssertionError("Expected CommandException not thrown");
+            throw new AssertionError("Expected CommandException Thrown By Duplicate Group Id");
         } catch (CommandException e) {
             assertEquals(String.format(CreateGroupCommand.MESSAGE_DUPLICATE_GROUP, groupId), e.getMessage());
         }
