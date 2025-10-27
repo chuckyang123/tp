@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_GROUP;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_WEEK;
 
 import java.util.ArrayList;
@@ -39,8 +40,9 @@ public class MarkAllAttendanceCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Marks the attendance of all the students in one group "
             + "by their group number. "
-            + "Parameters: g/<group> w/<week> <present|absent|excused> \n"
-            + "Example: " + COMMAND_WORD + " " + PREFIX_GROUP + "T02" + " " + PREFIX_WEEK + "3" + " present";
+            + "Parameters: g/<group> w/<week> status/<present|absent|excused> \n"
+            + "Example: " + COMMAND_WORD + " "
+            + PREFIX_GROUP + "T02 " + PREFIX_WEEK + "3 " + PREFIX_STATUS + "present";
 
     public static final String MESSAGE_MARK_ATTENDANCE_SUCCESS = "Marked attendance for Group %1$s: %2$s in week %3$d.";
     public static final String MESSAGE_GROUP_NOT_FOUND = "Group not found.";
