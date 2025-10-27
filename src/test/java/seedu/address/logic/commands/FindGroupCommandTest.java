@@ -53,8 +53,8 @@ public class FindGroupCommandTest {
         FindGroupCommand command = new FindGroupCommand(new GroupId("T99"));
         // no person in T99 group
         command.execute(model);
-        command.execute(expectedModel);
-        assertEquals(0, model.getFilteredPersonList().size());
+        CommandResult groupNotExistResult = command.execute(expectedModel);
+        assertEquals(groupNotExistResult, new CommandResult("No student with this group ID found"));
     }
     @Test
     public void toStringMethod() {
