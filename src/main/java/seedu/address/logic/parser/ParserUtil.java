@@ -14,7 +14,6 @@ import seedu.address.model.person.GroupId;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Nusnetid;
 import seedu.address.model.person.Phone;
-import seedu.address.model.person.Slot;
 import seedu.address.model.person.Telegram;
 
 /**
@@ -36,7 +35,6 @@ public class ParserUtil {
         }
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
     }
-
     /**
      * Parses a {@code String name} into a {@code Name}.
      * Leading and trailing whitespaces will be trimmed.
@@ -66,7 +64,6 @@ public class ParserUtil {
         }
         return new Phone(trimmedPhone);
     }
-
     /**
      * Parses a {@code String nusnetid} into an {@code NUSnetid}.
      * Leading and trailing whitespaces will be trimmed.
@@ -81,7 +78,6 @@ public class ParserUtil {
         }
         return new Nusnetid(trimmedNusnetid);
     }
-
     /**
      * Parses a {@code String email} into an {@code Email}.
      * Leading and trailing whitespaces will be trimmed.
@@ -96,7 +92,6 @@ public class ParserUtil {
         }
         return new Email(trimmedEmail);
     }
-
     /**
      * Parses a {@code String Telegram} into an {@code Telegram}.
      * Leading and trailing whitespaces will be trimmed.
@@ -111,22 +106,6 @@ public class ParserUtil {
         }
         return new Telegram(trimmedTelegram);
     }
-
-    /**
-     * Parses a {@code String slot} into an {@code Slot}.
-     * Leading and trailing whitespaces will be trimmed.
-     *
-     * @throws ParseException if the given {@code slot} is invalid.
-     */
-    public static Slot parseSlot(String slot) throws ParseException {
-        requireNonNull(slot);
-        String trimmedSlot = slot.trim();
-        if (!Slot.isValidSlot(trimmedSlot)) {
-            throw new ParseException(Slot.MESSAGE_CONSTRAINTS);
-        }
-        return new Slot(trimmedSlot);
-    }
-
     /**
      * Parses a {@code String input} into a {@code LocalDateTime}.
      * Leading and trailing whitespaces will be trimmed.
@@ -145,7 +124,6 @@ public class ParserUtil {
                     "Invalid date & time format. Please use yyyyMMdd HHmm format! (Eg. 20251010 1800)");
         }
     }
-
     /**
      * Parses a {@code String groupId} into a {@code GroupId}.
      * Leading and trailing whitespaces will be trimmed.

@@ -10,8 +10,8 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class GroupId {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Group IDs should start with T or B (case-insensitive) and be followed by at least 1 digit.";
-    public static final String VALIDATION_REGEX = "[TtBb]\\d{1,}";
+            "Group IDs should start with T or B (case-insensitive) and be followed by exactly 2 digits";
+    public static final String VALIDATION_REGEX = "[TtBb]\\d{2}";
 
     public final String value;
 
@@ -33,7 +33,15 @@ public class GroupId {
     public static boolean isValidGroupId(String test) {
         return test.matches(VALIDATION_REGEX);
     }
-
+    /**
+     * Check if the given group id is valid.
+     * @param test group id to be checked
+     * @return boolean valid or not
+     */
+    public static boolean isValidGroupId(GroupId test) {
+        requireNonNull(test);
+        return test.value.matches(VALIDATION_REGEX);
+    }
     @Override
     public String toString() {
         return value;

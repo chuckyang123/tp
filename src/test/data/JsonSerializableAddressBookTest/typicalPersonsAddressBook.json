@@ -48,7 +48,7 @@
     "email" : "anna@u.nus.edu",
     "nusnetid": "E1234560",
     "telegram": "@besttttttt",
-    "groupId": "T048"
+    "groupId": "T48"
   } ],
   "consultations" : [ ],
   "groups" : [ {
@@ -67,7 +67,7 @@
     "groupId" : "T18",
     "studentNusnetids" : [ "E1234562" ]
   }, {
-    "groupId" : "T048",
+    "groupId" : "T48",
     "studentNusnetids" : [ "E1234560" ]
   } ]
 }

@@ -88,7 +88,6 @@ Format: `add_student n/NAME i/NUSNETID t/TELEGRAM g/GROUPID  [p/PHONE_NUMBER] [e
 <box type="tip" seamless>
 
 **Tip:** Phone and email are optional. You can omit either or both when adding a person.
-A person can have any number of tags (including 0).
 </box>
 
 Examples:
@@ -108,12 +107,13 @@ Format: `list`
 
 Edits an existing person in the ADDRESS book.
 
-Format: `edit INDEX [n/NAME] [i/NUSNETID]  [t/TELEGRAM] [g/GROUPID] [p/PHONE] [e/EMAIL]`
+Format: `edit INDEX [n/NAME] [i/NUSNETID]  [t/TELEGRAM] [p/PHONE] [e/EMAIL]`
 
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * Phone and email are optional. You can remove them by omitting these fields in your edit command.
+* You can not use this command to change a person's tutorial group. Use the `add_to_group` command instead.
 
 
 Examples:
@@ -156,10 +156,10 @@ Examples:
 
 Adds a homework assignment for the specified student or for all students.
 
-Format: `add_hw i/NUSNETID (use 'all' for all students) a/ASSIGNMENT`
+Format: `add_hw i/NUSNETID (use 'i/all' for all students) a/ASSIGNMENT`
 
 * Adds the homework with the given assignment number for the specified student.
-* If `all` is used, the homework is added for all students.
+* If `i/all` is used, the homework is added for all students.
 * The NUSNET ID **must be valid** and the assignment identifier **must be specified**.
 
 Examples:
@@ -188,10 +188,10 @@ Examples:
 
 Deletes the homework for the specified student or for all students.
 
-Format: `delete_hw i/NUSNETID (use 'all' for all students) a/ASSIGNMENT`
+Format: `delete_hw i/NUSNETID (use 'i/all' for all students) a/ASSIGNMENT`
 
 * Deletes the homework with the given assignment number for the specified student.
-* If `all` is used, the homework is deleted for all students.
+* If `i/all` is used, the homework is deleted for all students.
 * The NUSNET ID **must be valid** and the assignment identifier **must be specified**.
 
 Examples:
@@ -345,7 +345,7 @@ Action     | Format, Examples
 **Clear**  | `clear`
 **Delete** | `delete INDEX`<br> e.g., `delete 3`
 **EditStudent**   | `edit_student INDEX [n/NAME] [i/NUSNETID] [t/TELEGRAM] [p/PHONE_NUMBER] [e/EMAIL]  [s/SLOT]`<br> e.g.,`edit 2 n/James Lee e/jameslee@u.nus.edu`
-**AddHomework**  | `add_hw i/NUSNETID (all for all students) a/ASSIGNMENT` <br> e.g., `add_hw i/E1234567 a/1`
+**AddHomework**  | `add_hw i/NUSNETID (i/all for all students) a/ASSIGNMENT` <br> e.g., `add_hw i/E1234567 a/1`
 **MarkHomework**  | `mark_hw i/NUSNETID  a/ASSIGNMENT status/STATUS(complete incomplete late)` <br> e.g., `mark_hw i/E1234567 a/1 complete`
 **MarkAttendance**  | `mark_attendance i/NUSNETID w/WEEK status/STATUS(present absent excused)` <br> e.g., `mark_attendance i/E1234567 week/3 status/present`
 **MarkAllAttendance**  | `mark_all_attendance g/GROUPID w/WEEK status/STATUS(present absent excused)` <br> e.g., `mark_all_attendance g/T02 week/3 status/present`
