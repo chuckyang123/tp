@@ -10,8 +10,8 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class GroupId {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Group IDs should start with T or B (case-insensitive) and be followed by at least 1 digit.";
-    public static final String VALIDATION_REGEX = "[TtBb]\\d{1,}";
+            "Group IDs should start with T or B (case-insensitive) and be followed by exactly 2 digits";
+    public static final String VALIDATION_REGEX = "[TtBb]\\d{2}";
 
     public final String value;
 
