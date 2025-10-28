@@ -181,31 +181,32 @@ public class AddCommandParserTest {
     public void parse_invalidValue_failure() {
         // invalid name
         assertParseFailure(parser, INVALID_NAME_DESC + PHONE_DESC_BOB + EMAIL_DESC_BOB + NUSNETID_DESC_BOB
-                + TELEGRAM_DESC_BOB + GROUPID_DESC_BOB, Name.MESSAGE_CONSTRAINTS);
+                + TELEGRAM_DESC_BOB + GROUPID_DESC_BOB, "Name: " + Name.MESSAGE_CONSTRAINTS);
 
         // invalid phone
         assertParseFailure(parser, NAME_DESC_BOB + INVALID_PHONE_DESC + EMAIL_DESC_BOB + NUSNETID_DESC_BOB
-                + TELEGRAM_DESC_BOB + GROUPID_DESC_BOB, Phone.MESSAGE_CONSTRAINTS);
+                + TELEGRAM_DESC_BOB + GROUPID_DESC_BOB, "Phone: " + Phone.MESSAGE_CONSTRAINTS);
 
         // invalid email
         assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + INVALID_EMAIL_DESC + NUSNETID_DESC_BOB
-                + TELEGRAM_DESC_BOB + GROUPID_DESC_BOB, Email.MESSAGE_CONSTRAINTS);
+                + TELEGRAM_DESC_BOB + GROUPID_DESC_BOB, "Email: " + Email.MESSAGE_CONSTRAINTS);
 
         // invalid nusnetid
         assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + INVALID_NUSNETID_DESC
-                + TELEGRAM_DESC_BOB + GROUPID_DESC_BOB, Nusnetid.MESSAGE_CONSTRAINTS);
+                + TELEGRAM_DESC_BOB + GROUPID_DESC_BOB, "Nusnetid: " + Nusnetid.MESSAGE_CONSTRAINTS);
 
         // invalid telegram
         assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + NUSNETID_DESC_BOB
-                + INVALID_TELEGRAM_DESC + GROUPID_DESC_BOB, Telegram.MESSAGE_CONSTRAINTS);
+                + INVALID_TELEGRAM_DESC + GROUPID_DESC_BOB, "Telegram: " + Telegram.MESSAGE_CONSTRAINTS);
 
-        // invalid slot
+        // invalid groupid
         assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + NUSNETID_DESC_BOB
-                + TELEGRAM_DESC_BOB + INVALID_SLOT_DESC, GroupId.MESSAGE_CONSTRAINTS);
+                + TELEGRAM_DESC_BOB + INVALID_SLOT_DESC, "Group: " + GroupId.MESSAGE_CONSTRAINTS);
 
-        // two invalid values, only first invalid value reported
+        // two invalid values
         assertParseFailure(parser, INVALID_NAME_DESC + PHONE_DESC_BOB + EMAIL_DESC_BOB + INVALID_NUSNETID_DESC
-                + TELEGRAM_DESC_BOB + GROUPID_DESC_BOB, Name.MESSAGE_CONSTRAINTS);
+                + TELEGRAM_DESC_BOB + GROUPID_DESC_BOB, "Name: " + Name.MESSAGE_CONSTRAINTS
+        + System.lineSeparator() + "Nusnetid: " + Nusnetid.MESSAGE_CONSTRAINTS);
 
         // non-empty preamble
         assertParseFailure(parser, PREAMBLE_NON_EMPTY + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB

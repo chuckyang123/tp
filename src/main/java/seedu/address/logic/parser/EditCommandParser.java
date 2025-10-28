@@ -3,6 +3,7 @@ package seedu.address.logic.parser;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_GROUP;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NUSNETID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
@@ -30,7 +31,7 @@ public class EditCommandParser implements Parser<EditCommand> {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
-                        PREFIX_NUSNETID, PREFIX_TELEGRAM);
+                        PREFIX_NUSNETID, PREFIX_TELEGRAM, PREFIX_GROUP);
 
         Index index;
 
@@ -41,7 +42,7 @@ public class EditCommandParser implements Parser<EditCommand> {
         }
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_NUSNETID,
-                PREFIX_TELEGRAM, PREFIX_PHONE, PREFIX_EMAIL);
+                PREFIX_TELEGRAM, PREFIX_GROUP, PREFIX_PHONE, PREFIX_EMAIL);
 
         EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
         List<String> errors = new ArrayList<>();
@@ -88,6 +89,14 @@ public class EditCommandParser implements Parser<EditCommand> {
                 editPersonDescriptor.setTelegram(ParserUtil.parseTelegram(argMultimap.getValue(PREFIX_TELEGRAM).get()));
             } catch (ParseException e) {
                 errors.add("Telegram: " + e.getMessage());
+            }
+        }
+        // Group
+        if (argMultimap.getValue(PREFIX_GROUP).isPresent()) {
+            try {
+                editPersonDescriptor.setGroupId(ParserUtil.parseGroupId(argMultimap.getValue(PREFIX_GROUP).get()));
+            } catch (ParseException e) {
+                errors.add("Group: " + e.getMessage());
             }
         }
 
