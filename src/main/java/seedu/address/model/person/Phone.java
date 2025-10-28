@@ -5,7 +5,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 
 /**
  * Represents a Person's phone number in the address book.
- * Guarantees: immutable; is valid as declared in {@link #isValidSlot(String)}
+ * Guarantees: immutable; is valid as declared in {@link #isValidPhone(String)}
  */
 public class Phone {
 
@@ -22,14 +22,14 @@ public class Phone {
      */
     public Phone(String phone) {
         requireNonNull(phone);
-        checkArgument(isValidSlot(phone), MESSAGE_CONSTRAINTS);
+        checkArgument(isValidPhone(phone), MESSAGE_CONSTRAINTS);
         value = phone;
     }
 
     /**
      * Returns true if a given string is a valid phone number.
      */
-    public static boolean isValidSlot(String test) {
+    public static boolean isValidPhone(String test) {
         return test.matches(VALIDATION_REGEX);
     }
 
