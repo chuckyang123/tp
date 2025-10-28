@@ -234,23 +234,6 @@ public class ModelManager implements Model {
                 updatedSheet.markAttendance(attendance.getWeek(), attendance.getAttendanceStatus());
             }
             updatedSheet.markAttendance(week, status);
-
-    /**
-     * Retrieves a person by their nusnetId in the Unique Person List
-     * @param nusnetId the nusnetId of the person to be retrieved
-     * @return the person with the specified nusnetId
-     * @throws CommandException if no person with the given nusnetId is found
-     */
-    @Override
-    public Person getPersonByNusnetIdFullList(Nusnetid nusnetId) throws CommandException {
-        requireNonNull(nusnetId);
-        assert hasPerson(nusnetId) : "Person with given nusnetId should exist in the address book.";
-        Person target = this.addressBook.getUniquePersonList()
-                .stream().filter(p -> p.getNusnetid().equals(nusnetId))
-                .findFirst().orElseThrow(() -> new CommandException(MESSAGE_STUDENT_NOT_FOUND));
-        return target;
-    }
-
             Person updatedStudent = new Person(
                     targetStudent.getName(),
                     targetStudent.getPhone(),
@@ -268,6 +251,22 @@ public class ModelManager implements Model {
 
         Predicate<Person> predicate = person -> person.getGroupId().equals(groupId);
         updateFilteredPersonList(predicate);
+    }
+
+    /**
+     * Retrieves a person by their nusnetId in the Unique Person List
+     * @param nusnetId the nusnetId of the person to be retrieved
+     * @return the person with the specified nusnetId
+     * @throws CommandException if no person with the given nusnetId is found
+     */
+    @Override
+    public Person getPersonByNusnetIdFullList(Nusnetid nusnetId) throws CommandException {
+        requireNonNull(nusnetId);
+        assert hasPerson(nusnetId) : "Person with given nusnetId should exist in the address book.";
+        Person target = this.addressBook.getUniquePersonList()
+                .stream().filter(p -> p.getNusnetid().equals(nusnetId))
+                .findFirst().orElseThrow(() -> new CommandException(MESSAGE_STUDENT_NOT_FOUND));
+        return target;
     }
     @Override
     public boolean hasConsultation(Consultation consultation) {
