@@ -327,7 +327,15 @@ public class AddressBook implements ReadOnlyAddressBook {
         oldGroup.removeStudent(student.getNusnetid());
         // Add to new group
         Person updatedStudent = student.withUpdatedGroup(newGroupId);
-        this.setPerson(student, updatedStudent);
+        try {
+            assert this.persons.contains(student);
+            this.setPerson(student, updatedStudent);
+            // Update in address book person list
+            // This may throw DuplicatePersonException or PersonNotFoundException
+            // Here we assume that the student exists and no duplicates will be created
+        } catch (DuplicatePersonException e) {
+            throw new CommandException(e.getMessage());
+        }
         if (!groups.contains(newGroupId)) {
             Group newGroup = new Group(newGroupId);
             this.addGroup(newGroup);
@@ -366,7 +374,7 @@ public class AddressBook implements ReadOnlyAddressBook {
                 try {
                     consultations.add(newConsult);
                 } catch (RuntimeException ex) {
-                    // ignore if add fails due to uniqueness; in that case, an equivalent slot already exists.
+                    // ignore if add fails due to uniqueness; in that case, an equivalent group already exists.
                 }
             }
         }
