@@ -100,7 +100,7 @@ public class PersonBuilder {
     }
 
     /**
-     * Sets the {@code Slot} of the {@code Person} that we are building.
+     * Sets the {@code Group} of the {@code Person} that we are building.
      */
     public PersonBuilder withGroup(String groupId) {
         this.groupId = new GroupId(groupId);
