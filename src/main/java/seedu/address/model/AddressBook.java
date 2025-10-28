@@ -327,11 +327,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         oldGroup.removeStudent(student.getNusnetid());
         // Add to new group
         Person updatedStudent = student.withUpdatedGroup(newGroupId);
-        try {
-            this.setPerson(student, updatedStudent);
-        } catch (DuplicatePersonException e) {
-            throw new CommandException(e.getMessage());
-        }
+        this.setPerson(student, updatedStudent);
         if (!groups.contains(newGroupId)) {
             Group newGroup = new Group(newGroupId);
             this.addGroup(newGroup);
@@ -341,7 +337,6 @@ public class AddressBook implements ReadOnlyAddressBook {
             newGroup.addStudent(updatedStudent);
         }
     }
-
     /**
      * Updates consultations stored in the address book when a person's nusnetid is edited.
      * Any consultation that references {@code oldNusnetid} will be replaced with a new Consultation
