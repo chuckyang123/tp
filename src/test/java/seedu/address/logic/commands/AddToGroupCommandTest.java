@@ -63,6 +63,15 @@ public class AddToGroupCommandTest {
         assert targetGroup.hasStudent(targetNusnetid);
         assert modelStub.hasGroup(targetGroupId);
     }
+    @Test
+    public void execute_sameGroup_throwsCommandException() throws Exception {
+        GroupId targetGroupId = new GroupId("T01");
+        Nusnetid targetNusnetid = new Nusnetid("E1234567");
+        ModelStubWithGroup modelStub = new ModelStubWithGroup();
+        AddToGroupCommand command = new AddToGroupCommand(targetNusnetid, targetGroupId);
+        assertThrows(CommandException.class, AddToGroupCommand.MESSAGE_SAME_GROUP_FAIL, ()
+                -> command.execute(modelStub));
+    }
 
     /**
      * A default model stub that have all the methods failing.
