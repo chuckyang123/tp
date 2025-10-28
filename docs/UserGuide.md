@@ -58,12 +58,12 @@ done faster than traditional GUI app and
 1. Ensure you have Java `17` or above installed in your Computer.<br>
    **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
-1. Download the latest `.jar` file from [here](https://github.com/AY2526S1-CS2103T-W11-1/tp/releases/tag/v1.3).
+1. Download the latest `.jar` file from [here](https://github.com/AY2526S1-CS2103T-W11-1/tp/releases/tag/v1.4).
 
 1. Copy the file to the folder you want to use as the _home folder_ for your SoCTAssist.
 
-1. Open a command terminal, using command `cd` + the path to get into the folder you put the jar file in, and use the `java -jar SoCTAssist.jar` command to run the application.<br>
-   A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
+1. Open a command terminal, using command `cd` + the path to get into the folder you put the jar file in, and use the `java -jar soctassist.jar` command to run the application.<br>
+   A GUI similar to the below should appear in a few seconds. <br>
    ![Ui](images/Ui.png)
 
 1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
@@ -84,27 +84,27 @@ done faster than traditional GUI app and
 --------------------------------------------------------------------------------------------------------------------
 ## Command Summary
 
-| Description                 | Format                                                                                      | Example                                                                       |
-|-----------------------------|---------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------|
-| **Display help message**    | `help`                                                                                      | `help`                                                                        |
-| **List students**           | `list`                                                                                      | `list`                                                                        |
-| **List consultations**      | `list_consult`                                                                              | `list_consult`                                                                |
-| **Add student**             | `add_student n/NAME i/NUSNETID t/TELEGRAM s/SLOT [p/PHONE_NUMBER] [e/EMAIL]`                | `add n/James Ho i/E1234567 tg/@jame s/T02 [p/22224444] [e/jamesho@u.nus.edu]` |
-| **Edit student**            | `edit_student INDEX [n/NAME] [i/NUSNETID] [t/TELEGRAM] [p/PHONE_NUMBER] [e/EMAIL] [s/SLOT]` | `edit 2 n/James Lee e/jameslee@u.nus.edu`                                     |
-| **Delete student**          | `delete INDEX`                                                                              | `delete 3`                                                                    |
-| **Find students by name**   | `find KEYWORD [MORE_KEYWORDS]`                                                              | `find James Jake`                                                             |
-| **Add homework**            | `add_hw i/NUSNETID a/ASSIGNMENT`<br>(use `i/all` for all students)                          | `add_hw i/E1234567 a/1`                                                       |
-| **Mark homework**           | `mark_hw i/NUSNETID a/ASSIGNMENT status/STATUS`<br>(STATUS: complete, incomplete, late)     | `mark_hw i/E1234567 a/1 complete`                                             |
-| **Delete homework**         | `delete_hw i/NUSNETID a/ASSIGNMENT`<br>(use `i/all` for all students)                       | `delete_hw i/E1234567 a/1`                                                    |
-| **Mark attendance**         | `mark_attendance i/NUSNETID w/WEEK status/STATUS`<br>(STATUS: present, absent, excused)     | `mark_attendance i/E1234567 w/3 status/present`                               |
-| **Mark attendance for all** | `mark_all_attendance g/GROUPID w/WEEK status/STATUS`<br>(STATUS: present, absent, excused)  | `mark_all_attendance g/T01 w/3 status/present`                                |
-| **Add consultation**        | `add_consult i/NUSNETID from/DATE_TIME to/DATE_TIME`                                        | `add_consult i/E1234567 from/20240915 1400 to/20240915 1500`                  |
-| **Delete consultation**     | `delete_consult i/NUSNETID`                                                                 | `delete_consult i/E1234567`                                                   |
-| **Create group**            | `create_group g/GROUPID`                                                                    | `create_group g/T03`                                                          |
-| **Add student to group**    | `add_to_group i/NUSNETID g/GROUPID`                                                         | `add_to_group i/E1234567 g/T03`                                               |
-| **Find students by group**  | `find_group g/GROUPID`                                                                      | `find_group g/T03`                                                            |
-| **Clear address book**      | `clear`                                                                                     | `clear`                                                                       |
-| **Exit application**        | `exit`                                                                                      | `exit`                                                                        |
+| Description                 | Format                                                                                     | Example                                                                              |
+|-----------------------------|--------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------|
+| **Display help message**    | `help`                                                                                     | `help`                                                                               |
+| **List students**           | `list`                                                                                     | `list`                                                                               |
+| **List consultations**      | `list_consult`                                                                             | `list_consult`                                                                       |
+| **Add student**             | `add_student n/NAME i/NUSNETID t/TELEGRAM g/GROUPID [p/PHONE_NUMBER] [e/EMAIL]`            | `add_student n/James Ho i/E1234567 t/@jame g/T02 [p/22224444] [e/jamesho@u.nus.edu]` |
+| **Edit student**            | `edit_student INDEX [n/NAME] [i/NUSNETID] [t/TELEGRAM] [p/PHONE_NUMBER] [e/EMAIL]`         | `edit_student 2 n/James Lee e/jameslee@u.nus.edu`                                    |
+| **Delete student**          | `delete INDEX`                                                                             | `delete 3`                                                                           |
+| **Find students by name**   | `find KEYWORD [MORE_KEYWORDS]`                                                             | `find James Jake`                                                                    |
+| **Add homework**            | `add_hw i/NUSNETID a/ASSIGNMENT`<br>(use `i/all` for all students)                         | `add_hw i/E1234567 a/1`                                                              |
+| **Mark homework**           | `mark_hw i/NUSNETID a/ASSIGNMENT status/STATUS`<br>(STATUS: complete, incomplete, late)    | `mark_hw i/E1234567 a/1 complete`                                                    |
+| **Delete homework**         | `delete_hw i/NUSNETID a/ASSIGNMENT`<br>(use `i/all` for all students)                      | `delete_hw i/E1234567 a/1`                                                           |
+| **Mark attendance**         | `mark_attendance i/NUSNETID w/WEEK status/STATUS`<br>(STATUS: present, absent, excused)    | `mark_attendance i/E1234567 w/3 status/present`                                      |
+| **Mark attendance for all** | `mark_all_attendance g/GROUPID w/WEEK status/STATUS`<br>(STATUS: present, absent, excused) | `mark_all_attendance g/T01 w/3 status/present`                                       |
+| **Add consultation**        | `add_consult i/NUSNETID from/DATE_TIME to/DATE_TIME`                                       | `add_consult i/E1234567 from/20240915 1400 to/20240915 1500`                         |
+| **Delete consultation**     | `delete_consult i/NUSNETID`                                                                | `delete_consult i/E1234567`                                                          |
+| **Create group**            | `create_group g/GROUPID`                                                                   | `create_group g/T03`                                                                 |
+| **Add student to group**    | `add_to_group i/NUSNETID g/GROUPID`                                                        | `add_to_group i/E1234567 g/T03`                                                      |
+| **Find students by group**  | `find_group g/GROUPID`                                                                     | `find_group g/T03`                                                                   |
+| **Clear address book**      | `clear`                                                                                    | `clear`                                                                              |
+| **Exit application**        | `exit`                                                                                     | `exit`                                                                               |
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -117,11 +117,12 @@ done faster than traditional GUI app and
 * Words in `UPPER_CASE` are the parameters to be supplied by the user.<br>
   e.g. in `add_student n/NAME`, `NAME` is a parameter which can be used as `add_student n/John Doe`.
 
-* Items in square brackets are optional.<br>
+* Items in square brackets are **optional**.<br>
   e.g `n/NAME [p/PHONE]` can be used as `n/John Doe p/87415612` or as `n/John Doe`.
 
-* Parameters can be in any order.<br>
-  e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+* Parameters can be in **any** order.<br>
+  e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable. \
+  But the index parameter must always come directly after the command word for commands that require an index.
 
 * Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `clear`) will be ignored.<br>
   e.g. if the command specifies `help 123`, it will be interpreted as `help`.
