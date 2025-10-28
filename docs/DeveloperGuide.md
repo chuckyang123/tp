@@ -4,9 +4,28 @@ title: "Developer Guide"
 pageNav: 3
 ---
 
-# AB-3 Developer Guide
+# SoCTAssist Developer Guide
 
 <!-- * Table of Contents -->
+1. [Acknowledgements](#acknowledgements)
+2. [Setting up, getting started](#setting-up-getting-started)
+3. [Design](#design)
+    - [Architecture](#architecture)
+    - [UI component](#ui-component)
+    - [Logic component](#logic-component)
+    - [Model component](#model-component)
+    - [Storage component](#storage-component)
+    - [Common Classes](#common-classes)
+4. [Implementation](#implementation)
+5. [Documentation, logging, testing, configuration, dev-ops](#documentation-logging-testing-configuration-dev-ops)
+6. [Appendix: Requirements](#appendix-requirements)
+    - [Product scope](#product-scope)
+    - [User stories](#user-stories)
+    - [Use cases](#use-cases)
+    - [Non-functional requirements](#non-functional-requirements)
+    - [Glossary](#glossary)
+7. [Appendix: Instructions for manual testing](#appendix-instructions-for-manual-testing)
+
 <page-nav-print />
 
 --------------------------------------------------------------------------------------------------------------------
@@ -412,11 +431,11 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case ends.
 
-**Use Case: Create Assignment**
+**Use Case: Create Homework**
 
 **MSS**
 
-1. User enters a command to create a new assignment numbered 1 to 3 for a student using their NUSNET ID.
+1. User enters a command to create a new homework numbered 1 to 3 for a student using their NUSNET ID.
 2. Homework Tracker locates the student record.
 3. Homework Tracker validates the assignment ID.
 4. Homework Tracker creates the new assignment with an initial status of `incomplete`.
@@ -430,24 +449,25 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 2a1. Homework Tracker displays an error: `Student not found`.
 
       Use case ends.
-* 3a. Assignment ID already exists for this student
+* 3a. Homework ID already exists for this student
   
   * 3a1. Homework Tracker displays an error: `Assignment ID already exists`.
 
     Use case ends.
-* 3b. Assignment ID is invalid (not between 1–3)
+* 3b. Homework ID is invalid (not between 1–3)
   
   * 3b1. Homework Tracker displays an error: `Assignment ID must be between 1 and 3`.
 
     Use case ends.
-**Use case: Mark assignment completion**
+    
+**Use case: Mark Homework completion**
 
 **MSS**
 
-1. User requests to mark an assignment status for a student using their NUSNET ID.
+1. User requests to mark a homework status for a student using their NUSNET ID.
 2. Homework Tracker locates the student record.
-3. Homework Tracker verifies the assignment ID.
-4. Homework Tracker updates the assignment status (complete / incomplete / late).
+3. Homework Tracker verifies the homework ID.
+4. Homework Tracker updates the homework status (complete / incomplete / late).
 5. Homework Tracker shows a confirmation message.
 
    Use case ends.
@@ -464,9 +484,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
   
       Use case ends.
 
-* 3a. The given assignment ID is invalid (not between 0–2).
+* 3a. The given assignment ID is invalid (not between 1-3).
   
-    * 3a1. Homework Tracker shows error message: `Assignment not found`.
+    * 3a1. Homework Tracker shows error message: `Assignment ID must be between 1 and 3`.
   
       Use case ends.
 * 4a. The given status is invalid (not one of complete / incomplete / late).
@@ -477,6 +497,46 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 4b1. Homework Tracker updates the record with the new status (last write wins).
 
       Use case resumes at step 5.
+
+**Use case: Delete a homework**
+**MSS**
+
+1. User requests to delete a homework for a student using their NUSNET ID.  
+2. Homework Tracker locates the student record.  
+3. Homework Tracker verifies the homework ID.  
+4. Homework Tracker removes the corresponding homework record from the student’s tracker.  
+5. Homework Tracker shows a confirmation message.  
+
+   Use case ends.  
+
+---
+
+**Extensions**
+
+* 1a. The list is empty.  
+
+    Use case ends.  
+
+* 2a. The student with the given NUSNET ID does not exist.  
+    * 2a1. Homework Tracker shows error message: `Student not found`.  
+
+      Use case ends.  
+
+* 3a. The given assignment ID is invalid.  
+    * 3a1. Homework Tracker shows error message: `Assignment ID must be between 1 and 3`.  
+
+      Use case ends.  
+
+* 4a. The specified homework does not exist for the student.  
+    * 4a1. Homework Tracker shows error message: `Assignment not found for this student`.  
+
+      Use case ends.  
+
+* 1b. User requests to delete homework for all students.  
+    * 1b1. Homework Tracker iterates through all student records and removes the specified homework from each valid record.  
+    * 1b2. Homework Tracker shows a confirmation message summarizing the deletions.  
+
+      Use case ends.  
 
 **Use case: Add a consultation**
 
@@ -517,6 +577,43 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 2d1. AddressBook shows error: Duplicate consultation booking.
 
          Use case ends.
+
+**Use case: Delete a consultation**
+
+**MSS**
+
+1. User requests to delete a consultation by specifying student email, date, start time, and end time.  
+
+2. AddressBook validates the student email, date, and times.  
+
+3. AddressBook locates the consultation record that matches the provided details.  
+
+4. AddressBook deletes the consultation booking from the system.  
+
+5. AddressBook shows success message confirming the deletion.  
+
+    Use case ends.  
+
+**Extensions**
+
+* 2a. Student nusnetid does not exist in the directory.  
+
+  * 2a1. AddressBook shows error: Student not found.  
+
+       Use case ends.  
+
+* 3a. Consultation record with the specified details does not exist.  
+
+  * 3a1. AddressBook shows error: Consultation not found.  
+
+       Use case ends.  
+
+* 3b. Consultation list is empty.  
+
+  * 3b1. AddressBook shows error: No consultations available to delete.  
+
+       Use case ends.  
+
 **Use case: Mark attendance**
 
 **MSS**
@@ -527,7 +624,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 3. AddressBook records the attendance for the student.
 
-4. AddressBook shows confirmation message with details.
+4. AddressBook shows a confirmation message with details.
 
     Use case ends.
 
@@ -567,6 +664,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 2b1. System shows error message: `Invalid Team Name`.
 
       Use case ends.
+  
 **Use case: Add student to a group**
 
 **MSS**

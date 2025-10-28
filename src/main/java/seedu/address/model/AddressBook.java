@@ -375,7 +375,7 @@ public class AddressBook implements ReadOnlyAddressBook {
                 try {
                     consultations.add(newConsult);
                 } catch (RuntimeException ex) {
-                    // ignore if add fails due to uniqueness; in that case, an equivalent slot already exists.
+                    // ignore if add fails due to uniqueness; in that case, an equivalent group already exists.
                 }
             }
         }
