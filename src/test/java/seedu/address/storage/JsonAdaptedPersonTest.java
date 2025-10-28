@@ -144,7 +144,7 @@ public class JsonAdaptedPersonTest {
     }
 
     @Test
-    public void toModelType_nullSlot_throwsIllegalValueException() {
+    public void toModelType_nullGroup_throwsIllegalValueException() {
         List<JsonAdaptedAttendance> emptyAttendanceSheet = List.of();
         JsonAdaptedPerson person = new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_NUSNETID,
                 null, VALID_TELEGRAM, convertToJsonMap(VALID_HOMEWORK_TRACKER), emptyAttendanceSheet, "", "");

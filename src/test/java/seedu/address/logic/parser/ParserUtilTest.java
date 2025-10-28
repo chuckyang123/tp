@@ -20,14 +20,14 @@ public class ParserUtilTest {
     private static final String INVALID_NUSNETID = " ";
     private static final String INVALID_EMAIL = "example.com";
     private static final String INVALID_TELEGRAM = "1234";
-    private static final String INVALID_SLOT = "05 ";
+    private static final String INVALID_GROUPID = "05 ";
 
     private static final String VALID_NAME = "Rachel Walker";
     private static final String VALID_PHONE = "123456";
     private static final String VALID_NUSNETID = "E1234567";
     private static final String VALID_EMAIL = "rachel@u.nus.edu";
     private static final String VALID_TELEGRAM = "@walker";
-    private static final String VALID_SLOT = "T05";
+    private static final String VALID_GROUPID = "T05";
 
     private static final String WHITESPACE = " \t\r\n";
 

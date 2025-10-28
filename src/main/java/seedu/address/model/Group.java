@@ -21,7 +21,7 @@ public class Group {
 
     /**
      * Construct a group
-     * @param groupId A valid slot number.
+     * @param groupId A valid group id.
      */
     public Group(GroupId groupId) {
         requireNonNull(groupId);
@@ -31,7 +31,7 @@ public class Group {
 
     /**
      * Construct a group
-     * @param groupId A valid slot number.
+     * @param groupId A valid group id.
      * @param students list of students in this tutorial.
      */
     public Group(GroupId groupId, List<Person> students) {
