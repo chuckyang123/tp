@@ -248,6 +248,12 @@ public class AddCommandTest {
         public Group getGroup(GroupId groupId) {
             throw new AssertionError("This method should not be called.");
         }
+
+        @Override
+        public void updateConsultationsForEditedPerson(Nusnetid oldNusnetid, Nusnetid newNusnetid) {
+            throw new AssertionError("This method should not be called.");
+        }
+
         @Override
         public boolean hasGroup(GroupId groupId) {
             throw new AssertionError("This method should not be called.");
@@ -256,9 +262,8 @@ public class AddCommandTest {
         public Person getPersonByNusnetId(Nusnetid nusnetid) {
             throw new AssertionError("This method should not be called.");
         }
-
         @Override
-        public Person getPersonByNusnetIdFullList(Nusnetid nusnetId) throws CommandException {
+        public void moveStudentToNewGroup(Person person, GroupId newGroupId) {
             throw new AssertionError("This method should not be called.");
         }
     }

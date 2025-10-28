@@ -147,6 +147,13 @@ public interface Model {
     void markHomework(Nusnetid nusnetId, int assignmentId, String status) throws CommandException;
 
     /**
+     * Moves a student to a new group.
+     * @param target the person to be moved
+     * @param newGroupId the new group ID
+     * @throws CommandException if an error occurs during the move
+     */
+    void moveStudentToNewGroup(Person target, GroupId newGroupId) throws CommandException;
+    /**
      * Updates the groups to include the newly added person.
      * @param person the person that was added
      */
@@ -220,4 +227,10 @@ public interface Model {
      * @return the group with the specified groupId
      */
     Group getGroup(GroupId groupId);
+
+    /**
+     * Updates consultations stored in the address book when a person's nusnetid changes.
+     * The implementation should update any Consultation objects that reference the old nusnetid to use the new one.
+     */
+    void updateConsultationsForEditedPerson(Nusnetid oldNusnetid, Nusnetid newNusnetid);
 }
