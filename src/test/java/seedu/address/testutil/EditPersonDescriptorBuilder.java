@@ -2,7 +2,6 @@ package seedu.address.testutil;
 
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.model.person.Email;
-import seedu.address.model.person.GroupId;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Nusnetid;
 import seedu.address.model.person.Person;
@@ -73,14 +72,6 @@ public class EditPersonDescriptorBuilder {
      */
     public EditPersonDescriptorBuilder withTelegram(String telegram) {
         descriptor.setTelegram(new Telegram(telegram));
-        return this;
-    }
-
-    /**
-     * Sets the {@code GroupId} of the {@code EditPersonDescriptor} that we are building.
-     */
-    public EditPersonDescriptorBuilder withSlot(String groupid) {
-        descriptor.setGroupId(new GroupId(groupid));
         return this;
     }
 

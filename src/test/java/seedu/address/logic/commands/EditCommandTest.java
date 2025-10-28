@@ -16,6 +16,8 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
+import java.time.LocalDateTime;
+
 import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.index.Index;
@@ -25,6 +27,8 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.event.Consultation;
+import seedu.address.model.person.Nusnetid;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
@@ -184,6 +188,38 @@ public class EditCommandTest {
         String expected = EditCommand.class.getCanonicalName() + "{index=" + index + ", editPersonDescriptor="
                 + editPersonDescriptor + "}";
         assertEquals(expected, editCommand.toString());
+    }
+
+    @Test
+    public void execute_editNusnetId_updatesConsultationList() throws Exception {
+        // Arrange: add a person with a consultation
+        Person original = model.getFilteredPersonList().get(0);
+        Nusnetid oldId = original.getNusnetid();
+        LocalDateTime from = LocalDateTime.of(2025, 1, 2, 9, 0);
+        LocalDateTime to = LocalDateTime.of(2025, 1, 2, 10, 0);
+        Consultation consult = new Consultation(oldId, from, to);
+        model.addConsultation(consult);
+        model.addConsultationToPerson(oldId, consult);
+
+        // Act: edit nusnetid
+        String newIdStr = "E9999999";
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withNusnetid(newIdStr).build();
+        EditCommand editCommand = new EditCommand(INDEX_FIRST_PERSON, descriptor);
+        editCommand.execute(model);
+
+        // Assert: global consultation list reflects new nusnetid
+        boolean hasOld = model.getAddressBook().getConsultationList().stream()
+                .anyMatch(c -> c.getNusnetid().equals(oldId) && c.getFrom().equals(from) && c.getTo().equals(to));
+        boolean hasNew = model.getAddressBook().getConsultationList().stream()
+                .anyMatch(c -> c.getNusnetid().value.equals(newIdStr)
+                        && c.getFrom().equals(from) && c.getTo().equals(to));
+        assertFalse(hasOld);
+        assertTrue(hasNew);
+
+        // And person's consultation updated
+        Person updated = model.findPerson(new Nusnetid(newIdStr));
+        assertTrue(updated.hasConsultation());
+        assertEquals(newIdStr, updated.getConsultation().get().getNusnetid().value);
     }
 
 }
