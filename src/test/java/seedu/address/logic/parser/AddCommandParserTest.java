@@ -83,7 +83,7 @@ public class AddCommandParserTest {
         assertParseFailure(parser, NUSNETID_DESC_AMY + validExpectedPersonString,
                 Messages.getErrorMessageForDuplicatePrefixes(PREFIX_NUSNETID));
 
-        // multiple slots
+        // multiple groupids
         assertParseFailure(parser, GROUPID_DESC_AMY + validExpectedPersonString,
                 Messages.getErrorMessageForDuplicatePrefixes(PREFIX_GROUP));
 
