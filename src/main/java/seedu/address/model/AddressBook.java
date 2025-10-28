@@ -10,12 +10,14 @@ import java.util.stream.StreamSupport;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.event.Consultation;
 import seedu.address.model.event.UniqueConsultationList;
 import seedu.address.model.person.GroupId;
 import seedu.address.model.person.Nusnetid;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
 
 /**
  * Wraps all data at the address-book level
@@ -306,5 +308,33 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void updateGroupWhenEditPerson(Person oldPerson) {
         requireNonNull(oldPerson);
         removePersonFromExistingGroup(oldPerson);
+    }
+    /**
+     * Moves a student to a new group. Also update the address book person list.
+     * @param student the student to be moved
+     * @param newGroupId the new group ID
+     */
+    public void moveStudentToNewGroup(Person student, GroupId newGroupId) throws CommandException {
+        requireNonNull(student);
+        requireNonNull(newGroupId);
+        // Remove from old group
+        Group oldGroup = groups.getGroup(student.getGroupId());
+        assert oldGroup != null : "Old group should exist when moving student to new group.";
+        oldGroup.removeStudent(student.getNusnetid());
+        // Add to new group
+        Person updatedStudent = student.withUpdatedGroup(newGroupId);
+        try {
+            this.setPerson(student, updatedStudent);
+        } catch (DuplicatePersonException e) {
+            throw new CommandException(e.getMessage());
+        }
+        if (!groups.contains(newGroupId)) {
+            Group newGroup = new Group(newGroupId);
+            this.addGroup(newGroup);
+            newGroup.addStudent(updatedStudent);
+        } else {
+            Group newGroup = groups.getGroup(newGroupId);
+            newGroup.addStudent(updatedStudent);
+        }
     }
 }

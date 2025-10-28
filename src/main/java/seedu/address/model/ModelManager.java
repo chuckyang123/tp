@@ -278,4 +278,10 @@ public class ModelManager implements Model {
         requireNonNull(groupId);
         return addressBook.getGroup(groupId);
     }
+
+    @Override
+    public void moveStudentToNewGroup(Person student, GroupId newGroupId) throws CommandException {
+        requireAllNonNull(student, newGroupId);
+        this.addressBook.moveStudentToNewGroup(student, newGroupId);
+    }
 }

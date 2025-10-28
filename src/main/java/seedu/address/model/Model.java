@@ -111,6 +111,13 @@ public interface Model {
      */
     void setPerson(Person target, Person editedPerson);
     /**
+     * Moves a student to a new group.
+     * @param target the person to be moved
+     * @param newGroupId the new group ID
+     * @throws CommandException if an error occurs during the move
+     */
+    void moveStudentToNewGroup(Person target, GroupId newGroupId) throws CommandException;
+    /**
      * Updates the groups to include the newly added person.
      * @param person the person that was added
      */

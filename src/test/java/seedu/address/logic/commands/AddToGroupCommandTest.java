@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.testutil.Assert.assertThrows;
 
 import java.nio.file.Path;
@@ -41,6 +42,8 @@ public class AddToGroupCommandTest {
     public void execute_groupDoesNotExist_createNewGroup() throws Exception {
         ModelStubWithGroup modelStub = new ModelStubWithGroup(
                 new Group(new GroupId("T01"), List.of()));
+        // Ensure that group T02 does not exist
+        assertEquals(false, modelStub.hasGroup(new GroupId("T02")));
         AddToGroupCommand command = new AddToGroupCommand(new Nusnetid("E1234567"), new GroupId("T02"));
         command.execute(modelStub);
         List<Group> groupsAfter = modelStub.getGroupList();
@@ -176,6 +179,10 @@ public class AddToGroupCommandTest {
         public void updateGroupWhenAddPerson(Person person) {
             throw new AssertionError("This method should not be called.");
         }
+        @Override
+        public void moveStudentToNewGroup(Person student, GroupId newGroupId) throws CommandException {
+            throw new AssertionError("This method should not be called.");
+        }
     }
     private class ModelStubWithGroup extends ModelStub {
         private static final String MESSAGE_STUDENT_NOT_FOUND = "Student not found.";
@@ -252,6 +259,11 @@ public class AddToGroupCommandTest {
         @Override
         public ObservableList<Group> getGroupList() {
             return this.addressBook.getGroupList();
+        }
+        @Override
+        public void moveStudentToNewGroup(Person student, GroupId newGroupId) throws CommandException {
+            requireAllNonNull(student, newGroupId);
+            this.addressBook.moveStudentToNewGroup(student, newGroupId);
         }
     }
 }
