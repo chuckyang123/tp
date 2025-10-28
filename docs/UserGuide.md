@@ -6,10 +6,11 @@
 
 # SoCTAssist User Guide
 
-SoCTAssist is a **desktop app for managing contacts, optimized for use via a Command Line Interface** (CLI) while still having
-the benefits of a Graphical User Interface (GUI). If you can type fast, SoCTAssist can get your contact management tasks
-done faster than traditional GUI apps.
+SoCTAssist is a **desktop app designed specifically to help Teaching Assistants manage their students' information,
+homework, attendance, and consultation sessions more efficiently.
 
+If you are a Teaching Assistance who can type fast, SoCTAssist can get your contact management tasks
+done faster than traditional GUI app and 
 <!-- * Table of Contents -->
 <page-nav-print />
 
