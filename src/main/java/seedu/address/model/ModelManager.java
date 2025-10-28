@@ -191,7 +191,7 @@ public class ModelManager implements Model {
     @Override
     public Person markAttendance(Nusnetid nusnetId, int week, AttendanceStatus status) throws CommandException {
         requireAllNonNull(nusnetId, status);
-        Person targetStudent = getPersonByNusnetId(nusnetId);
+        Person targetStudent = findPerson(nusnetId);
         AttendanceSheet updatedSheet = new AttendanceSheet();
         for (Attendance attendance : targetStudent.getAttendanceSheet().getAttendanceList()) {
             updatedSheet.markAttendance(attendance.getWeek(), attendance.getAttendanceStatus());
