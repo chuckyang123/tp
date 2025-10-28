@@ -177,6 +177,20 @@ public class AddCommandTest {
             throw new AssertionError("This method should not be called.");
         }
         @Override
+        public void addHomework(Nusnetid nusnetId, int assignmentId) throws CommandException {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void deleteHomework(Nusnetid nusnetId, int assignmentId) throws CommandException {
+            throw new AssertionError("This method should not be called.");
+        }
+        @Override
+        public void markHomework(Nusnetid nusnetId, int assignmentId, String status) throws CommandException {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public void addConsultationToPerson(Nusnetid nusnetid, Consultation consultation) {
             throw new AssertionError("This method should not be called.");
         }
@@ -254,6 +268,14 @@ public class AddCommandTest {
         }
         @Override
         public Person getPersonByNusnetId(Nusnetid nusnetid) {
+            throw new AssertionError("This method should not be called.");
+        }
+        @Override
+        public void moveStudentToNewGroup(Person person, GroupId newGroupId) {
+            throw new AssertionError("This method should not be called.");
+        }
+        @Override
+        public Person getPersonByNusnetIdFullList(Nusnetid nusnetid) {
             throw new AssertionError("This method should not be called.");
         }
     }
