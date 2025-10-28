@@ -10,6 +10,7 @@ import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -96,6 +97,38 @@ public class AddressBookTest {
                 + ", consultations=" + addressBook.getConsultationList()
                 + ", groups=" + addressBook.getGroupList() + "}";
         assertEquals(expected, addressBook.toString());
+    }
+
+    @Test
+    public void updateConsultationsForEditedPerson_updatesGlobalAndPersonConsultations() {
+        AddressBook ab = new AddressBook();
+        Person p = new PersonBuilder().withNusnetid("E1111111").build();
+        ab.addPerson(p);
+        LocalDateTime from = LocalDateTime.of(2025, 1, 1, 10, 0);
+        LocalDateTime to = LocalDateTime.of(2025, 1, 1, 11, 0);
+        Consultation c = new Consultation(new Nusnetid("E1111111"), from, to);
+        ab.addConsultation(c);
+        ab.addConsultationToPerson(new Nusnetid("E1111111"), c);
+
+        // Act
+        ab.updateConsultationsForEditedPerson(new Nusnetid("E1111111"), new Nusnetid("E2222222"));
+
+        // Assert global list updated
+        boolean hasOld = ab.getConsultationList().stream()
+                .anyMatch(x -> x.getNusnetid().value.equals("E1111111")
+                        && x.getFrom().equals(from) && x.getTo().equals(to));
+        boolean hasNew = ab.getConsultationList().stream()
+                .anyMatch(x -> x.getNusnetid().value.equals("E2222222")
+                        && x.getFrom().equals(from) && x.getTo().equals(to));
+        System.out.println(ab.getConsultationList().stream().map(Consultation::toString)
+                .reduce("", (a, b) -> a + "\n" + b));
+        assertFalse(hasOld);
+        assertTrue(hasNew);
+
+        // Assert person's optional consultation updated
+        Person stored = ab.getPersonByNusnetId(new Nusnetid("E1111111"));
+        assertTrue(stored.hasConsultation());
+        assertEquals("E2222222", stored.getConsultation().get().getNusnetid().value);
     }
 
     /**
