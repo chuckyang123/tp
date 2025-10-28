@@ -9,7 +9,7 @@ import static seedu.address.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_NUSNETID_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_SLOT_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_GROUP_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_TELEGRAM_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_BOB;
@@ -117,7 +117,7 @@ public class AddCommandParserTest {
                 Messages.getErrorMessageForDuplicatePrefixes(PREFIX_NUSNETID));
 
         // invalid slot
-        assertParseFailure(parser, INVALID_SLOT_DESC + validExpectedPersonString,
+        assertParseFailure(parser, INVALID_GROUP_DESC + validExpectedPersonString,
                 Messages.getErrorMessageForDuplicatePrefixes(PREFIX_GROUP));
 
         // invalid telegram
@@ -143,7 +143,7 @@ public class AddCommandParserTest {
                 Messages.getErrorMessageForDuplicatePrefixes(PREFIX_NUSNETID));
 
         // invalid slot
-        assertParseFailure(parser, validExpectedPersonString + INVALID_SLOT_DESC,
+        assertParseFailure(parser, validExpectedPersonString + INVALID_GROUP_DESC,
                 Messages.getErrorMessageForDuplicatePrefixes(PREFIX_GROUP));
 
         // invalid telegram
@@ -201,7 +201,7 @@ public class AddCommandParserTest {
 
         // invalid slot
         assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + NUSNETID_DESC_BOB
-                + TELEGRAM_DESC_BOB + INVALID_SLOT_DESC, GroupId.MESSAGE_CONSTRAINTS);
+                + TELEGRAM_DESC_BOB + INVALID_GROUP_DESC, GroupId.MESSAGE_CONSTRAINTS);
 
         // two invalid values, only first invalid value reported
         assertParseFailure(parser, INVALID_NAME_DESC + PHONE_DESC_BOB + EMAIL_DESC_BOB + INVALID_NUSNETID_DESC
