@@ -25,7 +25,7 @@ public class FindGroupCommandTest {
         assertEquals(findFirstCommand, findSecondCommand);
 
         // same values -> returns true
-        FindGroupCommand findFirstCommandCopy = new FindGroupCommand(new GroupId("B010"));
+        FindGroupCommand findFirstCommandCopy = new FindGroupCommand(new GroupId("B10"));
         assertNotEquals(findFirstCommand, findFirstCommandCopy);
 
         // different types -> returns false
@@ -53,8 +53,8 @@ public class FindGroupCommandTest {
         FindGroupCommand command = new FindGroupCommand(new GroupId("T99"));
         // no person in T99 group
         command.execute(model);
-        command.execute(expectedModel);
-        assertEquals(0, model.getFilteredPersonList().size());
+        CommandResult groupNotExistResult = command.execute(expectedModel);
+        assertEquals(groupNotExistResult, new CommandResult("No student with this group ID found"));
     }
     @Test
     public void toStringMethod() {
