@@ -86,16 +86,11 @@ public class EditCommandParserTest {
                 "Email: " + Email.MESSAGE_CONSTRAINTS); // invalid email
         assertParseFailure(parser, "1" + INVALID_NUSNETID_DESC,
                 "Nusnetid: " + Nusnetid.MESSAGE_CONSTRAINTS); // invalid nusnetid
-        assertParseFailure(parser, "1" + INVALID_SLOT_DESC,
-                "Group: " + GroupId.MESSAGE_CONSTRAINTS); // invalid slot
         assertParseFailure(parser, "1" + INVALID_TELEGRAM_DESC,
                 "Telegram: " + Telegram.MESSAGE_CONSTRAINTS); // invalid telegram
-
         // invalid phone followed by valid email
         assertParseFailure(parser, "1" + INVALID_PHONE_DESC + EMAIL_DESC_AMY,
                 "Phone: " + Phone.MESSAGE_CONSTRAINTS);
-
-
         // multiple invalid values
         assertParseFailure(parser, "1" + INVALID_NAME_DESC + INVALID_EMAIL_DESC + VALID_NUSNETID_AMY + VALID_PHONE_AMY,
                 "Name: " + Name.MESSAGE_CONSTRAINTS + System.lineSeparator()

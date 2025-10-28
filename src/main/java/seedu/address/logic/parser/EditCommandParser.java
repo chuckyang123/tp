@@ -91,6 +91,11 @@ public class EditCommandParser implements Parser<EditCommand> {
             }
         }
 
+        // If there were validation errors for any fields, report them together.
+        if (!errors.isEmpty()) {
+            throw new ParseException(String.join(System.lineSeparator(), errors));
+        }
+
         if (!editPersonDescriptor.isAnyFieldEdited()) {
             throw new ParseException(EditCommand.MESSAGE_NOT_EDITED);
         }
