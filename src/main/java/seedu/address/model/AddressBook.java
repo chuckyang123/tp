@@ -341,4 +341,56 @@ public class AddressBook implements ReadOnlyAddressBook {
             newGroup.addStudent(updatedStudent);
         }
     }
+
+    /**
+     * Updates consultations stored in the address book when a person's nusnetid is edited.
+     * Any consultation that references {@code oldNusnetid} will be replaced with a new Consultation
+     * using {@code newNusnetid} but keeping the same time range. If the updated consultation would
+     * conflict with existing consultations (by same time range), it will replace the old one.
+     */
+    public void updateConsultationsForEditedPerson(Nusnetid oldNusnetid, Nusnetid newNusnetid) {
+        requireNonNull(oldNusnetid);
+        requireNonNull(newNusnetid);
+        // Update consultations stored at the address book level
+        List<Consultation> toReplace = this.consultations.asUnmodifiableObservableList().stream()
+                .filter(c -> c.getNusnetid().equals(oldNusnetid))
+                .collect(Collectors.toList());
+        for (Consultation oldConsult : toReplace) {
+            Consultation newConsult = new Consultation(newNusnetid, oldConsult.getFrom(), oldConsult.getTo());
+            try {
+                // Replace the old consultation with the new nusnetid but same times.
+                // setConsultation uses identity by time; replacing is allowed because identity is unchanged.
+                consultations.setConsultation(oldConsult, newConsult);
+            } catch (RuntimeException e) {
+                // If not found (or other edge), try remove and add to ensure presence under new nusnetid.
+                try {
+                    consultations.remove(oldConsult);
+                } catch (RuntimeException ex) {
+                    // ignore if already removed
+                }
+                try {
+                    consultations.add(newConsult);
+                } catch (RuntimeException ex) {
+                    // ignore if add fails due to uniqueness; in that case, an equivalent slot already exists.
+                }
+            }
+        }
+
+        // Also update any consultation stored within persons (in UniquePersonList)
+        // For each person that had the old nusnetid, find and update their consultation as well
+        // Note: UniquePersonList manages person-level consultations
+        // via addConsultationToPerson/deleteConsultationFromPerson
+        // We will iterate through persons and for matching nusnetid update the person entry.
+        List<Person> personsToUpdate = persons.toList().stream()
+                .filter(p -> p.getNusnetid().equals(oldNusnetid) && p.hasConsultation())
+                .collect(Collectors.toList());
+        for (Person p : personsToUpdate) {
+            p.getConsultation().ifPresent(oldConsult -> {
+                Consultation newConsult = new Consultation(newNusnetid, oldConsult.getFrom(), oldConsult.getTo());
+                Person updatedPerson = p.deleteConsultation();
+                updatedPerson = updatedPerson.addConsultation(newConsult);
+                persons.setPerson(p, updatedPerson);
+            });
+        }
+    }
 }

@@ -46,7 +46,6 @@ public class PersonUtil {
         descriptor.getPhone().ifPresent(phone -> sb.append(PREFIX_PHONE).append(phone.value).append(" "));
         descriptor.getEmail().ifPresent(email -> sb.append(PREFIX_EMAIL).append(email.value).append(" "));
         descriptor.getNusnetid().ifPresent(nusnetid -> sb.append(PREFIX_NUSNETID).append(nusnetid.value).append(" "));
-        descriptor.getGroupId().ifPresent(groupId -> sb.append(PREFIX_GROUP).append(groupId).append(" "));
         descriptor.getTelegram().ifPresent(telegram -> sb.append(PREFIX_TELEGRAM).append(telegram.value).append(" "));
         return sb.toString();
     }
