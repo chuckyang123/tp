@@ -17,8 +17,8 @@ public class AddToGroupCommand extends Command {
     public static final String COMMAND_WORD = "add_to_group";
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Adds a existing student to a group.\n"
-            + "Parameters: " + PREFIX_GROUP + "GROUPID " + PREFIX_NUSNETID + "NETID \n"
-            + "Example: " + COMMAND_WORD + " " + PREFIX_GROUP + "T01 " + PREFIX_NUSNETID + "E1234567 \n";
+            + "Parameters: " + PREFIX_NUSNETID + "NETID " + PREFIX_GROUP + "GROUPID \n"
+            + "Example: " + COMMAND_WORD + " " + PREFIX_NUSNETID + "E1234567 " + PREFIX_GROUP + "T01 \n";
     public static final String MESSAGE_SAME_GROUP_FAIL = "Cannot move student to the same group they are already in.";
     private static final String MESSAGE_SUCCESS = "Student %s added to Group %s.";
     private final GroupId groupId;
@@ -35,6 +35,12 @@ public class AddToGroupCommand extends Command {
         this.nusnetId = nusnetId;
         this.groupId = groupId;
     }
+    /**
+     * Executes the command and returns the result message.
+     * @param model {@code Model} which the command should operate on.
+     * @return the command result message.
+     * @throws CommandException if the person is duplicate.
+     */
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
@@ -43,6 +49,11 @@ public class AddToGroupCommand extends Command {
         model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
         return new CommandResult(String.format(MESSAGE_SUCCESS, nusnetId, groupId));
     }
+    /**
+     * Checks equality between this AddToGroupCommand and another object.
+     * @param other the other object to compare with.
+     * @return true if both are AddToGroupCommand instances with the same nus net Id and groupId, false otherwise.
+     */
     @Override
     public boolean equals(Object other) {
         if (this == other) {

@@ -73,12 +73,6 @@ public class Group {
         return this.students.toArrayList();
     }
     /**
-     * Returns the list of students in this tutorial.
-     */
-    public UniquePersonList getStudents() {
-        return students;
-    }
-    /**
      * adds a student to this tutorial.
      */
     public void addStudent(Person student) {
