@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_GROUPID_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NUSNETID_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
@@ -57,9 +56,6 @@ public class EditPersonDescriptorTest {
         editedAmy = new EditPersonDescriptorBuilder(DESC_AMY).withTelegram(VALID_TELEGRAM_BOB).build();
         assertFalse(DESC_AMY.equals(editedAmy));
 
-        // different slot -> returns false
-        editedAmy = new EditPersonDescriptorBuilder(DESC_AMY).withSlot(VALID_GROUPID_BOB).build();
-        assertFalse(DESC_AMY.equals(editedAmy));
     }
 
     @Test
@@ -70,8 +66,7 @@ public class EditPersonDescriptorTest {
                 + editPersonDescriptor.getPhone().orElse(null) + ", email="
                 + editPersonDescriptor.getEmail().orElse(null) + ", nusnetid="
                 + editPersonDescriptor.getNusnetid().orElse(null) + ", telegram="
-                + editPersonDescriptor.getTelegram().orElse(null) + ", groupId="
-                + editPersonDescriptor.getGroupId().orElse(null) + "}";
+                + editPersonDescriptor.getTelegram().orElse(null) + "}";
         assertEquals(expected, editPersonDescriptor.toString());
     }
 }
