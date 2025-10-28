@@ -242,6 +242,10 @@ public class AddCommandTest {
         public Person getPersonByNusnetId(Nusnetid nusnetid) {
             throw new AssertionError("This method should not be called.");
         }
+        @Override
+        public void moveStudentToNewGroup(Person person, GroupId newGroupId) {
+            throw new AssertionError("This method should not be called.");
+        }
     }
 
     /**
