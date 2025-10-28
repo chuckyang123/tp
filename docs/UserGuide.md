@@ -1,30 +1,65 @@
 ---
   layout: default.md
-  title: "SoCAssist User Guide"
+  title: "User Guide"
   pageNav: 3
 ---
 
+# SoCTAssist User Guide
 
-
-
-
-SoCAssist is a **desktop app for managing contacts, optimized for use via a  Line Interface** (CLI) while still having
-the benefits of a Graphical User Interface (GUI). If you can type fast, SoCAssist can get your contact management tasks
+SoCTAssist is a **desktop app for managing contacts, optimized for use via a Command Line Interface** (CLI) while still having
+the benefits of a Graphical User Interface (GUI). If you can type fast, SoCTAssist can get your contact management tasks
 done faster than traditional GUI apps.
 
 <!-- * Table of Contents -->
 <page-nav-print />
 
 --------------------------------------------------------------------------------------------------------------------
+## Table of Contents
 
-## Quick start
+- [Quick Start](#quick-start)
+- [Command Summary](#command-summary)
+- [Features](#features)
+    - [Viewing help](#viewing-help--help)
+    - [List Commands](#list-commands)
+      - [Listing all persons](#listing-all-persons--list)
+      - [Listing all consultations](#listing-all-consultations--list_consult)
+    - [Person Commands](#person-commands)
+      - [Adding a person](#adding-a-person-add_student)
+      - [Editing a person](#editing-a-person--edit_student)
+      - [Finding students by name](#finding-students-by-name-find)
+      - [Deleting a person](#deleting-a-person--delete)
+    - [Homework Commands](#homework-commands)
+      - [Adding homework](#adding-homework--add_hw)
+      - [Marking homework](#marking-homework--mark_hw)
+      - [Deleting homework](#deleting-homework--delete_hw)
+    - [Attendance Commands](#attendance-commands)
+      - [Marking attendance](#marking-attendance--mark_attendance)
+      - [Marking attendance for one group of students](#marking-attendance-for-one-group-of-students--mark_all_attendance)
+    - [Consultation Commands](#consultation-commands)
+      - [Adding a consultation](#adding-a-consultation--add_consult)
+      - [Deleting a consultation](#deleting-a-consultation--delete_consult)
+    - [Group Commands](#group-commands)
+      - [Creating a group](#creating-a-group--create_group)
+      - [Adding a student to a group](#adding-a-student-to-a-group--add_to_group)
+      - [Finding group members](#finding-group-members--find_group)
+    - [Clearing all entries](#clearing-all-entries--clear)
+    - [Exiting the program](#exiting-the-program--exit)
+    - [Saving the data](#saving-the-data)
+    - [Editing the data file](#editing-the-data-file)
+- [FAQs](#faqs)
+- [Known Issues](#known-issues)
+- [Glossary](#glossary)
+
+---
+
+## Quick Start
 
 1. Ensure you have Java `17` or above installed in your Computer.<br>
    **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
 1. Download the latest `.jar` file from [here](https://github.com/AY2526S1-CS2103T-W11-1/tp/releases/tag/v1.3).
 
-1. Copy the file to the folder you want to use as the _home folder_ for your SoCAssist.
+1. Copy the file to the folder you want to use as the _home folder_ for your SoCTAssist.
 
 1. Open a command terminal, using command `cd` + the path to get into the folder you put the jar file in, and use the `java -jar SoCTAssist.jar` command to run the application.<br>
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
@@ -35,7 +70,7 @@ done faster than traditional GUI apps.
 
    * `list` : Lists all contacts.
 
-   * `add_student n/John Doe  i/E1234567 t/@john g/T01 p/98765432 e/johnd@@u.nus.edu` : Adds a contact named `John Doe` to the Address Book.
+   * `add_student n/John Doe  i/E1234567 t/@john g/T01 p/98765432 e/johnd@@u.nus.edu` : Adds a contact named `John Doe` to the address book.
 
    * `delete 3` : Deletes the 3rd contact shown in the current list.
 
@@ -44,6 +79,31 @@ done faster than traditional GUI apps.
    * `exit` : Exits the app.
 
 1. Refer to the [Features](#features) below for details of each command.
+
+--------------------------------------------------------------------------------------------------------------------
+## Command Summary
+
+| Description                 | Format                                                                                      | Example                                                                       |
+|-----------------------------|---------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------|
+| **Display help message**    | `help`                                                                                      | `help`                                                                        |
+| **List students**           | `list`                                                                                      | `list`                                                                        |
+| **List consultations**      | `list_consult`                                                                              | `list_consult`                                                                |
+| **Add student**             | `add_student n/NAME i/NUSNETID t/TELEGRAM s/SLOT [p/PHONE_NUMBER] [e/EMAIL]`                | `add n/James Ho i/E1234567 tg/@jame s/T02 [p/22224444] [e/jamesho@u.nus.edu]` |
+| **Edit student**            | `edit_student INDEX [n/NAME] [i/NUSNETID] [t/TELEGRAM] [p/PHONE_NUMBER] [e/EMAIL] [s/SLOT]` | `edit 2 n/James Lee e/jameslee@u.nus.edu`                                     |
+| **Delete student**          | `delete INDEX`                                                                              | `delete 3`                                                                    |
+| **Find students by name**   | `find KEYWORD [MORE_KEYWORDS]`                                                              | `find James Jake`                                                             |
+| **Add homework**            | `add_hw i/NUSNETID a/ASSIGNMENT`<br>(use `i/all` for all students)                          | `add_hw i/E1234567 a/1`                                                       |
+| **Mark homework**           | `mark_hw i/NUSNETID a/ASSIGNMENT status/STATUS`<br>(STATUS: complete, incomplete, late)     | `mark_hw i/E1234567 a/1 complete`                                             |
+| **Delete homework**         | `delete_hw i/NUSNETID a/ASSIGNMENT`<br>(use `i/all` for all students)                       | `delete_hw i/E1234567 a/1`                                                    |
+| **Mark attendance**         | `mark_attendance i/NUSNETID w/WEEK status/STATUS`<br>(STATUS: present, absent, excused)     | `mark_attendance i/E1234567 w/3 status/present`                               |
+| **Mark attendance for all** | `mark_all_attendance g/GROUPID w/WEEK status/STATUS`<br>(STATUS: present, absent, excused)  | `mark_all_attendance g/T01 w/3 status/present`                                |
+| **Add consultation**        | `add_consult i/NUSNETID from/DATE_TIME to/DATE_TIME`                                        | `add_consult i/E1234567 from/20240915 1400 to/20240915 1500`                  |
+| **Delete consultation**     | `delete_consult i/NUSNETID`                                                                 | `delete_consult i/E1234567`                                                   |
+| **Create group**            | `create_group g/GROUPID`                                                                    | `create_group g/T03`                                                          |
+| **Add student to group**    | `add_to_group i/NUSNETID g/GROUPID`                                                         | `add_to_group i/E1234567 g/T03`                                               |
+| **Find students by group**  | `find_group g/GROUPID`                                                                      | `find_group g/T03`                                                            |
+| **Clear address book**      | `clear`                                                                                     | `clear`                                                                       |
+| **Exit application**        | `exit`                                                                                      | `exit`                                                                        |
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -68,17 +128,39 @@ done faster than traditional GUI apps.
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 </box>
 
-
-
-\newpage
-
 ### Viewing help : `help`
 
-Shows a message explaining how to access the help page.
+Shows a message summarising all commands and displays a URL link that directs user to the help page.
 
 ![help message](images/helpMessage.png)
 
 Format: `help`
+
+---
+## List Commands
+
+### Listing all persons : `list`
+
+Shows a list of all persons in the address book.
+
+Format: `list`
+
+
+### Listing all consultations : `list_consult`
+
+Displays list of all consultations in the address book.
+
+Format: `list_consult`
+
+* Consultations will be sorted according to their start time, with the earliest consultation on top.
+
+Note:
+* After using `list_consult` command, index in `edit_student` and `delete` commands will refer to the global index of the student (index displayed after `list` command).
+* Users are highly recommended to use `list` command to find out the global index of the student before using `edit_student` or `delete` commands.
+
+---
+## Person Commands
+
 ### Adding a person: `add_student`
 
 Adds a person to the address book.
@@ -101,13 +183,11 @@ Shows a list of all persons in the ADDRESS book.
 
 Format: `list`
 
-
-
 ### Editing a person : `edit_student`
 
-Edits an existing person in the ADDRESS book.
+Edits an existing person in the address book.
 
-Format: `edit INDEX [n/NAME] [i/NUSNETID]  [t/TELEGRAM] [p/PHONE] [e/EMAIL]`
+Format: `edit_student INDEX [n/NAME] [i/NUSNETID]  [t/TELEGRAM] [p/PHONE] [e/EMAIL]`
 
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
@@ -117,11 +197,27 @@ Format: `edit INDEX [n/NAME] [i/NUSNETID]  [t/TELEGRAM] [p/PHONE] [e/EMAIL]`
 
 
 Examples:
-*  `edit_student 1 p/91234567 e/johndoe@u.nus.edu` Edits the phone number and email ADDRESS of the 1st person to be `91234567` and `johndoe@u.nus.edu` respectively.
+*  `edit_student 1 p/91234567 e/johndoe@u.nus.edu` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@u.nus.edu` respectively.
 *  `edit_student 2 n/Betsy Crower` Edits the name of the 2nd person to be `Betsy Crower`.
 *  `edit_student 3` Removes phone and email from the 3rd person (if present).
 
-### Locating persons by name: `find`
+
+### Deleting a person : `delete`
+
+Deletes the specified person from the address book.
+
+Format: `delete INDEX`
+
+* Deletes the person at the specified `INDEX`.
+* The index refers to the index number shown in the displayed person list.
+* The index **must be a positive integer** 1, 2, 3, …​
+
+Examples:
+* `list` followed by `delete 2` deletes the 2nd person in the address book.
+* `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
+
+
+### Finding students by name: `find`
 
 Finds persons whose names contain any of the given keywords.
 
@@ -138,19 +234,8 @@ Examples:
 * `find Doe` returns `Doe` and `John Doe`
   ![result for 'find alex david'](images/findDoeResult.png)
 
-### Deleting a person : `delete`
-
-Deletes the specified person from the ADDRESS book.
-
-Format: `delete INDEX`
-
-* Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the displayed person list.
-* The index **must be a positive integer** 1, 2, 3, …​
-
-Examples:
-* `list` followed by `delete 2` deletes the 2nd person in the ADDRESS book.
-* `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
+---
+## Homework Commands
 
 ### Adding homework : `add_hw`
 
@@ -166,7 +251,6 @@ Examples:
 * `add_hw i/E1234567 a/1` adds assignment 1 for the student with NUSNET ID `E1234567`.
 * `add_hw i/all a/2` adds assignment 2 for all students.
 
----
 
 ### Marking homework : `mark_hw`
 
@@ -182,7 +266,6 @@ Examples:
 * `mark_hw i/E1234567 a/1 status/complete` marks assignment 1 as complete for student `E1234567`.
 * `mark_hw i/E2345678 a/2 status/late` marks assignment 2 as late for student `E2345678`.
 
----
 
 ### Deleting homework : `delete_hw`
 
@@ -199,8 +282,9 @@ Examples:
 * `delete_hw i/all a/2` deletes assignment 2 for all students.
 
 ---
+## Attendance Commands
 
-### Marking attendance for one student: `mark_attendance`
+### Marking attendance : `mark_attendance`
 
 Marks the attendance status for the specified student and week.
 
@@ -236,6 +320,8 @@ Examples:
 * `mark_all_attendance g/T01 w/3 status/present` marks all students in group T01 as present for week 3.
 * `mark_all_attendance g/B04 w/5 status/absent` marks all students in group B04 as absent for week 5.
 
+---
+## Consultation Commands
 
 ### Adding a consultation : `add_consult`
 
@@ -243,15 +329,33 @@ Adds a consultation session for the specified student.
 
 Format: `add_consult i/NUSNETID from/DATE_TIME to/DATE_TIME`
 
-* Adds a consultation slot for the specified student.
 * Both start (`from`) and end (`to`) times **must be in `YYYYMMDD HHmm` format**.
 * The start time must be **earlier** than the end time**.
 
 Examples:
-* `add_consult i/E1234567 from/20240915 14:00 to/20240915 1500` adds a consultation for student `E1234567` from 2–3 PM on 15 Sep 2024.
-* `add_consult i/E2345678 from/20240920 1000 to/20240920 1100` adds a consultation from 10–11 AM for student `E2345678`.
+* `add_consult i/E1234567 from/20240915 1400 to/20240915 1500` adds a consultation from 2–3PM on 15 Sep 2024 for student `E1234567`.
+* `add_consult i/E2345678 from/20240920 1000 to/20240920 1100` adds a consultation from 10–11AM on 20 Sep 2024 for student `E2345678`.
+  
+Note:
+* After using `add_consult` command, index in `edit_student` and `delete` commands will refer to the global index of the student (index displayed after `list` command).
+* Users are highly recommended to use `list` command to find out the global index of the student before using `edit_student` or `delete` commands.
+
+### Deleting a consultation : `delete_consult`
+
+Deletes a consultation session for the specified student.
+
+Format: `delete_consult i/NUSNETID`
+
+Examples:
+* `delete_consult i/E1234567` deletes consultation for student `E1234567`.
+* `delete_consult i/E2345678` deletes consultation for student `E2345678`.
+
+Note:
+* After using `delete_consult` command, index in `edit_student` and `delete` commands will refer to the global index of the student (index displayed after `list` command).
+* Users are highly recommended to use `list` command to find out the global index of the student before using `edit_student` or `delete` commands.
 
 ---
+## Group Commands
 
 ### Creating a group : `create_group`
 
@@ -283,7 +387,7 @@ Examples:
 * `add_to_group i/E1234567 g/T03` adds student `E1234567` to group `T03`.
 * `add_to_group i/E2345678 g/B05` (group B05 does not exist initially) create group `B05` and adds student `E2345678` to it.
 
-### Find Group Members : `find_group`
+### Finding group members : `find_group`
 Finds all members in a specified tutorial group.
 
 Format: `find_group g/GROUPID`
@@ -295,9 +399,13 @@ Examples:
 * `find_group g/T03` displays all members in group `T03`.
 * `find_group g/B05` displays all members in group `B05`.
 
+---
+
 ### Clearing all entries : `clear`
 
-Clears all entries from the ADDRESS book.
+Clears all entries from the address book.
+
+* Deletes all students, groups and consultations from the address book.
 
 Format: `clear`
 
@@ -323,58 +431,35 @@ Furthermore, certain edits can cause the AddressBook to behave in unexpected way
 </box>
 --------------------------------------------------------------------------------------------------------------------
 
-## FAQ
+## FAQs
 
 **Q**: How do I transfer my data to another Computer?<br>
 **A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous AddressBook home folder.
 
 --------------------------------------------------------------------------------------------------------------------
 
-## Known issues
+## Known Issues
 
 1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen. The remedy is to delete the `preferences.json` file created by the application before running the application again.
 2. **If you minimize the Help Window** and then run the `help` command (or use the `Help` menu, or the keyboard shortcut `F1`) again, the original Help Window will remain minimized, and no new Help Window will appear. The remedy is to manually restore the minimized Help Window.
 
 --------------------------------------------------------------------------------------------------------------------
 
-## Command summary
-
-Action     | Format, Examples
------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------
-**AddStudent**    | `add_student n/NAME  i/NUSNETID t/TELEGRAM s/SLOT [p/PHONE_NUMBER] [e/EMAIL] ` <br> e.g., `add n/James Ho  i/E1234567 tg/@jame s/T02 [p/22224444] [e/jamesho@u.nus.edu]`
-**Clear**  | `clear`
-**Delete** | `delete INDEX`<br> e.g., `delete 3`
-**EditStudent**   | `edit_student INDEX [n/NAME] [i/NUSNETID] [t/TELEGRAM] [p/PHONE_NUMBER] [e/EMAIL]  [s/SLOT]`<br> e.g.,`edit 2 n/James Lee e/jameslee@u.nus.edu`
-**AddHomework**  | `add_hw i/NUSNETID (i/all for all students) a/ASSIGNMENT` <br> e.g., `add_hw i/E1234567 a/1`
-**MarkHomework**  | `mark_hw i/NUSNETID  a/ASSIGNMENT status/STATUS(complete incomplete late)` <br> e.g., `mark_hw i/E1234567 a/1 complete`
-**MarkAttendance**  | `mark_attendance i/NUSNETID w/WEEK status/STATUS(present absent excused)` <br> e.g., `mark_attendance i/E1234567 week/3 status/present`
-**MarkAllAttendance**  | `mark_all_attendance g/GROUPID w/WEEK status/STATUS(present absent excused)` <br> e.g., `mark_all_attendance g/T02 week/3 status/present`
-**AddConsultation**  | `add_consult i/NUSNETID from/DATE_TIME to/DATE_TIME` <br> e.g., `add_consult i/E1234567 from/2024-09-15 14:00 to/2024-09-15 15:00`
-**CreateGroup**  | `create_group g/GROUPID` <br> e.g., `create_group g/T03`
-**AddToGroup**  | `add_to_group i/NUSNETID g/GROUPID` <br> e.g., `add_to_group i/E1234567 g/T03`
-**FindGroup**  | `find_group g/GROUPID` <br> e.g., `find_group g/T03`
-**Find**   | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
-**List**   | `list`
-**Help**   | `help`
-**Exit**   | `exit`
-
 ## Glossary
-* **NETS id**: A unique identifier assigned to each student by the National University of Singapore (NUS) 
+* **NUSNETID**: A unique identifier assigned to each student by the National University of Singapore (NUS) 
 during matriculation. It is used for logging into various NUS systems.
 * **NUS email**: The official email address assigned to each student by NUS, typically
-in the format `<NETS id>@u.nus.edu`.
+in the format `<NUSNETID>@u.nus.edu`.
 * **Tutorial Group**: A smaller group of students within a course. Group Ids usually follow the format `TXX` or `BXX`,
-where `XX` are 2 digits.
+where `XX` represent 2 digits.
 * **CLI**: Command Line Interface. A text-based interface used to interact with software applications
 by typing commands.
 * **Week**: There are 13 weeks in each academic semester in NUS, and tutorial starts in Week 3.
-* **Assessment/Homework**: Work need to be done and submitted by mentees, graded by tutors.
+* **Assessment/Homework**: Work that needs to be done and submitted by mentees, graded by tutors.
 * **Consultation**: A session where mentees can seek help from tutors regarding their academic work or other
 related matters.
 * **Mentor (TA)/Mentee**: A mentor (TA) is a senior student who provides guidance and support to a junior student,
 known as a mentee.
-* **OOP**: Object-Oriented Programming. A programming paradigm that uses "objects" to represent data and methods
-to manipulate that data.
 * **GUI**: Graphical User Interface. A visual interface that allows users to interact with software applications
 using graphical elements such as windows, icons, and buttons.
 * **JSON**: JavaScript Object Notation. A lightweight data interchange format that is easy for humans to read and write
@@ -382,5 +467,4 @@ using graphical elements such as windows, icons, and buttons.
 * **JDK**: Java Development Kit. A software development environment used for developing Java applications.
 * **Jar file**: A Java ARchive file. A package file format used to aggregate many Java class files and associated
 metadata and resources into one file for distribution.
-* **KLoC**: Kilo Lines of Code. A measure of software size, representing 1,000 lines of code.
 * **CD**: Command Directory. The current directory in which the command terminal is operating.

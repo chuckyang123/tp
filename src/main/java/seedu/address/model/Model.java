@@ -201,4 +201,10 @@ public interface Model {
      * @return the group with the specified groupId
      */
     Group getGroup(GroupId groupId);
+
+    /**
+     * Updates consultations stored in the address book when a person's nusnetid changes.
+     * The implementation should update any Consultation objects that reference the old nusnetid to use the new one.
+     */
+    void updateConsultationsForEditedPerson(Nusnetid oldNusnetid, Nusnetid newNusnetid);
 }
