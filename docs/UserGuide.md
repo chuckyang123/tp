@@ -96,8 +96,8 @@ done faster than traditional GUI app and
 | **Add homework**            | `add_hw i/NUSNETID a/ASSIGNMENT`<br>(use `i/all` for all students)                         | `add_hw i/E1234567 a/1`                                                              |
 | **Mark homework**           | `mark_hw i/NUSNETID a/ASSIGNMENT status/STATUS`<br>(STATUS: complete, incomplete, late)    | `mark_hw i/E1234567 a/1 complete`                                                    |
 | **Delete homework**         | `delete_hw i/NUSNETID a/ASSIGNMENT`<br>(use `i/all` for all students)                      | `delete_hw i/E1234567 a/1`                                                           |
-| **Mark attendance**         | `mark_attendance i/NUSNETID w/WEEK status/STATUS`<br>(STATUS: present, absent, excused)    | `mark_attendance i/E1234567 w/3 status/present`                                      |
-| **Mark attendance for all** | `mark_all_attendance g/GROUPID w/WEEK status/STATUS`<br>(STATUS: present, absent, excused) | `mark_all_attendance g/T01 w/3 status/present`                                       |
+| **Mark attendance**         | `mark_attendance i/NUSNETID w/WEEK status/ATTENDANCE_STATUS`<br>(STATUS: present, absent, excused)    | `mark_attendance i/E1234567 w/3 status/present`                                      |
+| **Mark attendance for all** | `mark_all_attendance g/GROUPID w/WEEK status/ATTENDANCE_STATUS`<br>(STATUS: present, absent, excused) | `mark_all_attendance g/T01 w/3 status/present`                                       |
 | **Add consultation**        | `add_consult i/NUSNETID from/DATE_TIME to/DATE_TIME`                                       | `add_consult i/E1234567 from/20240915 1400 to/20240915 1500`                         |
 | **Delete consultation**     | `delete_consult i/NUSNETID`                                                                | `delete_consult i/E1234567`                                                          |
 | **Create group**            | `create_group g/GROUPID`                                                                   | `create_group g/T03`                                                                 |
@@ -179,6 +179,11 @@ Examples:
 * `add_student n/John Doe i/E1234567 t/@handle g/T01  p/98765432 e/johnd@u.nus.edu`
 * `add_student n/Betsy Crow i/E1234562 p/1234567 t/@betsy g/T02  e/betsycrowe@u.nus.edu`
 
+### Listing all persons : `list`
+
+Shows a list of all persons in the ADDRESS book.
+
+Format: `list`
 
 ### Editing a person : `edit_student`
 
@@ -281,34 +286,41 @@ Examples:
 ---
 ## Attendance Commands
 
-### Marking attendance : `mark_attendance`
+### Marking attendance for one student: `mark_attendance`
 
 Marks the attendance status for the specified student and week.
 
-Format: `mark_attendance i/NUSNETID w/WEEK status/STATUS`
+Format: `mark_attendance i/NUSNETID w/WEEK status/ATTENDANCE_STATUS`
 
 * Marks attendance for the given student and week.
-* The `STATUS` can be one of the following: `present`, `absent`, or `excused`.
-* The NUSNET ID and week number **must be valid**.
+* week number must between 2 to 13.
+* NUSNET ID can start with E and has 7 numbers, and it should not be blank.
+* The `ATTENDANCE_STATUS` can be one of the following: `present`, `absent`, or `excused`.
+* The NUSNET ID, week number and status **must be valid**.
+* The system will check the validity of command format, followed by validity of input, and lastly the existence of the student.
 
 Examples:
 * `mark_attendance i/E1234567 w/3 status/present` marks student `E1234567` as present for week 3.
 * `mark_attendance i/E2345678 w/5 status/absent` marks student `E2345678` as absent for week 5.
 
+---
 
 ### Marking attendance for one group of students : `mark_all_attendance`
 
 Marks the attendance status for all the students in one tutorial group in a specified week.
 
-Format: `mark_all_attendance g/GROUP w/WEEK status/STATUS`
+Format: `mark_all_attendance g/GROUPID w/WEEK status/ATTENDANCE_STATUS`
 
 * Marks attendance for the given tutorial group of student and week.
-* The `STATUS` can be one of the following: `present`, `absent`, or `excused`.
-* The groupId and week number **must be valid**.
+* week number must between 2 to 13.
+* Group IDs should start with T or B (case-insensitive) and be followed by strictly 2 digits.
+* The `ATTENDANCE_STATUS` can be one of the following: `present`, `absent`, or `excused`.
+* The groupId, week number and status **must be valid**.
+* The system will check the validity of command format, followed by validity of input, and lastly the existence of the group.
 
 Examples:
-* `mark_attendance g/T01 w/3 status/present` marks student `E1234567` as present for week 3.
-* `mark_attendance g/BO4 w/5 status/absent` marks student `E2345678` as absent for week 5.
+* `mark_all_attendance g/T01 w/3 status/present` marks all students in group T01 as present for week 3.
+* `mark_all_attendance g/B04 w/5 status/absent` marks all students in group B04 as absent for week 5.
 
 ---
 ## Consultation Commands
