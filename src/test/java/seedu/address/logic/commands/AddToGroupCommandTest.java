@@ -180,6 +180,12 @@ public class AddToGroupCommandTest {
         public Group getGroup(GroupId groupId) {
             throw new AssertionError("This method should not be called.");
         }
+
+        @Override
+        public void updateConsultationsForEditedPerson(Nusnetid oldNusnetid, Nusnetid newNusnetid) {
+            throw new AssertionError("This method should not be called.");
+        }
+
         @Override
         public boolean hasGroup(GroupId groupId) {
             throw new AssertionError("This method should not be called.");
