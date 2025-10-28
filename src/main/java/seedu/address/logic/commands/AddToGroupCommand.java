@@ -19,7 +19,7 @@ public class AddToGroupCommand extends Command {
             + ": Adds a existing student to a group.\n"
             + "Parameters: " + PREFIX_GROUP + "GROUPID " + PREFIX_NUSNETID + "NETID \n"
             + "Example: " + COMMAND_WORD + " " + PREFIX_GROUP + "T01 " + PREFIX_NUSNETID + "E1234567 \n";
-
+    public static final String MESSAGE_SAME_GROUP_FAIL = "Cannot move student to the same group they are already in.";
     private static final String MESSAGE_SUCCESS = "Student %s added to Group %s.";
     private final GroupId groupId;
     private final Nusnetid nusnetId;

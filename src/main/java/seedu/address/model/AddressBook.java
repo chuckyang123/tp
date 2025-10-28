@@ -10,6 +10,7 @@ import java.util.stream.StreamSupport;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.logic.commands.AddToGroupCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.event.Consultation;
 import seedu.address.model.event.UniqueConsultationList;
@@ -317,6 +318,9 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void moveStudentToNewGroup(Person student, GroupId newGroupId) throws CommandException {
         requireNonNull(student);
         requireNonNull(newGroupId);
+        if (student.getGroupId().equals(newGroupId)) {
+            throw new CommandException(AddToGroupCommand.MESSAGE_SAME_GROUP_FAIL);
+        }
         // Remove from old group
         Group oldGroup = groups.getGroup(student.getGroupId());
         assert oldGroup != null : "Old group should exist when moving student to new group.";
