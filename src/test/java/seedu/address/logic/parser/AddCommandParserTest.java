@@ -206,7 +206,7 @@ public class AddCommandParserTest {
         // two invalid values
         assertParseFailure(parser, INVALID_NAME_DESC + PHONE_DESC_BOB + EMAIL_DESC_BOB + INVALID_NUSNETID_DESC
                 + TELEGRAM_DESC_BOB + GROUPID_DESC_BOB, "Name: " + Name.MESSAGE_CONSTRAINTS
-        + System.lineSeparator() + "Nusnetid: " + Nusnetid.MESSAGE_CONSTRAINTS);
+                + System.lineSeparator() + "Nusnetid: " + Nusnetid.MESSAGE_CONSTRAINTS);
 
         // non-empty preamble
         assertParseFailure(parser, PREAMBLE_NON_EMPTY + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
