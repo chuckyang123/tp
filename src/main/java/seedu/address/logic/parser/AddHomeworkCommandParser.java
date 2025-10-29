@@ -17,7 +17,7 @@ import seedu.address.model.person.Nusnetid;
  *     <li>{@code i/<nusnetId> a/<assignmentId>} to add homework to a specific student</li>
  *     <li>{@code i/all a/<assignmentId>} to add homework to all students</li>
  * </ul>
- * Assignment IDs must be integers between 1 and 3.
+ * Homework IDs must be integers between 1 and 3.
  * </p>
  *
  * <p>Example usage:</p>
@@ -50,10 +50,10 @@ public class AddHomeworkCommandParser implements Parser<AddHomeworkCommand> {
         try {
             assignmentId = Integer.parseInt(assignmentRaw);
         } catch (NumberFormatException e) {
-            throw new ParseException("Assignment id must be an integer between 1 and 3.");
+            throw new ParseException("Homework id must be an integer between 1 and 3.");
         }
         if (assignmentId < 1 || assignmentId > 3) {
-            throw new ParseException("Assignment id must be between 1 and 3.");
+            throw new ParseException("Homework id must be between 1 and 3.");
         }
 
         String nusnetIdRaw = argMultimap.getValue(PREFIX_NUSNETID)

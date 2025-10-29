@@ -17,7 +17,7 @@ import seedu.address.model.person.Nusnetid;
  * <pre>{@code
  * i/<nusnetId> a/<assignmentId> status/<complete|incomplete|late>
  * }</pre>
- * Assignment IDs must be integers between 0 and 2, and the status must be one of
+ * Homework IDs must be integers between 0 and 2, and the status must be one of
  * "complete", "incomplete", or "late".
  * </p>
  *
@@ -55,10 +55,10 @@ public class MarkHomeworkCommandParser implements Parser<MarkHomeworkCommand> {
         try {
             assignmentId = Integer.parseInt(assignmentRaw);
         } catch (NumberFormatException e) {
-            throw new ParseException("Assignment id must be an integer between 1 and 3.");
+            throw new ParseException("Homework id must be an integer between 1 and 3.");
         }
         if (assignmentId < 1 || assignmentId > 3) {
-            throw new ParseException("Assignment id must be between 1 and 3.");
+            throw new ParseException("Homework id must be between 1 and 3.");
         }
 
         String status = argMultimap.getValue(PREFIX_STATUS)
