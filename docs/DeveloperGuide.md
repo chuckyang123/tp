@@ -270,9 +270,82 @@ The following activity diagram summarizes what happens when a user executes a ne
 
 _{more aspects and alternatives to be added}_
 
-### \[Proposed\] Data archiving
+---
+### Add Homework Feature
 
-_{Explain here how the data archiving feature will be implemented}_
+The add homework feature allows users to assign a homework task to either a specific student or all students. Each homework is identified by an assignment ID.
+
+The sequence diagram below illustrates the interactions within the `Logic` component for adding homework:
+
+<puml src="diagrams/AddHomeworkSequenceDiagram.puml" width="550" alt="Interactions Inside the Logic Component for the `addhomework` Command" />
+
+<box type="info" seamless>
+
+**Note:** The lifeline for `AddHomeworkCommandParser` should end at the destroy marker (X), but due to a limitation of PlantUML, the lifeline continues till the end of the diagram.
+
+</box>
+
+How the `addhomework` command works:
+1. When the user enters an `addhomework` command, `LogicManager` passes it to `AddressBookParser`.
+2. `AddressBookParser` creates an `AddHomeworkCommandParser` to parse the command arguments.
+3. `AddHomeworkCommandParser` validates and parses the NUSNET ID (or the keyword `all`) and the assignment ID.
+4. An `AddHomeworkCommand` object is created and executed.
+5. Before execution, the current state is committed for undo/redo functionality.
+6. `AddHomeworkCommand` checks if the homework assignment already exists for the specified student(s).
+7. If no duplicates are found, the homework is added to the target student(s)’ homework tracker(s).
+8. The updated address book is saved to storage.
+
+---
+
+### Delete Homework Feature
+
+The delete homework feature allows users to remove an existing homework assignment from a specific student or from all students.
+
+The sequence diagram below illustrates the interactions within the `Logic` component for deleting homework:
+
+<puml src="diagrams/DeleteHomeworkSequenceDiagram.puml" width="550" alt="Interactions Inside the Logic Component for the `deletehomework` Command" />
+
+<box type="info" seamless>
+
+**Note:** The lifeline for `DeleteHomeworkCommandParser` should end at the destroy marker (X), but due to a limitation of PlantUML, the lifeline continues till the end of the diagram.
+
+</box>
+
+How the `deletehomework` command works:
+1. When the user enters a `deletehomework` command, `LogicManager` passes it to `AddressBookParser`.
+2. `AddressBookParser` creates a `DeleteHomeworkCommandParser` to parse the command arguments.
+3. `DeleteHomeworkCommandParser` validates and parses the NUSNET ID (or the keyword `all`) and the assignment ID.
+4. A `DeleteHomeworkCommand` object is created and executed.
+5. Before execution, the current state is committed for undo/redo functionality.
+6. `DeleteHomeworkCommand` verifies that the homework exists for the specified student(s).
+7. If found, the homework is removed from the respective homework tracker(s).
+8. The updated address book is saved to storage.
+
+---
+
+### Mark Homework Feature
+
+The mark homework feature allows users to update the status (e.g., `done`, `pending`) of a homework assignment for a specific student.
+
+The sequence diagram below illustrates the interactions within the `Logic` component for marking homework:
+
+<puml src="diagrams/MarkHomeworkSequenceDiagram.puml" width="550" alt="Interactions Inside the Logic Component for the `markhomework` Command" />
+
+<box type="info" seamless>
+
+**Note:** The lifeline for `MarkHomeworkCommandParser` should end at the destroy marker (X), but due to a limitation of PlantUML, the lifeline continues till the end of the diagram.
+
+</box>
+
+How the `markhomework` command works:
+1. When the user enters a `markhomework` command, `LogicManager` passes it to `AddressBookParser`.
+2. `AddressBookParser` creates a `MarkHomeworkCommandParser` to parse the command arguments.
+3. `MarkHomeworkCommandParser` validates and parses the NUSNET ID, assignment ID, and status.
+4. A `MarkHomeworkCommand` object is created and executed.
+5. Before execution, the current state is committed for undo/redo functionality.
+6. `MarkHomeworkCommand` checks whether the specified homework exists for the student.
+7. If found, the homework’s status is updated to the new value.
+8. The updated address book is saved to storage.
 
 
 --------------------------------------------------------------------------------------------------------------------
