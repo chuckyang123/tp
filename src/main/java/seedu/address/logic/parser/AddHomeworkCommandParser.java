@@ -32,6 +32,11 @@ public class AddHomeworkCommandParser implements Parser<AddHomeworkCommand> {
     public AddHomeworkCommand parse(String args) throws ParseException {
         requireNonNull(args);
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_NUSNETID, PREFIX_ASSIGNMENT);
+        if (!arePrefixesPresent(argMultimap, PREFIX_NUSNETID, PREFIX_ASSIGNMENT)
+                || !argMultimap.getPreamble().isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddHomeworkCommand.MESSAGE_USAGE));
+        }
+
         try {
             argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NUSNETID, PREFIX_ASSIGNMENT);
         } catch (ParseException e) {
@@ -71,5 +76,14 @@ public class AddHomeworkCommandParser implements Parser<AddHomeworkCommand> {
         } catch (IllegalArgumentException e) {
             throw new ParseException(Nusnetid.MESSAGE_CONSTRAINTS);
         }
+    }
+
+    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
+        for (Prefix prefix : prefixes) {
+            if (argumentMultimap.getValue(prefix).isEmpty()) {
+                return false;
+            }
+        }
+        return true;
     }
 }

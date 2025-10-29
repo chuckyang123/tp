@@ -44,6 +44,6 @@ public class MarkHomeworkCommandParserTest {
     public void parse_invalidNusnetId_failure() {
         // Empty or invalid nusnet ID
         assertParseFailure(parser, " i/ a/1",
-                Nusnetid.MESSAGE_CONSTRAINTS);
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, MarkHomeworkCommand.MESSAGE_USAGE));
     }
 }

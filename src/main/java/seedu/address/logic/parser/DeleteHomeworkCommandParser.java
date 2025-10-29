@@ -26,6 +26,12 @@ public class DeleteHomeworkCommandParser implements Parser<DeleteHomeworkCommand
         requireNonNull(args);
         String normalized = " " + args.trim();
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(normalized, PREFIX_NUSNETID, PREFIX_ASSIGNMENT);
+        if (!arePrefixesPresent(argMultimap, PREFIX_NUSNETID, PREFIX_ASSIGNMENT)
+                || !argMultimap.getPreamble().isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    DeleteHomeworkCommand.MESSAGE_USAGE));
+        }
+
         try {
             argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NUSNETID, PREFIX_ASSIGNMENT);
         } catch (ParseException e) {
@@ -67,5 +73,14 @@ public class DeleteHomeworkCommandParser implements Parser<DeleteHomeworkCommand
         } catch (IllegalArgumentException e) {
             throw new ParseException(Nusnetid.MESSAGE_CONSTRAINTS);
         }
+    }
+
+    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
+        for (Prefix prefix : prefixes) {
+            if (argumentMultimap.getValue(prefix).isEmpty()) {
+                return false;
+            }
+        }
+        return true;
     }
 }

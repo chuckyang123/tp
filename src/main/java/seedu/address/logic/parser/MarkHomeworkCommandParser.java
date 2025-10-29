@@ -36,6 +36,11 @@ public class MarkHomeworkCommandParser implements Parser<MarkHomeworkCommand> {
                 PREFIX_NUSNETID, PREFIX_ASSIGNMENT, PREFIX_STATUS);
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NUSNETID, PREFIX_ASSIGNMENT, PREFIX_STATUS);
 
+        if (!arePrefixesPresent(argMultimap, PREFIX_NUSNETID, PREFIX_ASSIGNMENT, PREFIX_STATUS)
+                || !argMultimap.getPreamble().isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MarkHomeworkCommand.MESSAGE_USAGE));
+        }
+
         String nusnetIdRaw = argMultimap.getValue(PREFIX_NUSNETID)
                 .orElseThrow(() -> new ParseException(
                         String.format(MESSAGE_INVALID_COMMAND_FORMAT, MarkHomeworkCommand.MESSAGE_USAGE)))
@@ -71,5 +76,14 @@ public class MarkHomeworkCommandParser implements Parser<MarkHomeworkCommand> {
         }
 
         return new MarkHomeworkCommand(nusnetId, assignmentId, status);
+    }
+
+    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
+        for (Prefix prefix : prefixes) {
+            if (argumentMultimap.getValue(prefix).isEmpty()) {
+                return false;
+            }
+        }
+        return true;
     }
 }
