@@ -10,12 +10,15 @@ import java.util.stream.StreamSupport;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.logic.commands.AddToGroupCommand;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.event.Consultation;
 import seedu.address.model.event.UniqueConsultationList;
 import seedu.address.model.person.GroupId;
 import seedu.address.model.person.Nusnetid;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
 
 /**
  * Wraps all data at the address-book level
@@ -307,6 +310,41 @@ public class AddressBook implements ReadOnlyAddressBook {
         requireNonNull(oldPerson);
         removePersonFromExistingGroup(oldPerson);
     }
+    /**
+     * Moves a student to a new group. Also update the address book person list.
+     * @param student the student to be moved
+     * @param newGroupId the new group ID
+     */
+    public void moveStudentToNewGroup(Person student, GroupId newGroupId) throws CommandException {
+        requireNonNull(student);
+        requireNonNull(newGroupId);
+        if (student.getGroupId().equals(newGroupId)) {
+            throw new CommandException(AddToGroupCommand.MESSAGE_SAME_GROUP_FAIL);
+        }
+        // Remove from old group
+        Group oldGroup = groups.getGroup(student.getGroupId());
+        assert oldGroup != null : "Old group should exist when moving student to new group.";
+        oldGroup.removeStudent(student.getNusnetid());
+        // Add to new group
+        Person updatedStudent = student.withUpdatedGroup(newGroupId);
+        try {
+            assert this.persons.contains(student);
+            this.setPerson(student, updatedStudent);
+            // Update in address book person list
+            // This may throw DuplicatePersonException or PersonNotFoundException
+            // Here we assume that the student exists and no duplicates will be created
+        } catch (DuplicatePersonException e) {
+            throw new CommandException(e.getMessage());
+        }
+        if (!groups.contains(newGroupId)) {
+            Group newGroup = new Group(newGroupId);
+            this.addGroup(newGroup);
+            newGroup.addStudent(updatedStudent);
+        } else {
+            Group newGroup = groups.getGroup(newGroupId);
+            newGroup.addStudent(updatedStudent);
+        }
+    }
 
     /**
      * Updates consultations stored in the address book when a person's nusnetid is edited.
@@ -337,7 +375,7 @@ public class AddressBook implements ReadOnlyAddressBook {
                 try {
                     consultations.add(newConsult);
                 } catch (RuntimeException ex) {
-                    // ignore if add fails due to uniqueness; in that case, an equivalent slot already exists.
+                    // ignore if add fails due to uniqueness; in that case, an equivalent group already exists.
                 }
             }
         }
