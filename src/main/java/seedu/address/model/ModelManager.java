@@ -326,6 +326,20 @@ public class ModelManager implements Model {
 
     @Override
     public void addHomework(Nusnetid nusnetId, int assignmentId) throws CommandException {
+        List<String> errors = new ArrayList<>();
+        if (assignmentId < 1 || assignmentId > 3) {
+            errors.add("Homework ID must be between 1 and 3.");
+        }
+
+        if (nusnetId != null) {
+            if (!hasPerson(nusnetId)) {
+                errors.add(String.format("Student with NUSNET ID %s does not exist.", nusnetId.value));
+            }
+        }
+        if (!errors.isEmpty()) {
+            throw new CommandException(String.join(" ", errors));
+        }
+
         if (nusnetId == null) {
             // add homework to all students
             for (Person p : addressBook.getUniquePersonList()) {
