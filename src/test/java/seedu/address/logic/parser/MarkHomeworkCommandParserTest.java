@@ -26,7 +26,7 @@ public class MarkHomeworkCommandParserTest {
     public void parse_invalidAssignmentId_failure() {
         // ID out of allowed range
         assertParseFailure(parser, " i/" + VALID_NUSNETID_AMY + " a/10" + " status/complete",
-                "Assignment id must be between 1 and 3.");
+                "Homework id must be between 1 and 3.");
     }
 
     @Test
