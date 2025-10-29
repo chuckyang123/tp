@@ -61,8 +61,6 @@ public class EditCommandParser implements Parser<EditCommand> {
             } catch (ParseException e) {
                 errors.add("Phone: " + e.getMessage());
             }
-        } else {
-            editPersonDescriptor.setPhone(null);
         }
         // Email (optional)
         if (argMultimap.getValue(PREFIX_EMAIL).isPresent()) {
@@ -71,8 +69,6 @@ public class EditCommandParser implements Parser<EditCommand> {
             } catch (ParseException e) {
                 errors.add("Email: " + e.getMessage());
             }
-        } else {
-            editPersonDescriptor.setEmail(null);
         }
         // Nusnetid
         if (argMultimap.getValue(PREFIX_NUSNETID).isPresent()) {

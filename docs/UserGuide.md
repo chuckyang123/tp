@@ -192,16 +192,14 @@ Edits an existing person in the address book.
 Format: `edit_student INDEX [n/NAME] [i/NUSNETID]  [t/TELEGRAM] [p/PHONE] [e/EMAIL]`
 
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
-* At least one of the fields is provided to change the person's details. If none of the fields are provided, the command will clear the phone and email of the student.
+* At least one of the fields is provided to change the person's details.
 * Existing values will be updated to the input values.
-* Phone and email are optional. You can remove them by omitting these fields in your edit command.
 * You can not use this command to change a person's tutorial group. Use the `add_to_group` command instead.
 
 
 Examples:
 *  `edit_student 1 p/91234567 e/johndoe@u.nus.edu` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@u.nus.edu` respectively.
 *  `edit_student 2 n/Betsy Crower` Edits the name of the 2nd person to be `Betsy Crower`.
-*  `edit_student 3` Removes phone and email from the 3rd person (if present).
 
 
 ### Deleting a person : `delete`
