@@ -391,7 +391,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* * *`  | TA                  | mark students' attendance                             | record all students' tutorial attendance                                  |
 | `* * *`  | TA                  | track each individual student's homework completeness | view their learning progress and identify students who are falling behind |                                                          |
 | `* *`    | new user            | have a step-by-step usage instruction guide           | learn how to use the app                                                  |
-| `* *`    | course coordinator  | view all TAs' availability                            | assign TAs to their preferred tutorial slot                               |
+| `* *`    | course coordinator  | view all TAs' availability                            | assign TAs to their preferred tutorial group                              |
 | `* *`    | head TA             | create subgroups within the course                    | assign students and TAs to their respective tutorial groups               |
 | `* *`    | head TA             | key in students' scores                               | update students' scores after every exam                                  |
 | `* *`    | head TA             | view overall course feedback from students            | gather data to perform course analysis                                    |
@@ -413,7 +413,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1. User requests to add a student by specifying full name, preferred name, email, Telegram handle, and slot ID.
+1. User requests to add a student by specifying full name, preferred name, email, Telegram handle, and group ID.
 
 2. AddressBook validates all fields.
 
@@ -443,7 +443,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
         Use case ends.
 
-* 2d. Slot ID format is invalid.
+* 2d. Group ID format is invalid.
 
     * 2d1. AddressBook shows error message.
 
@@ -772,7 +772,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 #### 1. Data Requirements
 ##### NFR-D1: Data Size
 - Maximum 500 students per course
-- Maximum 50 tutorial slots per course
+- Maximum 50 tutorial groups per course
 - Support 12 weeks of attendance data (weeks 2-13)
 - Support at least 10 assignments per course
 - Store consultation history for entire semester

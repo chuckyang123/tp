@@ -6,10 +6,11 @@
 
 # SoCTAssist User Guide
 
-SoCTAssist is a **desktop app for managing contacts, optimized for use via a Command Line Interface** (CLI) while still having
-the benefits of a Graphical User Interface (GUI). If you can type fast, SoCTAssist can get your contact management tasks
-done faster than traditional GUI apps.
+SoCTAssist is a **desktop app designed specifically to help Teaching Assistants manage their students' information,
+homework, attendance, and consultation sessions more efficiently.
 
+If you are a Teaching Assistance who can type fast, SoCTAssist can get your contact management tasks
+done faster than traditional GUI app and 
 <!-- * Table of Contents -->
 <page-nav-print />
 
@@ -57,12 +58,12 @@ done faster than traditional GUI apps.
 1. Ensure you have Java `17` or above installed in your Computer.<br>
    **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
-1. Download the latest `.jar` file from [here](https://github.com/AY2526S1-CS2103T-W11-1/tp/releases/tag/v1.3).
+1. Download the latest `.jar` file from [here](https://github.com/AY2526S1-CS2103T-W11-1/tp/releases/tag/v1.4).
 
 1. Copy the file to the folder you want to use as the _home folder_ for your SoCTAssist.
 
-1. Open a command terminal, using command `cd` + the path to get into the folder you put the jar file in, and use the `java -jar SoCTAssist.jar` command to run the application.<br>
-   A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
+1. Open a command terminal, using command `cd` + the path to get into the folder you put the jar file in, and use the `java -jar soctassist.jar` command to run the application.<br>
+   A GUI similar to the below should appear in a few seconds. <br>
    ![Ui](images/Ui.png)
 
 1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
@@ -83,27 +84,27 @@ done faster than traditional GUI apps.
 --------------------------------------------------------------------------------------------------------------------
 ## Command Summary
 
-| Description                 | Format                                                                                      | Example                                                                       |
-|-----------------------------|---------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------|
-| **Display help message**    | `help`                                                                                      | `help`                                                                        |
-| **List students**           | `list`                                                                                      | `list`                                                                        |
-| **List consultations**      | `list_consult`                                                                              | `list_consult`                                                                |
-| **Add student**             | `add_student n/NAME i/NUSNETID t/TELEGRAM s/SLOT [p/PHONE_NUMBER] [e/EMAIL]`                | `add n/James Ho i/E1234567 tg/@jame s/T02 [p/22224444] [e/jamesho@u.nus.edu]` |
-| **Edit student**            | `edit_student INDEX [n/NAME] [i/NUSNETID] [t/TELEGRAM] [p/PHONE_NUMBER] [e/EMAIL] [s/SLOT]` | `edit 2 n/James Lee e/jameslee@u.nus.edu`                                     |
-| **Delete student**          | `delete INDEX`                                                                              | `delete 3`                                                                    |
-| **Find students by name**   | `find KEYWORD [MORE_KEYWORDS]`                                                              | `find James Jake`                                                             |
-| **Add homework**            | `add_hw i/NUSNETID a/ASSIGNMENT`<br>(use `i/all` for all students)                          | `add_hw i/E1234567 a/1`                                                       |
-| **Mark homework**           | `mark_hw i/NUSNETID a/ASSIGNMENT status/STATUS`<br>(STATUS: complete, incomplete, late)     | `mark_hw i/E1234567 a/1 complete`                                             |
-| **Delete homework**         | `delete_hw i/NUSNETID a/ASSIGNMENT`<br>(use `i/all` for all students)                       | `delete_hw i/E1234567 a/1`                                                    |
-| **Mark attendance**         | `mark_attendance i/NUSNETID w/WEEK status/STATUS`<br>(STATUS: present, absent, excused)     | `mark_attendance i/E1234567 w/3 status/present`                               |
-| **Mark attendance for all** | `mark_all_attendance g/GROUPID w/WEEK status/STATUS`<br>(STATUS: present, absent, excused)  | `mark_all_attendance g/T01 w/3 status/present`                                |
-| **Add consultation**        | `add_consult i/NUSNETID from/DATE_TIME to/DATE_TIME`                                        | `add_consult i/E1234567 from/20240915 1400 to/20240915 1500`                  |
-| **Delete consultation**     | `delete_consult i/NUSNETID`                                                                 | `delete_consult i/E1234567`                                                   |
-| **Create group**            | `create_group g/GROUPID`                                                                    | `create_group g/T03`                                                          |
-| **Add student to group**    | `add_to_group i/NUSNETID g/GROUPID`                                                         | `add_to_group i/E1234567 g/T03`                                               |
-| **Find students by group**  | `find_group g/GROUPID`                                                                      | `find_group g/T03`                                                            |
-| **Clear address book**      | `clear`                                                                                     | `clear`                                                                       |
-| **Exit application**        | `exit`                                                                                      | `exit`                                                                        |
+| Description                 | Format                                                                                     | Example                                                                              |
+|-----------------------------|--------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------|
+| **Display help message**    | `help`                                                                                     | `help`                                                                               |
+| **List students**           | `list`                                                                                     | `list`                                                                               |
+| **List consultations**      | `list_consult`                                                                             | `list_consult`                                                                       |
+| **Add student**             | `add_student n/NAME i/NUSNETID t/TELEGRAM g/GROUPID [p/PHONE_NUMBER] [e/EMAIL]`            | `add_student n/James Ho i/E1234567 t/@jame g/T02 [p/22224444] [e/jamesho@u.nus.edu]` |
+| **Edit student**            | `edit_student INDEX [n/NAME] [i/NUSNETID] [t/TELEGRAM] [p/PHONE_NUMBER] [e/EMAIL]`         | `edit_student 2 n/James Lee e/jameslee@u.nus.edu`                                    |
+| **Delete student**          | `delete INDEX`                                                                             | `delete 3`                                                                           |
+| **Find students by name**   | `find KEYWORD [MORE_KEYWORDS]`                                                             | `find James Jake`                                                                    |
+| **Add homework**            | `add_hw i/NUSNETID a/ASSIGNMENT`<br>(use `i/all` for all students)                         | `add_hw i/E1234567 a/1`                                                              |
+| **Mark homework**           | `mark_hw i/NUSNETID a/ASSIGNMENT status/STATUS`<br>(STATUS: complete, incomplete, late)    | `mark_hw i/E1234567 a/1 complete`                                                    |
+| **Delete homework**         | `delete_hw i/NUSNETID a/ASSIGNMENT`<br>(use `i/all` for all students)                      | `delete_hw i/E1234567 a/1`                                                           |
+| **Mark attendance**         | `mark_attendance i/NUSNETID w/WEEK status/ATTENDANCE_STATUS`<br>(STATUS: present, absent, excused)    | `mark_attendance i/E1234567 w/3 status/present`                                      |
+| **Mark attendance for all** | `mark_all_attendance g/GROUPID w/WEEK status/ATTENDANCE_STATUS`<br>(STATUS: present, absent, excused) | `mark_all_attendance g/T01 w/3 status/present`                                       |
+| **Add consultation**        | `add_consult i/NUSNETID from/DATE_TIME to/DATE_TIME`                                       | `add_consult i/E1234567 from/20240915 1400 to/20240915 1500`                         |
+| **Delete consultation**     | `delete_consult i/NUSNETID`                                                                | `delete_consult i/E1234567`                                                          |
+| **Create group**            | `create_group g/GROUPID`                                                                   | `create_group g/T03`                                                                 |
+| **Add student to group**    | `add_to_group i/NUSNETID g/GROUPID`                                                        | `add_to_group i/E1234567 g/T03`                                                      |
+| **Find students by group**  | `find_group g/GROUPID`                                                                     | `find_group g/T03`                                                                   |
+| **Clear address book**      | `clear`                                                                                    | `clear`                                                                              |
+| **Exit application**        | `exit`                                                                                     | `exit`                                                                               |
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -116,11 +117,12 @@ done faster than traditional GUI apps.
 * Words in `UPPER_CASE` are the parameters to be supplied by the user.<br>
   e.g. in `add_student n/NAME`, `NAME` is a parameter which can be used as `add_student n/John Doe`.
 
-* Items in square brackets are optional.<br>
+* Items in square brackets are **optional**.<br>
   e.g `n/NAME [p/PHONE]` can be used as `n/John Doe p/87415612` or as `n/John Doe`.
 
-* Parameters can be in any order.<br>
-  e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+* Parameters can be in **any** order.<br>
+  e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable. \
+  But the index parameter must always come directly after the command word for commands that require an index.
 
 * Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `clear`) will be ignored.<br>
   e.g. if the command specifies `help 123`, it will be interpreted as `help`.
@@ -177,6 +179,11 @@ Examples:
 * `add_student n/John Doe i/E1234567 t/@handle g/T01  p/98765432 e/johnd@u.nus.edu`
 * `add_student n/Betsy Crow i/E1234562 p/1234567 t/@betsy g/T02  e/betsycrowe@u.nus.edu`
 
+### Listing all persons : `list`
+
+Shows a list of all persons in the ADDRESS book.
+
+Format: `list`
 
 ### Editing a person : `edit_student`
 
@@ -185,16 +192,14 @@ Edits an existing person in the address book.
 Format: `edit_student INDEX [n/NAME] [i/NUSNETID]  [t/TELEGRAM] [p/PHONE] [e/EMAIL]`
 
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
-* At least one of the optional fields must be provided.
+* At least one of the fields is provided to change the person's details.
 * Existing values will be updated to the input values.
-* Phone and email are optional. You can remove them by omitting these fields in your edit command.
 * You can not use this command to change a person's tutorial group. Use the `add_to_group` command instead.
 
 
 Examples:
 *  `edit_student 1 p/91234567 e/johndoe@u.nus.edu` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@u.nus.edu` respectively.
 *  `edit_student 2 n/Betsy Crower` Edits the name of the 2nd person to be `Betsy Crower`.
-*  `edit_student 3` Removes phone and email from the 3rd person (if present).
 
 
 ### Deleting a person : `delete`
@@ -204,11 +209,11 @@ Deletes the specified person from the address book.
 Format: `delete INDEX`
 
 * Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the displayed person list.
+* The index refers to the index number shown in the **displayed** person list.
 * The index **must be a positive integer** 1, 2, 3, …​
 
 Examples:
-* `list` followed by `delete 2` deletes the 2nd person in the address book.
+* `list` followed by `delete 2` deletes the 2nd person in the displayed person list.
 * `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
 
 
@@ -279,34 +284,41 @@ Examples:
 ---
 ## Attendance Commands
 
-### Marking attendance : `mark_attendance`
+### Marking attendance for one student: `mark_attendance`
 
 Marks the attendance status for the specified student and week.
 
-Format: `mark_attendance i/NUSNETID w/WEEK status/STATUS`
+Format: `mark_attendance i/NUSNETID w/WEEK status/ATTENDANCE_STATUS`
 
 * Marks attendance for the given student and week.
-* The `STATUS` can be one of the following: `present`, `absent`, or `excused`.
-* The NUSNET ID and week number **must be valid**.
+* week number must between 2 to 13.
+* NUSNET ID can start with E and has 7 numbers, and it should not be blank.
+* The `ATTENDANCE_STATUS` can be one of the following: `present`, `absent`, or `excused`.
+* The NUSNET ID, week number and status **must be valid**.
+* The system will check the validity of command format, followed by validity of input, and lastly the existence of the student.
 
 Examples:
 * `mark_attendance i/E1234567 w/3 status/present` marks student `E1234567` as present for week 3.
 * `mark_attendance i/E2345678 w/5 status/absent` marks student `E2345678` as absent for week 5.
 
+---
 
 ### Marking attendance for one group of students : `mark_all_attendance`
 
 Marks the attendance status for all the students in one tutorial group in a specified week.
 
-Format: `mark_all_attendance g/GROUP w/WEEK status/STATUS`
+Format: `mark_all_attendance g/GROUPID w/WEEK status/ATTENDANCE_STATUS`
 
 * Marks attendance for the given tutorial group of student and week.
-* The `STATUS` can be one of the following: `present`, `absent`, or `excused`.
-* The groupId and week number **must be valid**.
+* week number must between 2 to 13.
+* Group IDs should start with T or B (case-insensitive) and be followed by strictly 2 digits.
+* The `ATTENDANCE_STATUS` can be one of the following: `present`, `absent`, or `excused`.
+* The groupId, week number and status **must be valid**.
+* The system will check the validity of command format, followed by validity of input, and lastly the existence of the group.
 
 Examples:
-* `mark_attendance g/T01 w/3 status/present` marks student `E1234567` as present for week 3.
-* `mark_attendance g/BO4 w/5 status/absent` marks student `E2345678` as absent for week 5.
+* `mark_all_attendance g/T01 w/3 status/present` marks all students in group T01 as present for week 3.
+* `mark_all_attendance g/B04 w/5 status/absent` marks all students in group B04 as absent for week 5.
 
 ---
 ## Consultation Commands
@@ -352,8 +364,8 @@ Creates a new tutorial group.
 Format: `create_group g/GROUPID`
 
 * Creates a new group with the specified group ID.
-* The group ID **must be unique**.
-* Group IDs typically follow the format `TXX` or `BXX`, where `XX` are 2 digits.
+* The group ID **must be unique**. If a group with the same ID already exists, an error message will be shown.
+* Group IDs typically follow the format `TXX` (for tutorial) or `BXX` (for lab), where `XX` are exactly 2 digits (from 0 to 9).
 
 Examples:
 * `create_group g/T03` creates a new group with ID `T03`.
@@ -365,15 +377,18 @@ Adds a student to a tutorial group.
 
 Format: `add_to_group i/NUSNETID g/GROUPID`
 
+* move a student with the specified NUSNET ID to a group with the specified group ID.
+* If the student with the specified NUSNET ID does not exist, an error message will be shown.
 * If the specified group does not exist, it will be created.
 * If the group exists, the student will be added to that group.
-* If the student does not exist, an error message will be shown.
-* The NUSNET ID and group ID **must be valid**.
+* Student cannot be moved to the same group they are already in; an error message will be shown in such cases.
+* Since a student can only belong to one group at a time, adding them to a new group will remove them from their previous group.
+* The NUSNET ID and group ID **must be valid**. For group ID, refer [here](#creating-a-group--create_group).
 * A student can only belong to one group at a time; adding them to a new group will remove them from their previous group.
 
 Examples:
-* `add_to_group i/E1234567 g/T03` adds student `E1234567` to group `T03`.
-* `add_to_group i/E2345678 g/B05` (group B05 does not exist initially) create group `B05` and adds student `E2345678` to it.
+* `add_to_group i/E1234567 g/T03` move student with NUSNET ID `E1234567` from current group to group `T03`.
+* `add_to_group i/E2345678 g/B05` (assume group B05 does not exist initially) create group `B05` and move student `E2345678` to it.
 
 ### Finding group members : `find_group`
 Finds all members in a specified tutorial group.
@@ -409,7 +424,11 @@ AddressBook data are saved in the hard disk automatically after any command that
 
 ### Editing the data file
 
-AddressBook data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
+AddressBook data are saved automatically as a JSON file in JAR `file_location/data/addressbook.json`. \
+Users are **NOT** recommended to edit the data file directly, but if you need to do so, please follow these guidelines:
+1. Ensure that the JSON format is valid after editing.
+2. Ensure that all fields have valid values according to the specifications of AddressBook.
+
 
 <box type="warning" seamless>
 
@@ -446,8 +465,8 @@ by typing commands.
 * **Assessment/Homework**: Work that needs to be done and submitted by mentees, graded by tutors.
 * **Consultation**: A session where mentees can seek help from tutors regarding their academic work or other
 related matters.
-* **Mentor (TA)/Mentee**: A mentor (TA) is a senior student who provides guidance and support to a junior student,
-known as a mentee.
+* **Teaching Assistant (TA)**: A Teaching Assistant (TA) is a senior student who provides guidance and support to a junior student,
+known as a student.
 * **GUI**: Graphical User Interface. A visual interface that allows users to interact with software applications
 using graphical elements such as windows, icons, and buttons.
 * **JSON**: JavaScript Object Notation. A lightweight data interchange format that is easy for humans to read and write
