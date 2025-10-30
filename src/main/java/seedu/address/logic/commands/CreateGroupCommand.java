@@ -14,7 +14,7 @@ import seedu.address.model.person.GroupId;
 public class CreateGroupCommand extends Command {
     public static final String COMMAND_WORD = "create_group";
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Creates a new group identified by the given group id. "
+            + ": Creates a new group identified by the given group id.\n"
             + "Parameters: " + PREFIX_GROUP + "GROUPID "
             + "Example: " + COMMAND_WORD + " " + PREFIX_GROUP + "T12";
     public static final String MESSAGE_DUPLICATE_GROUP = "Group %s already exists!";

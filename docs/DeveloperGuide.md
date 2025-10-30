@@ -494,7 +494,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 (For all use cases below, the **System** is the `SocTAssist` and the **Actor** is the `user`, unless specified otherwise)
 
 
-**Use case: Add a student**
+**Use case:** UC01 - Add a student
+**Actor**: TA
 
 **MSS**
 
@@ -540,7 +541,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
        Use case ends.
 
-**Use case: Edit a student**
+**Use case:** UC02 - Edit a student
+**Actor**: TA
 
 **MSS**
 
@@ -554,7 +556,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     Use case ends.
 
-**Use case: Delete a student**
+**Use case:** UC03 - Delete a student
+**Actor**: TA
 
 **MSS**
 
@@ -589,7 +592,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case ends.
 
-**Use Case: Create Homework**
+**Use Case:** UC04 - Create Homework
+**Actor**: TA
 
 **MSS**
 
@@ -618,7 +622,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     Use case ends.
     
-**Use case: Mark Homework completion**
+**Use case:** UC05 - Mark Homework completion
+**Actor**: TA
 
 **MSS**
 
@@ -656,7 +661,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case resumes at step 5.
 
-**Use case: Delete a homework**
+**Use case:** UC06 - Delete a homework
+**Actor**: TA
+
 **MSS**
 
 1. User requests to delete a homework for a student using their NUSNET ID.  
@@ -696,7 +703,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case ends.  
 
-**Use case: Add a consultation**
+**Use case:** UC07 - Add a consultation
+**User**: TA
 
 **MSS**
 
@@ -736,7 +744,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
          Use case ends.
 
-**Use case: Delete a consultation**
+**Use case:** UC08 - Delete a consultation
+**User**: TA
 
 **MSS**
 
@@ -772,7 +781,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
        Use case ends.  
 
-**Use case: Mark attendance**
+**Use case:** UC09 - Mark attendance
+**User**: TA
 
 **MSS**
 
@@ -800,12 +810,13 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
          Use case ends.
 
-**Use case: Create and manage student groups**
+**Use case:** UC10 - Create and manage student groups
+**User**: TA
 
 **MSS**
 
 1. User requests to create a new group with a specified GroupName.
-2. Homework Tracker validates the GroupName.
+2. Address Book validates the GroupId.
 3. System creates the group.
 4. System shows confirmation message: `Group <GroupName> is created.`
 
@@ -814,16 +825,21 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **Extensions**
 
 * 2a. The GroupName is missing.
-    * 2a1. System shows error message: `Missing required field: GroupName`.
-
-      Use case ends.
+    * 2a1. System shows error message: 
+      ```text
+      Invalid command format!
+      create_group: Creates a new group identified by the given group id.
+      Parameters: g/GROUPID Example: create_group g/T12
+      ```
+    Use case ends.
 
 * 2b. The GroupName is a duplicate.
-    * 2b1. System shows error message: `Invalid Team Name`.
+    * 2b1. System shows error message: `Group <GroupId> already exists!`.
 
       Use case ends.
   
-**Use case: Add student to a group**
+**Use case:** UC11 - Add student to a group
+**User**: TA
 
 **MSS**
 
