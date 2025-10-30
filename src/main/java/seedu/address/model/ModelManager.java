@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Predicate;
@@ -17,6 +18,9 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.AddHomeworkCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.event.Consultation;
+import seedu.address.model.person.Attendance;
+import seedu.address.model.person.AttendanceSheet;
+import seedu.address.model.person.AttendanceStatus;
 import seedu.address.model.person.GroupId;
 import seedu.address.model.person.HomeworkTracker;
 import seedu.address.model.person.Nusnetid;
@@ -179,6 +183,75 @@ public class ModelManager implements Model {
                 .findFirst().orElseThrow(() -> new CommandException(MESSAGE_STUDENT_NOT_FOUND));
         return target;
     }
+    /**
+     * Marks attendance for a student identified by their nusnetId.
+     * @param nusnetId the nusnetId of the student
+     * @param week the week number for which attendance is to be marked
+     * @param status the attendance status to be marked
+     * @return the updated Person object with modified attendance
+     * @throws CommandException if the student with the given nusnetId is not found
+     */
+    @Override
+    public Person markAttendance(Nusnetid nusnetId, int week, AttendanceStatus status) throws CommandException {
+        requireAllNonNull(nusnetId, status);
+        Person targetStudent = findPerson(nusnetId);
+        AttendanceSheet updatedSheet = new AttendanceSheet();
+        for (Attendance attendance : targetStudent.getAttendanceSheet().getAttendanceList()) {
+            updatedSheet.markAttendance(attendance.getWeek(), attendance.getAttendanceStatus());
+        }
+        updatedSheet.markAttendance(week, status);
+        Person updatedStudent = new Person(
+               targetStudent.getName(),
+               targetStudent.getPhone(),
+               targetStudent.getEmail(),
+               targetStudent.getNusnetid(),
+               targetStudent.getTelegram(),
+               targetStudent.getGroupId(),
+               targetStudent.getHomeworkTracker(),
+               updatedSheet,
+               targetStudent.getConsultation());
+
+        setPerson(targetStudent, updatedStudent);
+        Predicate<Person> predicate = person -> true;
+        updateFilteredPersonList(predicate);
+        return updatedStudent;
+    }
+    /**
+     * Marks attendance for all students in a group for a specific week and status.
+     * @param groupId the ID of the group
+     * @param week the week number for which attendance is to be marked
+     * @param status the attendance status to be marked
+     * @throws CommandException if the group with the given groupId is not found
+     */
+    @Override
+    public void markAllAttendance(GroupId groupId, int week, AttendanceStatus status) throws CommandException {
+        requireAllNonNull(groupId, status);
+        Group targetGroup = getGroup(groupId);
+        ArrayList<Person> studentsInGroup = targetGroup.getAllPersons();
+        for (Person targetStudent: studentsInGroup) {
+            AttendanceSheet updatedSheet = new AttendanceSheet();
+            for (Attendance attendance : targetStudent.getAttendanceSheet().getAttendanceList()) {
+                updatedSheet.markAttendance(attendance.getWeek(), attendance.getAttendanceStatus());
+            }
+            updatedSheet.markAttendance(week, status);
+            Person updatedStudent = new Person(
+                    targetStudent.getName(),
+                    targetStudent.getPhone(),
+                    targetStudent.getEmail(),
+                    targetStudent.getNusnetid(),
+                    targetStudent.getTelegram(),
+                    targetStudent.getGroupId(),
+                    targetStudent.getHomeworkTracker(),
+                    updatedSheet,
+                    targetStudent.getConsultation());
+
+            setPerson(targetStudent, updatedStudent);
+            targetGroup.setPerson(targetStudent, updatedStudent);
+        }
+
+        Predicate<Person> predicate = person -> person.getGroupId().equals(groupId);
+        updateFilteredPersonList(predicate);
+    }
 
     /**
      * Retrieves a person by their nusnetId in the Unique Person List
@@ -195,7 +268,6 @@ public class ModelManager implements Model {
                 .findFirst().orElseThrow(() -> new CommandException(MESSAGE_STUDENT_NOT_FOUND));
         return target;
     }
-
     @Override
     public boolean hasConsultation(Consultation consultation) {
         requireNonNull(consultation);
@@ -254,12 +326,26 @@ public class ModelManager implements Model {
 
     @Override
     public void addHomework(Nusnetid nusnetId, int assignmentId) throws CommandException {
+        List<String> errors = new ArrayList<>();
+        if (assignmentId < 1 || assignmentId > 3) {
+            errors.add("Homework ID must be between 1 and 3.");
+        }
+
+        if (nusnetId != null) {
+            if (!hasPerson(nusnetId)) {
+                errors.add(String.format("Student with NUSNET ID %s does not exist.", nusnetId.value));
+            }
+        }
+        if (!errors.isEmpty()) {
+            throw new CommandException(String.join(" ", errors));
+        }
+
         if (nusnetId == null) {
             // add homework to all students
             for (Person p : addressBook.getUniquePersonList()) {
                 if (p.getHomeworkTracker().contains(assignmentId)) {
                     throw new CommandException(
-                            String.format("Assignment %d already exists for %s.", assignmentId, p.getName().fullName)
+                            String.format("Homework %d already exists for some student(s).", assignmentId)
                     );
                 }
             }
@@ -277,7 +363,7 @@ public class ModelManager implements Model {
         }
         if (target.getHomeworkTracker().contains(assignmentId)) {
             throw new CommandException(
-                    String.format("Assignment %d already exists for %s.", assignmentId, target.getName())
+                    String.format("Homework %d already exists for %s.", assignmentId, target.getName())
             );
         }
 
@@ -291,7 +377,7 @@ public class ModelManager implements Model {
             for (Person p : addressBook.getUniquePersonList()) {
                 if (!p.getHomeworkTracker().contains(assignmentId)) {
                     throw new CommandException(
-                            String.format("Assignment %d not found for %s.", assignmentId, p.getName())
+                            String.format("Homework %d does not exist for some students.", assignmentId)
                     );
                 }
             }
@@ -311,7 +397,7 @@ public class ModelManager implements Model {
 
         if (!target.getHomeworkTracker().contains(assignmentId)) {
             throw new CommandException(
-                    String.format("Assignment %d not found for %s.", assignmentId, target.getName())
+                    String.format("Homework %d not found for %s.", assignmentId, target.getName())
             );
         }
 
@@ -339,7 +425,7 @@ public class ModelManager implements Model {
         }
         if (!target.getHomeworkTracker().hasAssignment(assignmentId)) {
             throw new CommandException(
-                    String.format("Assignment %d not found for %s. Add it first using 'add_hw'.",
+                    String.format("Homework %d not found for %s. Add it first using 'add_hw'.",
                             assignmentId, target.getName().fullName));
         }
 

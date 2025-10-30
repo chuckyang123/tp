@@ -26,7 +26,7 @@ public class MarkHomeworkCommandParserTest {
     public void parse_invalidAssignmentId_failure() {
         // ID out of allowed range
         assertParseFailure(parser, " i/" + VALID_NUSNETID_AMY + " a/10" + " status/complete",
-                "Assignment id must be between 1 and 3.");
+                "Homework id must be between 1 and 3.");
     }
 
     @Test
@@ -44,6 +44,6 @@ public class MarkHomeworkCommandParserTest {
     public void parse_invalidNusnetId_failure() {
         // Empty or invalid nusnet ID
         assertParseFailure(parser, " i/ a/1",
-                Nusnetid.MESSAGE_CONSTRAINTS);
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, MarkHomeworkCommand.MESSAGE_USAGE));
     }
 }

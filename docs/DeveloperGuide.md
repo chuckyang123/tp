@@ -270,9 +270,82 @@ The following activity diagram summarizes what happens when a user executes a ne
 
 _{more aspects and alternatives to be added}_
 
-### \[Proposed\] Data archiving
+---
+### Add Homework Feature
 
-_{Explain here how the data archiving feature will be implemented}_
+The add homework feature allows users to assign a homework task to either a specific student or all students. Each homework is identified by an assignment ID.
+
+The sequence diagram below illustrates the interactions within the `Logic` component for adding homework:
+
+<puml src="diagrams/AddHomeworkSequenceDiagram.puml" width="550" alt="Interactions Inside the Logic Component for the `addhomework` Command" />
+
+<box type="info" seamless>
+
+**Note:** The lifeline for `AddHomeworkCommandParser` should end at the destroy marker (X), but due to a limitation of PlantUML, the lifeline continues till the end of the diagram.
+
+</box>
+
+How the `addhomework` command works:
+1. When the user enters an `addhomework` command, `LogicManager` passes it to `AddressBookParser`.
+2. `AddressBookParser` creates an `AddHomeworkCommandParser` to parse the command arguments.
+3. `AddHomeworkCommandParser` validates and parses the NUSNET ID (or the keyword `all`) and the assignment ID.
+4. An `AddHomeworkCommand` object is created and executed.
+5. Before execution, the current state is committed for undo/redo functionality.
+6. `AddHomeworkCommand` checks if the homework assignment already exists for the specified student(s).
+7. If no duplicates are found, the homework is added to the target student(s)’ homework tracker(s).
+8. The updated address book is saved to storage.
+
+---
+
+### Delete Homework Feature
+
+The delete homework feature allows users to remove an existing homework assignment from a specific student or from all students.
+
+The sequence diagram below illustrates the interactions within the `Logic` component for deleting homework:
+
+<puml src="diagrams/DeleteHomeworkSequenceDiagram.puml" width="550" alt="Interactions Inside the Logic Component for the `deletehomework` Command" />
+
+<box type="info" seamless>
+
+**Note:** The lifeline for `DeleteHomeworkCommandParser` should end at the destroy marker (X), but due to a limitation of PlantUML, the lifeline continues till the end of the diagram.
+
+</box>
+
+How the `deletehomework` command works:
+1. When the user enters a `deletehomework` command, `LogicManager` passes it to `AddressBookParser`.
+2. `AddressBookParser` creates a `DeleteHomeworkCommandParser` to parse the command arguments.
+3. `DeleteHomeworkCommandParser` validates and parses the NUSNET ID (or the keyword `all`) and the assignment ID.
+4. A `DeleteHomeworkCommand` object is created and executed.
+5. Before execution, the current state is committed for undo/redo functionality.
+6. `DeleteHomeworkCommand` verifies that the homework exists for the specified student(s).
+7. If found, the homework is removed from the respective homework tracker(s).
+8. The updated address book is saved to storage.
+
+---
+
+### Mark Homework Feature
+
+The mark homework feature allows users to update the status (e.g., `done`, `pending`) of a homework assignment for a specific student.
+
+The sequence diagram below illustrates the interactions within the `Logic` component for marking homework:
+
+<puml src="diagrams/MarkHomeworkSequenceDiagram.puml" width="550" alt="Interactions Inside the Logic Component for the `markhomework` Command" />
+
+<box type="info" seamless>
+
+**Note:** The lifeline for `MarkHomeworkCommandParser` should end at the destroy marker (X), but due to a limitation of PlantUML, the lifeline continues till the end of the diagram.
+
+</box>
+
+How the `markhomework` command works:
+1. When the user enters a `markhomework` command, `LogicManager` passes it to `AddressBookParser`.
+2. `AddressBookParser` creates a `MarkHomeworkCommandParser` to parse the command arguments.
+3. `MarkHomeworkCommandParser` validates and parses the NUSNET ID, assignment ID, and status.
+4. A `MarkHomeworkCommand` object is created and executed.
+5. Before execution, the current state is committed for undo/redo functionality.
+6. `MarkHomeworkCommand` checks whether the specified homework exists for the student.
+7. If found, the homework’s status is updated to the new value.
+8. The updated address book is saved to storage.
 
 
 --------------------------------------------------------------------------------------------------------------------
@@ -318,7 +391,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* * *`  | TA                  | mark students' attendance                             | record all students' tutorial attendance                                  |
 | `* * *`  | TA                  | track each individual student's homework completeness | view their learning progress and identify students who are falling behind |                                                          |
 | `* *`    | new user            | have a step-by-step usage instruction guide           | learn how to use the app                                                  |
-| `* *`    | course coordinator  | view all TAs' availability                            | assign TAs to their preferred tutorial slot                               |
+| `* *`    | course coordinator  | view all TAs' availability                            | assign TAs to their preferred tutorial group                              |
 | `* *`    | head TA             | create subgroups within the course                    | assign students and TAs to their respective tutorial groups               |
 | `* *`    | head TA             | key in students' scores                               | update students' scores after every exam                                  |
 | `* *`    | head TA             | view overall course feedback from students            | gather data to perform course analysis                                    |
@@ -340,7 +413,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1. User requests to add a student by specifying full name, preferred name, email, Telegram handle, and slot ID.
+1. User requests to add a student by specifying full name, preferred name, email, Telegram handle, and group ID.
 
 2. AddressBook validates all fields.
 
@@ -370,7 +443,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
         Use case ends.
 
-* 2d. Slot ID format is invalid.
+* 2d. Group ID format is invalid.
 
     * 2d1. AddressBook shows error message.
 
@@ -699,7 +772,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 #### 1. Data Requirements
 ##### NFR-D1: Data Size
 - Maximum 500 students per course
-- Maximum 50 tutorial slots per course
+- Maximum 50 tutorial groups per course
 - Support 12 weeks of attendance data (weeks 2-13)
 - Support at least 10 assignments per course
 - Store consultation history for entire semester
