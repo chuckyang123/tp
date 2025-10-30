@@ -499,7 +499,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1. User requests to add a student by specifying full name, NUSNET ID, email, Telegram handle, phone number and group ID.
+1. User requests to add a student by specifying required fields: full name, NUSNET ID, email, Telegram handle ann optional fields: phone number, group ID.
 
 2. AddressBook validates all fields.
 
@@ -529,7 +529,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
         Use case ends.
 
-* 2e. A student with the same nusnetid already exists.
+* 2d. A student with the same nusnetid already exists.
 
     * 2e1. AddressBook shows error: `Student with this nusnetid already exists`.
 
@@ -557,9 +557,16 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 2a1. AddressBook shows error: `The person index provided is invalid`.
 
       Use case ends.
+
 * 2b. Any updated field is invalid.
 
-    * 2c1. AddressBook shows corresponding validation error.
+    * 2c1. AddressBook shows corresponding validation error. (UC01 Extensions 2b, 2c).
+
+      Use case ends.
+
+* 2c. Try to update group id.
+
+    * 2c1. AddressBook shows error: `Group ID cannot be edited directly. Use add_to_group commands instead.`
 
       Use case ends.
 
@@ -707,7 +714,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Extensions**
 
-* 2a. Student nusnetid does not exist in the directory.
+* 2a. Student NUSNET ID does not exist in the directory.
 
   * 2a1. AddressBook shows error: `Student not found`.
 
@@ -750,7 +757,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Extensions**
 
-* 2a. Student nusnetid does not exist in the directory.  
+* 2a. Student NUSNET ID does not exist in the directory.  
 
   * 2a1. AddressBook shows error: `Student not found`.  
 
@@ -773,7 +780,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1. User requests to mark attendance for a student by specifying student nusnetid, week, and attendance status.
+1. User requests to mark attendance for a student by specifying student NUSNET ID, week, and attendance status.
 
 2. AddressBook validates that the student exists and the week and status are valid.
 
@@ -785,7 +792,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Extensions**
 
-* 2a. Student nusnetid does not exist.
+* 2a. Student NUSNET ID does not exist.
 
     * 2a1. AddressBook shows error: `Student not found`.
 
@@ -861,7 +868,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1. User requests to add a student to an existing group using the student’s nus net id and GroupId.
+1. User requests to add a student to an existing group using the student’s NUSNET ID and GroupId.
 2. System verifies the student exists.
 3. System checks whether the group id is the same as the student's existing group.
 4. System checks whether the group exists.
@@ -872,7 +879,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Extensions**
 
-* 2a. The student with the nusnetid does not exist.
+* 2a. The student with the NUSNET ID does not exist.
     * 2a1. System shows error message.
 
       Use case ends.
@@ -936,7 +943,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 - Group assignments: adjusted a few times during the semester
 
 **Low Volatility Data** (rarely changes):
-- Student directory (names, NusNET IDs): mostly stable after add/drop period
+- Student directory (names, NUSNET IDs): mostly stable after add/drop period
 - Tutorial group assignments: fixed after first few weeks
 
 ##### NFR-D3: Data Persistence
