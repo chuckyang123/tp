@@ -359,6 +359,81 @@ How the `list_consult` command works:
 4. During execution, `ListConsultationCommand` updates the filtered consultation list in the model.
 5. A success message is returned to the user.
 
+### Create Group Feature
+
+The create group feature allows users to create a new group by specifying a unique group ID.
+
+The sequence diagram below illustrates the interactions within the `Logic` and `Model` component for creating a group:
+
+<puml src="diagrams/CreateGroupSequenceDiagram.puml" width="550" alt="Interactions Inside the Logic Component for the `creategroup` Command" />
+
+<box type="info" seamless>
+
+**Note:** The lifeline for `CreateGroupCommandParser` should end at the destroy marker (X), but due to a limitation of PlantUML, the lifeline continues till the end of the diagram.
+
+</box>
+
+How the `creategroup` command works:
+1. When the user enters a `creategroup` command, `LogicManager` passes it to `AddressBookParser`.
+2. `AddressBookParser` creates a `CreateGroupCommandParser` to parse the command arguments.
+3. `CreateGroupCommandParser` validates and parses the group ID.
+4. A `CreateGroupCommand` object is created and executed.
+5. `CreateGroupCommand` checks if the group ID already exists.
+6. If no duplicates are found, a new group is created with the specified group ID.
+7. The updated address book is saved to storage.
+
+### Add Student to Group Feature
+
+The add student to group feature allows users to assign a student to an existing group by specifying the student's NUSNET ID and the group ID.
+
+The sequence diagram below illustrates the interactions within the `Logic` and `Model` component for adding a student to a group:
+
+<puml src="diagrams/AddStudentToGroupSequenceDiagram.puml" width="550" alt="Interactions Inside the Logic Component for the `addstudenttogroup` Command" />
+
+<box type="info" seamless>
+
+**Note:** The lifeline for `AddStudentToGroupCommandParser` should end at the destroy marker (X), but due to a limitation of PlantUML, the lifeline continues till the end of the diagram.
+
+</box>
+
+How the `addstudenttogroup` command works:
+1. When the user enters an `addstudenttogroup` command, `LogicManager` passes it to `AddressBookParser`.
+2. `AddressBookParser` creates an `AddStudentToGroupCommandParser` to parse the command arguments.
+3. `AddStudentToGroupCommandParser` validates and parses the NUSNET ID and group ID.
+4. An `AddStudentToGroupCommand` object is created and executed.
+5. `AddStudentToGroupCommand` checks if the specified student exist.
+6. If the student exists, `AddStudentToGroupCommand` checks if the specified group already exist.
+7. Create an updated student object with the new group ID.
+8. If the group exists, the student is added to the specified group.
+9. Else, the group is created and the student is added to the newly created group.
+10. The updated address book is saved to storage.
+11. If the student does not exist, an error message is shown to the user.
+
+### Find Student by Group Feature
+
+The find student by group feature allows users to search for students belonging to a specific group by specifying the group ID.
+
+The sequence diagram below illustrates the interactions within the `Logic` and `Model` component for finding students by group:
+
+<puml src="diagrams/FindStudentByGroupSequenceDiagram.puml" width="550" alt="Interactions Inside the Logic Component for the `findstudentbygroup` Command" />
+
+<box type="info" seamless>
+
+**Note:** The lifeline for `FindStudentByGroupCommandParser` should end at the destroy marker (X), but due to a limitation of PlantUML, the lifeline continues till the end of the diagram.
+
+</box>
+
+How the `find_group` command works:
+1. When the user enters a `find_group` command, `LogicManager` passes it to `AddressBookParser`.
+2. `AddressBookParser` creates a `FindStudentByGroupCommandParser` to parse the command arguments.
+3. `FindStudentByGroupCommandParser` validates and parses the group ID.
+4. A `FindStudentByGroupCommand` object is created and executed.
+5. If the group ID is valid, and the group exist in the address book, `FindStudentByGroupCommand` retrieves the list of students belonging to the specified group from the `Model`.
+6. The filtered student list in the `Model` is updated to only include students from the specified group.
+7. The updated filtered student list is displayed to the user in the UI.
+8. If the group ID is invalid or the group does not exist, an error message is shown to the user.
+9. No change to the address book is made.
+
 --------------------------------------------------------------------------------------------------------------------
 ## **Documentation, logging, testing, configuration, dev-ops**
 
