@@ -159,6 +159,7 @@ Format: `list_consult`
 Note:
 * After using `list_consult` command, index in `edit_student` and `delete` commands will refer to the global index of the student (index displayed after `list` command).
 * Users are highly recommended to use `list` command to find out the global index of the student before using `edit_student` or `delete` commands.
+* Users can use `list` command to return to the student list view.
 
 ---
 ## Person Commands
@@ -245,6 +246,9 @@ Format: `add_hw i/NUSNETID (use 'i/all' for all students) a/ASSIGNMENT`
 
 * Adds the homework with the given assignment number for the specified student.
 * If `i/all` is used, the homework is added for all students.
+* The NUSNET ID **must be valid** and the assignment identifier **must be specified**.
+* The newly added homework will have a default status of `incomplete`.
+* The assignment number should be a positive integer between 1 to 3.
 * Homework number must be between 1 to 3.
 * If adding homework for a specific student, NUSNET ID is used, which starts with E and has 7 numbers, and it should not be blank.
 * The NUSNET ID and homework number **must be valid**.
@@ -262,8 +266,8 @@ Marks the homework status for the specified student.
 Format: `mark_hw i/NUSNETID a/ASSIGNMENT status/STATUS`
 
 * Marks the specified assignment for the given student.
-* Homework number must be between 1 to 3.
-* NUSNET ID can start with E and has 7 numbers, and it should not be blank.
+* The assignment number should be a positive integer between 1 to 3.
+* The assignment must exist for the student.
 * The `STATUS` can be one of the following: `complete`, `incomplete`, or `late`.
 * The NUSNET ID, homework number and status **must be valid**.
 * The system will check the validity of command format, followed by validity of input, and lastly the existence of the student.
@@ -279,10 +283,10 @@ Deletes the homework for the specified student or for all students.
 
 Format: `delete_hw i/NUSNETID (use 'i/all' for all students) a/ASSIGNMENT`
 
-* Deletes the homework with the given assignment number for the specified student.
+* Deletes the homework with the given assignment number for the specified student. 
+* The assignment number should be a positive integer between 1 to 3.
+* The assignment must exist for the student.
 * If `i/all` is used, the homework is deleted for all students.
-* Homework number must be between 1 to 3.
-* If deleting the homework for a specific student, NUSNET ID is used, which starts with E and has 7 numbers, and it should not be blank.
 * The NUSNET ID and homework number **must be valid**.
 * The system will check the validity of command format, followed by validity of input, and lastly the existence of the student.
 
@@ -340,6 +344,9 @@ Format: `add_consult i/NUSNETID from/DATE_TIME to/DATE_TIME`
 
 * Both start (`from`) and end (`to`) times **must be in `YYYYMMDD HHmm` format**.
 * The start time must be **earlier** than the end time**.
+* The NUSNET ID, start time and end time **must be valid**.
+* If a consultation already exists for the student, it will be unavailable to add a new consultation to the student.
+* If the consultation time overlaps with an existing consultation for another student, it will be unavailable to add the new consultation.
 
 Examples:
 * `add_consult i/E1234567 from/20240915 1400 to/20240915 1500` adds a consultation from 2–3PM on 15 Sep 2024 for student `E1234567`.
@@ -354,6 +361,9 @@ Note:
 Deletes a consultation session for the specified student.
 
 Format: `delete_consult i/NUSNETID`
+
+* Deletes the consultation for the specified student.
+* The NUSNET ID **must be valid**.
 
 Examples:
 * `delete_consult i/E1234567` deletes consultation for student `E1234567`.
@@ -387,13 +397,11 @@ Adds a student to a tutorial group.
 Format: `add_to_group i/NUSNETID g/GROUPID`
 
 * move a student with the specified NUSNET ID to a group with the specified group ID.
-* If the student with the specified NUSNET ID does not exist, an error message will be shown.
 * If the specified group does not exist, it will be created.
 * If the group exists, the student will be added to that group.
 * Student cannot be moved to the same group they are already in; an error message will be shown in such cases.
 * Since a student can only belong to one group at a time, adding them to a new group will remove them from their previous group.
 * The NUSNET ID and group ID **must be valid**. For group ID, refer [here](#creating-a-group--create_group).
-* A student can only belong to one group at a time; adding them to a new group will remove them from their previous group.
 
 Examples:
 * `add_to_group i/E1234567 g/T03` move student with NUSNET ID `E1234567` from current group to group `T03`.
@@ -449,8 +457,62 @@ Furthermore, certain edits can cause the AddressBook to behave in unexpected way
 
 ## FAQs
 
-**Q**: How do I transfer my data to another Computer?<br>
-**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous AddressBook home folder.
+**Q**: How do I back up or transfer my data to another computer?<br>
+**A**: Copy the data file at `file_location/data/addressbook.json` from your current machine and replace the same file on the other machine. Close the app before copying to avoid partial writes.
+
+**Q**: Are phone and email mandatory when adding a student?<br>
+**A**: No. `p/PHONE` and `e/EMAIL` are optional. Example: `add_student n/John i/E1234567 t/@john g/T01` (no phone/email).
+
+**Q**: What is a valid NUSNET ID format?<br>
+**A**: An `E` (case-insensitive) followed by 7 digits, e.g. `E1234567`.
+
+**Q**: Can I target all students at once for homework commands?<br>
+**A**: Yes. Use `i/all` with homework commands, e.g. `add_hw i/all a/2` or `delete_hw i/all a/2`.
+
+**Q**: Do homework/attendance/consultation commands use index or NUSNET ID?<br>
+**A**: They use NUSNET ID. For example, `mark_hw i/E1234567 a/1 status/complete` and `mark_attendance i/E1234567 w/3 status/present`.
+
+**Q**: What values are valid for assignment numbers?<br>
+**A**: Positive integers from 1 to 3.
+
+**Q**: What is the valid range for attendance week?<br>
+**A**: Weeks 2 to 13 inclusive.
+
+**Q**: What’s the valid format for group IDs?<br>
+**A**: Start with `T` or `B` (case-insensitive) followed by exactly two digits, e.g., `T01`, `B04`.
+
+**Q**: How do I mark attendance for an entire tutorial group?<br>
+**A**: Use `mark_all_attendance g/GROUPID w/WEEK status/STATUS`, e.g. `mark_all_attendance g/T01 w/3 status/present`.
+
+**Q**: How do consultation times work and what conflicts are checked?<br>
+**A**: Use `YYYYMMDD HHmm` for `from/` and `to/`, and ensure start is earlier than end. A student can have at most one consultation, and consultation times cannot overlap with another student’s consultation.
+
+**Q**: After running `list_consult`, why do some indices not match what I see?<br>
+**A**: `list_consult` shows consultations; student edit/delete still use the global student index from `list`. Run `list` to return to the student list view and use those indices.
+
+**Q**: Can I edit the data file manually?<br>
+**A**: Not recommended. If you must, ensure the JSON stays valid and values follow the app rules. Invalid edits can cause the app to reset to an empty dataset on next start.
+
+**Q**: Where is the data file stored exactly?<br>
+**A**: By default at `file_location/data/addressbook.json` relative to the app’s working directory (same folder as the JAR unless configured otherwise).
+
+**Q**: How do I update SoCTAssist to a newer version?<br>
+**A**: Download the new JAR and replace the old one. Your data in `file_location/data/addressbook.json` will be reused automatically. If there are breaking changes, follow any migration instructions in the release notes.
+
+**Q**: Where can I find application logs for troubleshooting?<br>
+**A**: In the app folder as rotating files like `addressbook.log`, `addressbook.log.0`, etc. Share the latest log when reporting issues.
+
+**Q**: If I change a student’s NUSNET ID, will their homework/attendance/consultation be preserved?<br>
+**A**: Yes. These records are linked to the student and will follow the updated NUSNET ID.
+
+**Q**: Can I delete a tutorial group?<br>
+**A**: There is no explicit delete command for groups. Groups are created automatically when needed. Move students to other groups as required.
+
+**Q**: Can I mark attendance for all students across all groups?
+**A**: Not directly. Use `mark_all_attendance` per group (`g/GROUPID`). There is no global "all students" attendance command.
+
+**Q**: How can I see a student’s homework and attendance quickly?
+**A**: Use `list` to show students; details appear in the student panel. There is no separate `list_hw` command.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -462,25 +524,16 @@ Furthermore, certain edits can cause the AddressBook to behave in unexpected way
 --------------------------------------------------------------------------------------------------------------------
 
 ## Glossary
-* **NUSNETID**: A unique identifier assigned to each student by the National University of Singapore (NUS) 
-during matriculation. It is used for logging into various NUS systems.
-* **NUS email**: The official email address assigned to each student by NUS, typically
-in the format `<NUSNETID>@u.nus.edu`.
-* **Tutorial Group**: A smaller group of students within a course. Group Ids usually follow the format `TXX` or `BXX`,
-where `XX` represent 2 digits.
-* **CLI**: Command Line Interface. A text-based interface used to interact with software applications
-by typing commands.
+* **NUSNETID**: A unique identifier assigned to each student by the National University of Singapore (NUS) during matriculation. It is used for logging into various NUS systems.
+* **NUS email**: The official email address assigned to each student by NUS, typically in the format `<NUSNETID>@u.nus.edu`.
+* **Tutorial Group**: A smaller group of students within a course. Group IDs usually follow the format `TXX` or `BXX`, where `XX` represent 2 digits.
+* **CLI**: Command Line Interface. A text-based interface used to interact with software applications by typing commands.
 * **Week**: There are 13 weeks in each academic semester in NUS, and tutorial starts in Week 3.
 * **Assessment/Homework**: Work that needs to be done and submitted by mentees, graded by tutors.
-* **Consultation**: A session where mentees can seek help from tutors regarding their academic work or other
-related matters.
-* **Teaching Assistant (TA)**: A Teaching Assistant (TA) is a senior student who provides guidance and support to a junior student,
-known as a student.
-* **GUI**: Graphical User Interface. A visual interface that allows users to interact with software applications
-using graphical elements such as windows, icons, and buttons.
-* **JSON**: JavaScript Object Notation. A lightweight data interchange format that is easy for humans to read and write
-, and easy for machines to parse and generate.
+* **Consultation**: A session where mentees can seek help from tutors regarding their academic work or other related matters.
+* **Teaching Assistant (TA)**: A Teaching Assistant (TA) is a senior student who provides guidance and support to a junior student, known as a student.
+* **GUI**: Graphical User Interface. A visual interface that allows users to interact with software applications using graphical elements such as windows, icons, and buttons.
+* **JSON**: JavaScript Object Notation. A lightweight data interchange format that is easy for humans to read and write, and easy for machines to parse and generate.
 * **JDK**: Java Development Kit. A software development environment used for developing Java applications.
-* **Jar file**: A Java ARchive file. A package file format used to aggregate many Java class files and associated
-metadata and resources into one file for distribution.
+* **Jar file**: A Java ARchive file. A package file format used to aggregate many Java class files and associated metadata and resources into one file for distribution.
 * **CD**: Command Directory. The current directory in which the command terminal is operating.
