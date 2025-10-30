@@ -427,7 +427,7 @@ The add student to group feature allows users to assign a student to an existing
 
 The sequence diagram below illustrates the interactions within the `Logic` and `Model` component for adding a student to a group:
 
-<puml src="diagrams/AddStudentToGroupSequenceDiagram.puml" width="550" alt="Interactions Inside the Logic Component for the `addstudenttogroup` Command" />
+<puml src="diagrams/AddToGroupSequenceDiagram.puml" width="550" alt="Interactions Inside the Logic Component for the `addstudenttogroup` Command" />
 
 <box type="info" seamless>
 
