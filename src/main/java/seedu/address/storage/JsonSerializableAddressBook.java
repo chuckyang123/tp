@@ -111,7 +111,7 @@ class JsonSerializableAddressBook {
                 if (!Nusnetid.isValidNusnetid(nusIdStr)) {
                     throw new IllegalValueException(Nusnetid.MESSAGE_CONSTRAINTS);
                 }
-                Person student = addressBook.getPersonByNusnetId(new Nusnetid(nusIdStr));
+                Person student = addressBook.getPerson(new Nusnetid(nusIdStr));
                 // person not found in address book
                 if (student == null) {
                     throw new IllegalValueException(MESSAGE_GROUP_REFERENCES_UNKNOWN_PERSON);
@@ -131,7 +131,7 @@ class JsonSerializableAddressBook {
         if (distinctCount != modelGroups.size()) {
             throw new IllegalValueException(MESSAGE_DUPLICATE_GROUP);
         }
-        addressBook.setGroups(modelGroups);
+        addressBook.setGroupList(modelGroups);
         // no need to check every student is in one existing group only
         // if the group is not found, addPerson will auto create in model
         // if a student is in multiple groups, the group addition will fail

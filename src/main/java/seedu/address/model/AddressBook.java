@@ -6,7 +6,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.ToStringBuilder;
@@ -81,10 +80,9 @@ public class AddressBook implements ReadOnlyAddressBook {
      * Replaces the contents of the group list with {@code groups}.
      * {@code groups} must not contain duplicate groups.
      */
-    public void setGroups(List<Group> groups) {
+    public void setGroupList(List<Group> groups) {
         this.groups.setGroups(groups);
     }
-
     /**
      * Adds a group to the address book.
      * The group must not already exist in the address book.
@@ -93,7 +91,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         requireNonNull(g);
         this.groups.add(g);
     }
-
     /**
      * Gets a group by GroupId, or null if not present.
      */
@@ -109,7 +106,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         requireNonNull(newData);
         setPersons(newData.getPersonList());
         setConsultations(newData.getConsultationList());
-        setGroups(newData.getGroupList());
+        setGroupList(newData.getGroupList());
     }
 
     //// person-level operations
@@ -133,7 +130,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      * Returns the person with the given nusnetid.
      * Returns null if no such person exists.
      */
-    public Person findPerson(Nusnetid nusnetid) {
+    public Person getPerson(Nusnetid nusnetid) {
         requireNonNull(nusnetid);
         return persons.find(nusnetid);
     }
@@ -156,19 +153,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         requireNonNull(editedPerson);
         persons.setPerson(target, editedPerson);
     }
-
-    /**
-     * Retrieves a person by their nusnetId. Assumes that the person exists.
-     * @param nusnetId the nusnetId of the person to be retrieved
-     * @return the person with the specified nusnetId
-     */
-    public Person getPersonByNusnetId(Nusnetid nusnetId) {
-        requireNonNull(nusnetId);
-        return StreamSupport.stream(persons.spliterator(), false)
-                .filter(p -> p.getNusnetid().equals(nusnetId))
-                .findFirst().orElse(null);
-    }
-
     /**
      * Removes {@code key} from this {@code AddressBook}.
      * {@code key} must exist in the address book.
@@ -177,107 +161,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.remove(key);
         this.removePersonFromExistingGroup(key);
     }
-
     /**
-     * Adds the given {@code consultation} to the person identified by {@code nusnetid}.
-     * The person must exist in the address book.
+     * Updates the group when a new person is added.
+     * If the group does not exist, create a new group and add the person to it.
+     * If the group exists, add the person to the existing group.
+     * @param person the person to be added
      */
-    public void addConsultationToPerson(Nusnetid nusnetid, Consultation consultation) {
-        persons.addConsultationToPerson(nusnetid, consultation);
-    }
-
-    /**
-     * Deletes the consultation from the person identified by {@code nusnetid}.
-     * The person must exist in the address book.
-     * @return the deleted Consultation.
-     */
-    public Consultation deleteConsultationFromPerson(Nusnetid nusnetid) {
-        return persons.deleteConsultationFromPerson(nusnetid);
-    }
-
-    //// consultation-level operations
-
-    /**
-     * Returns true if a consultations equivalent to {@code consultation} exists in the address book.
-     */
-    public boolean hasConsultation(Consultation consultation) {
-        requireNonNull(consultation);
-        return consultations.contains(consultation);
-    }
-
-    /**
-     * Returns true if a consultation overlapping with {@code consultation} exists in the address book.
-     */
-    public boolean hasOverlappingConsultation(Consultation consultation) {
-        requireNonNull(consultation);
-        return consultations.hasOverlappingConsultation(consultation);
-    }
-
-    /**
-     * Adds a consultation to the address book.
-     * The consultation must not already exist in the address book.
-     */
-    public void addConsultation(Consultation c) {
-        consultations.add(c);
-    }
-
-    /**
-     * Deletes the given consultation from the address book.
-     * The consultation must exist in the address book.
-     */
-    public void deleteConsultation(Consultation c) {
-        consultations.remove(c);
-    }
-
-    //// util methods
-
-    @Override
-    public String toString() {
-        List<Group> groupsString = groups.asUnmodifiableObservableList().stream()
-                .sorted(Comparator.comparing(g -> g.getGroupId().toString()))
-                .collect(Collectors.toList());
-        return new ToStringBuilder(this)
-                .add("persons", persons)
-                .add("consultations", consultations)
-                .add("groups", groupsString)
-                .toString();
-    }
-
-    @Override
-    public ObservableList<Person> getPersonList() {
-        return persons.asUnmodifiableObservableList();
-    }
-    public List<Person> getUniquePersonList() {
-        return persons.toList();
-    }
-    @Override
-    public ObservableList<Consultation> getConsultationList() {
-        return consultations.asUnmodifiableObservableList();
-    }
-    @Override
-    public ObservableList<Group> getGroupList() {
-        return this.groups.asUnmodifiableObservableList();
-    }
-    @Override
-    public boolean equals(Object other) {
-        if (other == this) {
-            return true;
-        }
-
-        // instanceof handles nulls
-        if (!(other instanceof AddressBook)) {
-            return false;
-        }
-
-        AddressBook otherAddressBook = (AddressBook) other;
-        return this.getPersonList().equals(otherAddressBook.getPersonList())
-            && this.getConsultationList().equals(otherAddressBook.getConsultationList())
-            && this.groups.equals(otherAddressBook.groups);
-    }
-    @Override
-    public int hashCode() {
-        return Objects.hash(getPersonList(), getConsultationList(), getGroupList());
-    }
     @Override
     public void updateGroupWhenAddPerson(Person person) {
         requireNonNull(person);
@@ -336,6 +225,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         } catch (DuplicatePersonException e) {
             throw new CommandException(e.getMessage());
         }
+        // If new group does not exist, create it
+        // Else, add student to existing group
         if (!groups.contains(newGroupId)) {
             Group newGroup = new Group(newGroupId);
             this.addGroup(newGroup);
@@ -344,6 +235,94 @@ public class AddressBook implements ReadOnlyAddressBook {
             Group newGroup = groups.getGroup(newGroupId);
             newGroup.addStudent(updatedStudent);
         }
+    }
+
+    /**
+     * Adds the given {@code consultation} to the person identified by {@code nusnetid}.
+     * The person must exist in the address book.
+     */
+    public void addConsultationToPerson(Nusnetid nusnetid, Consultation consultation) {
+        persons.addConsultationToPerson(nusnetid, consultation);
+    }
+
+    /**
+     * Deletes the consultation from the person identified by {@code nusnetid}.
+     * The person must exist in the address book.
+     * @return the deleted Consultation.
+     */
+    public Consultation deleteConsultationFromPerson(Nusnetid nusnetid) {
+        return persons.deleteConsultationFromPerson(nusnetid);
+    }
+
+    //// consultation-level operations
+
+    /**
+     * Returns true if a consultations equivalent to {@code consultation} exists in the address book.
+     */
+    public boolean hasConsultation(Consultation consultation) {
+        requireNonNull(consultation);
+        return consultations.contains(consultation);
+    }
+
+    /**
+     * Returns true if a consultation overlapping with {@code consultation} exists in the address book.
+     */
+    public boolean hasOverlappingConsultation(Consultation consultation) {
+        requireNonNull(consultation);
+        return consultations.hasOverlappingConsultation(consultation);
+    }
+
+    /**
+     * Adds a consultation to the address book.
+     * The consultation must not already exist in the address book.
+     */
+    public void addConsultation(Consultation c) {
+        consultations.add(c);
+    }
+
+    /**
+     * Deletes the given consultation from the address book.
+     * The consultation must exist in the address book.
+     */
+    public void deleteConsultation(Consultation c) {
+        consultations.remove(c);
+    }
+
+    //// util methods
+    @Override
+    public ObservableList<Person> getPersonList() {
+        return persons.asUnmodifiableObservableList();
+    }
+    public List<Person> getUniquePersonList() {
+        return persons.toList();
+    }
+    @Override
+    public ObservableList<Consultation> getConsultationList() {
+        return consultations.asUnmodifiableObservableList();
+    }
+    @Override
+    public ObservableList<Group> getGroupList() {
+        return this.groups.asUnmodifiableObservableList();
+    }
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof AddressBook)) {
+            return false;
+        }
+
+        AddressBook otherAddressBook = (AddressBook) other;
+        return this.getPersonList().equals(otherAddressBook.getPersonList())
+            && this.getConsultationList().equals(otherAddressBook.getConsultationList())
+            && this.groups.equals(otherAddressBook.groups);
+    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(getPersonList(), getConsultationList(), getGroupList());
     }
     /**
      * Updates consultations stored in the address book when a person's nusnetid is edited.
@@ -395,5 +374,16 @@ public class AddressBook implements ReadOnlyAddressBook {
                 persons.setPerson(p, updatedPerson);
             });
         }
+    }
+    @Override
+    public String toString() {
+        List<Group> groupsString = groups.asUnmodifiableObservableList().stream()
+                .sorted(Comparator.comparing(g -> g.getGroupId().toString()))
+                .collect(Collectors.toList());
+        return new ToStringBuilder(this)
+                .add("persons", persons)
+                .add("consultations", consultations)
+                .add("groups", groupsString)
+                .toString();
     }
 }

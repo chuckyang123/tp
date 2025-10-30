@@ -44,7 +44,7 @@ public class AddToGroupCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        Person target = model.getPersonByNusnetIdFullList(nusnetId);
+        Person target = model.getPersonByNusnetId(nusnetId);
         model.moveStudentToNewGroup(target, groupId);
         model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
         return new CommandResult(String.format(MESSAGE_SUCCESS, nusnetId, groupId));
