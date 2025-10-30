@@ -871,6 +871,34 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case resumes at step 5.
 
+**Use case:** UC12 - Find students by group
+**User**: TA
+
+**Guarantees**: 
+* If the GroupId is valid and exists, at least one student is found.
+
+**MSS**
+
+1. User requests to find students by specifying a GroupId.
+2. System verifies the GroupId is valid.
+3. System checks whether the group exists.
+4. System retrieves the list of students in the specified group.
+5. System displays the list of students in the UI. 
+   
+   Use case ends.
+
+**Extensions**
+
+* 2a. The GroupId is invalid.
+    * 2a1. System shows error message and indicates the valid format for Group Id.
+
+      Use case ends.
+
+* 3a. The group does not exist.
+    * 3a1. System shows error message, saying group does not exist.
+  
+      Use case ends.
+
 ### Non-Functional Requirements
 
 #### 1. Data Requirements
