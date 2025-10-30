@@ -339,5 +339,14 @@ public class AddToGroupCommandTest {
             requireAllNonNull(student, newGroupId);
             this.addressBook.moveStudentToNewGroup(student, newGroupId);
         }
+        @Override
+        public Person getPersonByNusnetIdFullList(Nusnetid nusnetId) throws CommandException {
+            requireNonNull(nusnetId);
+            assert hasPerson(nusnetId) : "Person with given nusnetId should exist in the address book.";
+            Person target = this.addressBook.getUniquePersonList()
+                    .stream().filter(p -> p.getNusnetid().equals(nusnetId))
+                    .findFirst().orElseThrow(() -> new CommandException(MESSAGE_STUDENT_NOT_FOUND));
+            return target;
+        }
     }
 }

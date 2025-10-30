@@ -345,7 +345,6 @@ public class AddressBook implements ReadOnlyAddressBook {
             newGroup.addStudent(updatedStudent);
         }
     }
-
     /**
      * Updates consultations stored in the address book when a person's nusnetid is edited.
      * Any consultation that references {@code oldNusnetid} will be replaced with a new Consultation
