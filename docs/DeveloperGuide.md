@@ -404,7 +404,56 @@ How the `list_consult` command works:
 5. A success message is returned to the user.
 
 --------------------------------------------------------------------------------------------------------------------
+### Mark Attendance Feature
 
+The mark attendance feature allows users to mark the attendance status (e.g., `present`, `absent`, `excused`) of a single student in a particular week.
+
+The sequence diagram below illustrates the interactions within the `Logic` component for marking attendance:
+
+<puml src="diagrams/MarkAttendanceSequenceDiagram.puml" width="550" alt="Interactions Inside the Logic Component for the `markhomework` Command" />
+
+<box type="info" seamless>
+
+**Note:** The lifeline for `MarkAttendanceCommandParser` should end at the destroy marker (X), but due to a limitation of PlantUML, the lifeline continues till the end of the diagram.
+
+</box>
+
+How the `markAttendance` command works:
+1. When the user enters a `markAttendance` command, `LogicManager` passes it to `AddressBookParser`.
+2. `AddressBookParser` creates a `MarkAttendanceCommandParser` to parse the command arguments.
+3. `MarkAttendanceCommandParser` validates and parses the NUSNET ID, week number, and attendance status.
+4. A `MarkAttendanceCommand` object is created and executed.
+5. Before execution, the current state is committed for undo/redo functionality.
+6. `MarkAttendanceCommand` checks whether the specified student exits.
+7. If exits, the attendance status of the student in the specified week is updated to the status.
+8. The updated address book is saved to storage.
+
+--------------------------------------------------------------------------------------------------------------------
+### Mark All Attendance Feature
+
+The mark all attendance feature allows users to mark the attendance status (e.g., `present`, `absent`, `excused`) of a group of students in a particular week.
+
+The sequence diagram below illustrates the interactions within the `Logic` component for marking attendance:
+
+<puml src="diagrams/MarkAllAttendanceSequenceDiagram.puml" width="550" alt="Interactions Inside the Logic Component for the `markhomework` Command" />
+
+<box type="info" seamless>
+
+**Note:** The lifeline for `MarkAllAttendanceCommandParser` should end at the destroy marker (X), but due to a limitation of PlantUML, the lifeline continues till the end of the diagram.
+
+</box>
+
+How the `markAllAttendance` command works:
+1. When the user enters a `markAllAttendance` command, `LogicManager` passes it to `AddressBookParser`.
+2. `AddressBookParser` creates a `MarkAllAttendanceCommandParser` to parse the command arguments.
+3. `MarkAllAttendanceCommandParser` validates and parses the GroupId, week number, and attendance status.
+4. A `MarkAllAttendanceCommand` object is created and executed.
+5. Before execution, the current state is committed for undo/redo functionality.
+6. `MarkAllAttendanceCommand` checks whether the specified group exits.
+7. If exits, the attendance status of students of the group in the specified week is updated to the status.
+8. The updated address book is saved to storage.
+
+--------------------------------------------------------------------------------------------------------------------
 ## **Documentation, logging, testing, configuration, dev-ops**
 
 * [Documentation guide](Documentation.md)
@@ -826,11 +875,11 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 #### 1. Data Requirements
 ##### NFR-D1: Data Size
-- Maximum 500 students per course
-- Maximum 50 tutorial groups per course
+- Maximum 500 students 
+- Maximum 20 tutorial groups
 - Support 12 weeks of attendance data (weeks 2-13)
-- Support at least 10 assignments per course
-- Store consultation history for entire semester
+- Support maximum 3 assignments
+- Maximum 1 consultation slot for each student
 
 ##### NFR-D2: Data Volatility
 **High Volatility Data** (changes very frequently):
@@ -841,29 +890,27 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **Medium Volatility Data** (changes occasionally):
 - Student contact information: might change once or twice per semester
 - Group assignments: adjusted a few times during the semester
-- TA availability: changes periodically but not daily
 
 **Low Volatility Data** (rarely changes):
 - Student directory (names, NusNET IDs): mostly stable after add/drop period
-- Tutorial slot assignments: fixed after first few weeks
+- Tutorial group assignments: fixed after first few weeks
 
 ##### NFR-D3: Data Persistence
-- All student data must persist between application sessions
-- Attendance, homework, and consultation records must be permanent until explicitly deleted
-- System must auto-save after every successful command
-- Historical data (eg.assessment performance) must persist across semesters
+- All student data must persist between application sessions.
+- Attendance, homework, and consultation records must be permanent until explicitly deleted.
+- System must auto-save after every successful command.
 
 #### 2. Environment/Technical Requirements
 ##### NFR-E1: Operating System Compatibility
-- Must run on Windows, Linux, and OS-X platforms
-- Must work on both 32-bit and 64-bit environments
-- No OS-dependent libraries or OS-specific features allowed
-- Cross-platform compatibility without any modifications to codebase
+- Must run on Windows, Linux, and OS-X platforms.
+- Must work on both 32-bit and 64-bit environments.
+- No OS-dependent libraries or OS-specific features allowed.
+- Cross-platform compatibility without any modifications to codebase.
 
 ##### NFR-E2: Software Dependencies
-- Requires Java 17 only (no other Java version required or installed)
-- Must work without internet connection (offline-first design)
-- No external database server required
+- Requires Java 17 only (no other Java version required or installed).
+- Must work without internet connection (offline-first design).
+- No external database server required.
 - Third-party libraries must be:
   - Free and open-source with permissive licenses
   - Packaged within the JAR file (no separate installation required)
@@ -871,51 +918,50 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
   - Approved by teaching team prior to use
 
 ##### NFR-E3: Hardware Requirements(To be finalized later)
+- The application must operate efficiently on standard consumer-grade hardware without requiring specialized equipment.
+- Must run on both desktop and laptop computers without additional hardware dependencies.
 
 
 #### 3. Performance Requirements
 ##### NFR-P1: Response Time
-- Basic commands (add, delete, mark) must complete within 2 seconds
-- Search and filter operations must return results within 1 second
-- Tab switching must occur within 1 second
-- PDF export must complete within 5 seconds for up to 200 students
+- Basic commands must complete within 2 seconds.
+- Find operations must return results within 2 second.
 
 ##### NFR-P2: Startup Time
-- Application must launch within 3 seconds on standard hardware
-- Onboarding guide must appear within 1 second of first launch
+- Application must launch within 5 seconds on standard hardware.
+
 #### 4. Scalability Requirements
 ##### NFR-S1: User Scalability
-- Support TAs managing multiple tutorial slots simultaneously
+- Supports TAs managing multiple tutorial slots.
 
 ##### NFR-S2: Data Scalability
-- Performance must not degrade noticeably up to 100 students
-- Support unlimited consultation bookings per student
+- Performance must not degrade noticeably up to 100 students.
+- Supports unlimited consultation bookings per student.
+
 #### 5. Usability Requirements
 ##### NFR-U1: Learnability
-- First-time TA users must be able to add a student and mark attendance within 10 minutes using the onboarding guide
-- The onboarding guide must be completable in under 5 minutes
-- Help command must provide examples for all commands
+- First-time TA users must be able to add a student and mark attendance within 10 minutes using the onboarding guide.
+- The onboarding guide must be completable in under 5 minutes.
+- Help command must provide examples for all commands.
 
 ##### NFR-U2: Efficiency
-- Experienced users should be able to mark attendance for 30 students in under 2 minutes
-- Common tasks should require fewer than 10 commands
-- All primary functions must be accessible via keyboard commands without requiring mouse
+- Experienced users should be able to mark attendance for 30 students in under 2 minutes.
+- Common tasks should require fewer than 3 commands.
+- All primary functions must be accessible via keyboard commands without requiring mouse.
 
 ##### NFR-U3: Error Handling
-- Error messages must be specific and actionable (e.g., "Missing required field: email" not "Error 404")
-- System must provide confirmation prompts for destructive operations (delete student, bulk delete)
+- Error messages must be specific and actionable.
+- System must provide confirmation prompts for destructive operations.
 - No technical jargon in error messages - use plain language
 
 ##### NFR-U4: Consistency
-- Command syntax must be consistent across all features using the same prefix style (i/, n/, e/, t/, s/, w/, a/)
-- All command names follow verb-noun format: `add_student`, `mark_attendance`, `delete_student`
-- Parameter handling behavior must be consistent (e.g., last occurrence wins for duplicate prefixes)
+- Command syntax must be consistent across all features using the same prefix style (i/, n/, e/, t/, status/, w/, a/).
+- All command names follow verb-noun format: `add_student`, `mark_attendance`, `delete`.
 
 ##### NFR-U5: Visual Design
 - Minimum font size: 12pt for readability
-- UI must be usable on minimum resolution 1280x720
+- UI must be usable on minimum resolution 1280x720.
 - Clear visual separation between tabs (Students, Attendance, Homework, Groups)
-- Tables must have alternating row colors for scannabilityRetryClaude can make mistakes. Please double-check responses.Research Sonnet 4.5
 
 
 #### 6.Constraints
