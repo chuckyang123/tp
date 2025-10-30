@@ -94,7 +94,7 @@ done faster than traditional GUI app and
 | **Delete student**          | `delete INDEX`                                                                             | `delete 3`                                                                           |
 | **Find students by name**   | `find KEYWORD [MORE_KEYWORDS]`                                                             | `find James Jake`                                                                    |
 | **Add homework**            | `add_hw i/NUSNETID a/ASSIGNMENT`<br>(use `i/all` for all students)                         | `add_hw i/E1234567 a/1`                                                              |
-| **Mark homework**           | `mark_hw i/NUSNETID a/ASSIGNMENT status/STATUS`<br>(STATUS: complete, incomplete, late)    | `mark_hw i/E1234567 a/1 complete`                                                    |
+| **Mark homework**           | `mark_hw i/NUSNETID a/ASSIGNMENT status/STATUS`<br>(STATUS: complete, incomplete, late)    | `mark_hw i/E1234567 a/1 status/complete`                                                    |
 | **Delete homework**         | `delete_hw i/NUSNETID a/ASSIGNMENT`<br>(use `i/all` for all students)                      | `delete_hw i/E1234567 a/1`                                                           |
 | **Mark attendance**         | `mark_attendance i/NUSNETID w/WEEK status/ATTENDANCE_STATUS`<br>(STATUS: present, absent, excused)    | `mark_attendance i/E1234567 w/3 status/present`                                      |
 | **Mark attendance for all** | `mark_all_attendance g/GROUPID w/WEEK status/ATTENDANCE_STATUS`<br>(STATUS: present, absent, excused) | `mark_all_attendance g/T01 w/3 status/present`                                       |
