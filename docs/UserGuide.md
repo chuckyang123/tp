@@ -528,9 +528,9 @@ Furthermore, certain edits can cause the AddressBook to behave in unexpected way
 2. **If you minimize the Help Window** and then run the `help` command (or use the `Help` menu, or the keyboard shortcut `F1`) again, the original Help Window will remain minimized, and no new Help Window will appear.
    
    **Remedy:** Manually restore the minimized Help Window.
-3. **When using `edit` or `delete` commands on the consultation view page**, the index of student to be edited or deleted cannot be seen.
+3. **When using `edit_student` or `delete` commands on the consultation view page**, the index of student to be edited or deleted cannot be seen.
    
-   **Remedy:** Use the `list` command to return to the student view page to obtain the target student's index before using the `edit` or `delete` command.
+   **Remedy:** Use the `list` command to return to the student view page to obtain the target student's index before using the `edit_student` or `delete` command.
 
 --------------------------------------------------------------------------------------------------------------------
 
