@@ -6,7 +6,7 @@
 
 # SoCTAssist User Guide
 
-SoCTAssist is a **desktop app designed specifically to help Teaching Assistants manage their students' information,
+SoCTAssist is a desktop app designed specifically to help Teaching Assistants manage their students' information,
 homework, attendance, and consultation sessions more efficiently.
 
 If you are a Teaching Assistance who can type fast, SoCTAssist can get your contact management tasks
