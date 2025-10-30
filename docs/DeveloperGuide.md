@@ -197,10 +197,9 @@ How the `addhomework` command works:
 2. `AddressBookParser` creates an `AddHomeworkCommandParser` to parse the command arguments.
 3. `AddHomeworkCommandParser` validates and parses the NUSNET ID (or the keyword `all`) and the assignment ID.
 4. An `AddHomeworkCommand` object is created and executed.
-5. Before execution, the current state is committed for undo/redo functionality.
-6. `AddHomeworkCommand` checks if the homework assignment already exists for the specified student(s).
-7. If no duplicates are found, the homework is added to the target student(s)’ homework tracker(s).
-8. The updated address book is saved to storage.
+5. `AddHomeworkCommand` checks if the homework assignment already exists for the specified student(s).
+6. If no duplicates are found, the homework is added to the target student(s)’ homework tracker(s).
+7. The updated address book is saved to storage.
 
 ---
 
@@ -223,10 +222,9 @@ How the `deletehomework` command works:
 2. `AddressBookParser` creates a `DeleteHomeworkCommandParser` to parse the command arguments.
 3. `DeleteHomeworkCommandParser` validates and parses the NUSNET ID (or the keyword `all`) and the assignment ID.
 4. A `DeleteHomeworkCommand` object is created and executed.
-5. Before execution, the current state is committed for undo/redo functionality.
-6. `DeleteHomeworkCommand` verifies that the homework exists for the specified student(s).
-7. If found, the homework is removed from the respective homework tracker(s).
-8. The updated address book is saved to storage.
+5. `DeleteHomeworkCommand` verifies that the homework exists for the specified student(s).
+6. If found, the homework is removed from the respective homework tracker(s).
+7. The updated address book is saved to storage.
 
 ---
 
@@ -249,10 +247,9 @@ How the `markhomework` command works:
 2. `AddressBookParser` creates a `MarkHomeworkCommandParser` to parse the command arguments.
 3. `MarkHomeworkCommandParser` validates and parses the NUSNET ID, assignment ID, and status.
 4. A `MarkHomeworkCommand` object is created and executed.
-5. Before execution, the current state is committed for undo/redo functionality.
-6. `MarkHomeworkCommand` checks whether the specified homework exists for the student.
-7. If found, the homework’s status is updated to the new value.
-8. The updated address book is saved to storage.
+5.`MarkHomeworkCommand` checks whether the specified homework exists for the student.
+6. If found, the homework’s status is updated to the new value.
+7. The updated address book is saved to storage.
 
 
 --------------------------------------------------------------------------------------------------------------------
@@ -275,10 +272,9 @@ How the `markAttendance` command works:
 2. `AddressBookParser` creates a `MarkAttendanceCommandParser` to parse the command arguments.
 3. `MarkAttendanceCommandParser` validates and parses the NUSNET ID, week number, and attendance status.
 4. A `MarkAttendanceCommand` object is created and executed.
-5. Before execution, the current state is committed for undo/redo functionality.
-6. `MarkAttendanceCommand` checks whether the specified student exits.
-7. If exits, the attendance status of the student in the specified week is updated to the status.
-8. The updated address book is saved to storage.
+5. `MarkAttendanceCommand` checks whether the specified student exits.
+6. If exits, the attendance status of the student in the specified week is updated to the status.
+7. The updated address book is saved to storage.
 
 --------------------------------------------------------------------------------------------------------------------
 ### Mark All Attendance Feature
@@ -300,10 +296,9 @@ How the `markAllAttendance` command works:
 2. `AddressBookParser` creates a `MarkAllAttendanceCommandParser` to parse the command arguments.
 3. `MarkAllAttendanceCommandParser` validates and parses the GroupId, week number, and attendance status.
 4. A `MarkAllAttendanceCommand` object is created and executed.
-5. Before execution, the current state is committed for undo/redo functionality.
-6. `MarkAllAttendanceCommand` checks whether the specified group exits.
-7. If exits, the attendance status of students of the group in the specified week is updated to the status.
-8. The updated address book is saved to storage.
+5. `MarkAllAttendanceCommand` checks whether the specified group exits.
+6. If exits, the attendance status of students of the group in the specified week is updated to the status.
+7. The updated address book is saved to storage.
 
 --------------------------------------------------------------------------------------------------------------------
 ## **Documentation, logging, testing, configuration, dev-ops**
