@@ -251,7 +251,6 @@ How the `markhomework` command works:
 6. If found, the homework’s status is updated to the new value.
 7. The updated address book is saved to storage.
 
-
 --------------------------------------------------------------------------------------------------------------------
 ### Mark Attendance Feature
 
@@ -299,6 +298,66 @@ How the `markAllAttendance` command works:
 5. `MarkAllAttendanceCommand` checks whether the specified group exits.
 6. If exits, the attendance status of students of the group in the specified week is updated to the status.
 7. The updated address book is saved to storage.
+
+---
+
+### Add Consultation Feature
+The add consultation feature allows users to add consultation slots for students.
+
+The sequence diagram below illustrates the interactions within the `Logic` component for adding a consultation:
+<puml src="diagrams/AddConsultationSequenceDiagram-Logic.puml" width="550" alt="Interactions inside the Logic Component for the `add_consult` Command" />
+
+The sequence diagram below illustrates the interactions within the `Model` component for adding a consultation:
+<puml src="diagrams/AddConsultationSequenceDiagram-Model.puml" width="550" alt="Interactions inside the Model Component for the `add_consult` Command" />
+
+How the `add_consult` command works:
+1. When the user enters an `add_consult` command, `LogicManager` passes it to `AddressBookParser`.
+2. `AddressBookParser` creates an `AddConsultationCommandParser` to parse the command arguments.
+3. `AddConsultationCommandParser` validates and parses the NUSNET ID, start time and end time.
+4. An `AddConsultationCommand` object is created and executed.
+5. During execution, `AddConsultationCommand` checks if the student exists in the model, if the consultation overlaps with other existing consultations in the model, and if the student already has a consultation.
+6. If all checks pass, the consultation is added to the student and the model is updated.
+7. The updated address book is saved to storage.
+8. A success message is returned to the user.
+
+---
+
+### Delete Consultation Feature
+The delete consultation feature allows users to delete existing consultations from students.
+
+The sequence diagram below illustrates the interactions within the `Logic` component for deleting a consultation:
+<puml src="diagrams/DeleteConsultationSequenceDiagram-Logic.puml" width="550" alt="Interactions inside the Logic Component for the `delete_consult` Command" />
+
+The sequence diagram below illustrates the interactions within the `Model` component for deleting a consultation:
+<puml src="diagrams/DeleteConsultationSequenceDiagram-Model.puml" width="550" alt="Interactions inside the Model Component for the `delete_consult` Command" />
+
+How the `delete_consult` command works:
+1. When the user enters a `delete_consult` command, `LogicManager` passes it to `AddressBookParser`.
+2. `AddressBookParser` creates a `DeleteConsultationCommandParser` to parse the command arguments.
+3. `DeleteConsultationCommandParser` validates and parses the NUSNET ID.
+4. A `DeleteConsultationCommand` object is created and executed.
+5. During execution, `DeleteConsultationCommand` checks if the student exists in the model and if the student has an existing consultation.
+6. If both checks pass, the consultation is removed from the student and the model is updated.
+7. The updated address book is saved to storage.
+8. A success message is returned to the user.
+
+---
+
+### List Consultation Feature
+The list consultation feature allows users to view all scheduled consultations.
+
+The sequence diagram below illustrates the interactions within the `Logic` component for listing consultations:
+<puml src="diagrams/ListConsultationSequenceDiagram-Logic.puml" width="550" alt="Interactions inside the Logic Component for the `list_consult` Command" />
+
+The sequence diagram below illustrates the interactions within the `Model` component for listing consultations:
+<puml src="diagrams/ListConsultationSequenceDiagram-Model.puml" width="550" alt="Interactions inside the Model Component for the `list_consult` Command" />
+
+How the `list_consult` command works:
+1. When the user enters a `list_consult` command, `LogicManager` passes it to `AddressBookParser`.
+2. `AddressBookParser` creates a `ListConsultationCommand` object.
+3. The `ListConsultationCommand` object is executed.
+4. During execution, `ListConsultationCommand` updates the filtered consultation list in the model.
+5. A success message is returned to the user.
 
 --------------------------------------------------------------------------------------------------------------------
 ## **Documentation, logging, testing, configuration, dev-ops**
