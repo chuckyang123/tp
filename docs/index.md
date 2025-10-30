@@ -3,7 +3,7 @@
   title: ""
 ---
 
-# AddressBook Level-3
+# SoCTAssist
 
 [![CI Status](https://github.com/AY2526S1-CS2103T-W11-1/tp/actions/workflows/gradle.yml/badge.svg)](https://github.com/AY2526S1-CS2103T-W11-1/tp/actions/workflows/gradle.yml)
 [![codecov](https://codecov.io/gh/AY2526S1-CS2103T-W11-1/tp/branch/master/graph/badge.svg)](https://codecov.io/gh/AY2526S1-CS2103T-W11-1/tp)
