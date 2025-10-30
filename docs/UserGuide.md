@@ -245,7 +245,10 @@ Format: `add_hw i/NUSNETID (use 'i/all' for all students) a/ASSIGNMENT`
 
 * Adds the homework with the given assignment number for the specified student.
 * If `i/all` is used, the homework is added for all students.
-* The NUSNET ID **must be valid** and the assignment identifier **must be specified**.
+* Homework number must be between 1 to 3.
+* If adding homework for a specific student, NUSNET ID is used, which starts with E and has 7 numbers, and it should not be blank.
+* The NUSNET ID and homework number **must be valid**.
+* The system will check the validity of command format, followed by validity of input, and lastly the existence of the student.
 
 Examples:
 * `add_hw i/E1234567 a/1` adds assignment 1 for the student with NUSNET ID `E1234567`.
@@ -259,8 +262,11 @@ Marks the homework status for the specified student.
 Format: `mark_hw i/NUSNETID a/ASSIGNMENT status/STATUS`
 
 * Marks the specified assignment for the given student.
+* Homework number must be between 1 to 3.
+* NUSNET ID can start with E and has 7 numbers, and it should not be blank.
 * The `STATUS` can be one of the following: `complete`, `incomplete`, or `late`.
-* The NUSNET ID and assignment number **must be valid**.
+* The NUSNET ID, homework number and status **must be valid**.
+* The system will check the validity of command format, followed by validity of input, and lastly the existence of the student.
 
 Examples:
 * `mark_hw i/E1234567 a/1 status/complete` marks assignment 1 as complete for student `E1234567`.
@@ -275,7 +281,10 @@ Format: `delete_hw i/NUSNETID (use 'i/all' for all students) a/ASSIGNMENT`
 
 * Deletes the homework with the given assignment number for the specified student.
 * If `i/all` is used, the homework is deleted for all students.
-* The NUSNET ID **must be valid** and the assignment identifier **must be specified**.
+* Homework number must be between 1 to 3.
+* If deleting the homework for a specific student, NUSNET ID is used, which starts with E and has 7 numbers, and it should not be blank.
+* The NUSNET ID and homework number **must be valid**.
+* The system will check the validity of command format, followed by validity of input, and lastly the existence of the student.
 
 Examples:
 * `delete_hw i/E1234567 a/1` deletes assignment 1 for the student with NUSNET ID `E1234567`.

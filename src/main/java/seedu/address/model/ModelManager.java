@@ -326,12 +326,26 @@ public class ModelManager implements Model {
 
     @Override
     public void addHomework(Nusnetid nusnetId, int assignmentId) throws CommandException {
+        List<String> errors = new ArrayList<>();
+        if (assignmentId < 1 || assignmentId > 3) {
+            errors.add("Homework ID must be between 1 and 3.");
+        }
+
+        if (nusnetId != null) {
+            if (!hasPerson(nusnetId)) {
+                errors.add(String.format("Student with NUSNET ID %s does not exist.", nusnetId.value));
+            }
+        }
+        if (!errors.isEmpty()) {
+            throw new CommandException(String.join(" ", errors));
+        }
+
         if (nusnetId == null) {
             // add homework to all students
             for (Person p : addressBook.getUniquePersonList()) {
                 if (p.getHomeworkTracker().contains(assignmentId)) {
                     throw new CommandException(
-                            String.format("Assignment %d already exists for %s.", assignmentId, p.getName().fullName)
+                            String.format("Homework %d already exists for some student(s).", assignmentId)
                     );
                 }
             }
@@ -349,7 +363,7 @@ public class ModelManager implements Model {
         }
         if (target.getHomeworkTracker().contains(assignmentId)) {
             throw new CommandException(
-                    String.format("Assignment %d already exists for %s.", assignmentId, target.getName())
+                    String.format("Homework %d already exists for %s.", assignmentId, target.getName())
             );
         }
 
@@ -363,7 +377,7 @@ public class ModelManager implements Model {
             for (Person p : addressBook.getUniquePersonList()) {
                 if (!p.getHomeworkTracker().contains(assignmentId)) {
                     throw new CommandException(
-                            String.format("Assignment %d not found for %s.", assignmentId, p.getName())
+                            String.format("Homework %d does not exist for some students.", assignmentId)
                     );
                 }
             }
@@ -383,7 +397,7 @@ public class ModelManager implements Model {
 
         if (!target.getHomeworkTracker().contains(assignmentId)) {
             throw new CommandException(
-                    String.format("Assignment %d not found for %s.", assignmentId, target.getName())
+                    String.format("Homework %d not found for %s.", assignmentId, target.getName())
             );
         }
 
@@ -411,7 +425,7 @@ public class ModelManager implements Model {
         }
         if (!target.getHomeworkTracker().hasAssignment(assignmentId)) {
             throw new CommandException(
-                    String.format("Assignment %d not found for %s. Add it first using 'add_hw'.",
+                    String.format("Homework %d not found for %s. Add it first using 'add_hw'.",
                             assignmentId, target.getName().fullName));
         }
 
