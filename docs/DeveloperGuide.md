@@ -499,7 +499,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1. User requests to add a student by specifying full name, preferred name, email, Telegram handle, and group ID.
+1. User requests to add a student by specifying full name, NUSNET ID, email, Telegram handle, phone number and group ID.
 
 2. AddressBook validates all fields.
 
@@ -513,31 +513,25 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 2a. One or more required fields are missing.
 
-    * 2a1. AddressBook shows error: Missing required field: <field>.
+    * 2a1. AddressBook shows error: `Invalid command format!`.
 
         Use case ends.
 
 * 2b. Email format is invalid.
 
-    * 2b1. AddressBook shows error: Invalid email format. Use RFC-5322 pattern.
+    * 2b1. AddressBook shows error: `Invalid email format`.
 
         Use case ends.
 
-* 2c. Telegram handle format is invalid.
+* 2c. Group ID format is invalid.
 
-    * 2c1. AddressBook shows error message.
-
-        Use case ends.
-
-* 2d. Group ID format is invalid.
-
-    * 2d1. AddressBook shows error message.
+    * 2d1. AddressBook shows error message: `Invaid Group ID`.
 
         Use case ends.
 
 * 2e. A student with the same nusnetid already exists.
 
-    * 2e1. AddressBook shows error: Student with this nusnetid already exists.
+    * 2e1. AddressBook shows error: `Student with this nusnetid already exists`.
 
        Use case ends.
 
@@ -546,7 +540,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1. User requests to edit a student by specifying the email and updated fields.
+1. User requests to edit a student by specifying the index and updated fields.
 
 2. AddressBook validates that the student exists.
 
@@ -555,6 +549,19 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 4. AddressBook shows confirmation message with updated student details.
 
     Use case ends.
+
+**Extensions**
+
+* 2a. Student index does not exist.
+
+    * 2a1. AddressBook shows error: `The person index provided is invalid`.
+
+      Use case ends.
+* 2b. Any updated field is invalid.
+
+    * 2c1. AddressBook shows corresponding validation error.
+
+      Use case ends.
 
 **Use case:** UC03 - Delete a student
 **Actor**: TA
@@ -571,26 +578,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 5. AddressBook UI updated.
     Use case ends.
-
-**Extensions**
-
-* 2a. Student email does not exist.
-
-    * 2a1. AddressBook shows error: Student not found.
-
-      Use case ends.
-
-* 2b. Edited email duplicates another existing student’s nusnetid.
-
-    * 2b1. AddressBook shows error: nusnetid already in use.
-
-      Use case ends.
-
-* 2c. Any updated field is invalid.
-
-    * 2c1. AddressBook shows corresponding validation error.
-
-      Use case ends.
 
 **Use Case:** UC04 - Create Homework
 **Actor**: TA
@@ -708,9 +695,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1. User requests to add a consultation by specifying student email, date, start time, and end time.
+1. User requests to add a consultation by specifying student NUSNET ID, date_start_time, and date_end_time.
 
-2. AddressBook validates the student email, date, and times.
+2. AddressBook validates the student NUSNET ID, date, and times.
 
 3. AddressBook creates the consultation booking for the student.
 
@@ -722,25 +709,25 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 2a. Student nusnetid does not exist in the directory.
 
-  * 2a1. AddressBook shows error: Student not found.
+  * 2a1. AddressBook shows error: `Student not found`.
 
        Use case ends.
 
 * 2b. End time is not after start time.
 
-    * 2b1. AddressBook shows error: End time must be after start time.
+    * 2b1. AddressBook shows error: `End time must be after start time`.
 
          Use case ends.
 
 * 2c. The new consultation overlaps with an existing one.
 
-    * 2c1. AddressBook shows error: Time conflict with existing booking.
+    * 2c1. AddressBook shows error: `Time conflict with existing booking`.
 
          Use case ends.
 
 * 2d. A consultation with identical date and time already exists.
 
-    * 2d1. AddressBook shows error: Duplicate consultation booking.
+    * 2d1. AddressBook shows error: `Duplicate consultation booking`.
 
          Use case ends.
 
@@ -749,9 +736,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1. User requests to delete a consultation by specifying student email, date, start time, and end time.  
+1. User requests to delete a consultation by specifying student NUSNET ID, date_start_time, and date_end_time.  
 
-2. AddressBook validates the student email, date, and times.  
+2. AddressBook validates the student NUSNET ID, date, and times.  
 
 3. AddressBook locates the consultation record that matches the provided details.  
 
@@ -765,19 +752,19 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 2a. Student nusnetid does not exist in the directory.  
 
-  * 2a1. AddressBook shows error: Student not found.  
+  * 2a1. AddressBook shows error: `Student not found`.  
 
        Use case ends.  
 
 * 3a. Consultation record with the specified details does not exist.  
 
-  * 3a1. AddressBook shows error: Consultation not found.  
+  * 3a1. AddressBook shows error: `Consultation not found`.  
 
        Use case ends.  
 
 * 3b. Consultation list is empty.  
 
-  * 3b1. AddressBook shows error: No consultations available to delete.  
+  * 3b1. AddressBook shows error: `No consultations available to delete`.  
 
        Use case ends.  
 
@@ -786,9 +773,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1. User requests to mark attendance for a student by specifying student nusnetid, date, and attendance status.
+1. User requests to mark attendance for a student by specifying student nusnetid, week, and attendance status.
 
-2. AddressBook validates that the student exists and the date/status are valid.
+2. AddressBook validates that the student exists and the week and status are valid.
 
 3. AddressBook records the attendance for the student.
 
@@ -800,13 +787,42 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 2a. Student nusnetid does not exist.
 
-    * 2a1. AddressBook shows error: Student not found.
+    * 2a1. AddressBook shows error: `Student not found`.
 
          Use case ends.
 
 * 2b. Attendance status is invalid (not Present or Absent or Excused).
 
-    * 2b1. AddressBook shows error: Invalid attendance status.
+    * 2b1. AddressBook shows error: `Please enter present/absent/excused only`.
+
+         Use case ends.
+
+
+**Use case: Mark all attendance**
+
+**MSS**
+
+1. User requests to mark attendance for a group of student by specifying GroupId, week, and attendance status.
+
+2. AddressBook validates that the group exists and the week and status are valid.
+
+3. AddressBook records the attendance for the student.
+
+4. AddressBook shows a confirmation message with details.
+
+    Use case ends.
+
+**Extensions**
+
+* 2a. GroupId does not exist.
+
+    * 2a1. AddressBook shows error: `Group not found`.
+
+         Use case ends.
+
+* 2b. Attendance status is invalid (not Present or Absent or Excused).
+
+    * 2b1. AddressBook shows error: `Please enter present/absent/excused only`.
 
          Use case ends.
 
