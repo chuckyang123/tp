@@ -810,7 +810,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
          Use case ends.
 
-**Use case:** UC10 - Create and manage student groups
+**Use case:** UC10 - Create student groups
 **User**: TA
 
 **MSS**
@@ -818,56 +818,59 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 1. User requests to create a new group with a specified GroupName.
 2. Address Book validates the GroupId.
 3. System creates the group.
-4. System shows confirmation message: `Group <GroupName> is created.`
+4. System shows confirmation message.
 
    Use case ends.
 
 **Extensions**
 
-* 2a. The GroupName is missing.
-    * 2a1. System shows error message: 
-      ```text
-      Invalid command format!
-      create_group: Creates a new group identified by the given group id.
-      Parameters: g/GROUPID Example: create_group g/T12
-      ```
+* 2a. The GroupId is missing.
+    * 2a1. System shows error message, saying Group Id is missing.
+
     Use case ends.
 
-* 2b. The GroupName is a duplicate.
-    * 2b1. System shows error message: `Group <GroupId> already exists!`.
+* 2b. The GroupId is invalid.
+    * 2c1. System shows error message and indicates the valid format for Group Id.
 
       Use case ends.
-  
+
+* 2c. The GroupId is a duplicate.
+    * 2b1. System shows error message, saying Group Id already exists
+
+      Use case ends.
+
+
 **Use case:** UC11 - Add student to a group
 **User**: TA
 
 **MSS**
 
-1. User requests to add a student to an existing group using the student’s email and GroupName.
-2. System verifies the group exists.
-3. System verifies the student exists.
-4. System checks whether the student is already in the group.
-5. System adds the student to the group.
-6. System shows confirmation message: `Alice is added to Group <GroupName>.`
+1. User requests to add a student to an existing group using the student’s nus net id and GroupId.
+2. System verifies the student exists.
+3. System checks whether the group id is the same as the student's existing group.
+4. System checks whether the group exists.
+5. System adds the student to the specified group.
+6. System shows confirmation message.
 
    Use case ends.
 
 **Extensions**
 
-* 2a. The GroupName is missing or invalid.
-    * 2a1. System shows error message: `Missing required field: GroupName` or `Invalid Team Name`.
+* 2a. The student with the nusnetid does not exist.
+    * 2a1. System shows error message.
 
       Use case ends.
 
-* 3a. The student's email is missing or invalid.
-    * 3a1. System shows error message: `Missing required field: Email` or `Student does not exist`.
+* 3a. The group id is the same as the student's existing group.
+    * 3a1. System shows error message, saying student already in that group.
 
       Use case ends.
 
-* 4a. The student is already in the group.
-    * 4a1. System shows error message: `Student already in this group`.
+* 4a. The group does not exist.
+    * 4a1. System creates the group.
 
-      Use case ends.
+      Use case resumes at step 5.
+
 ### Non-Functional Requirements
 
 #### 1. Data Requirements
