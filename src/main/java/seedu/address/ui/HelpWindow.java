@@ -28,8 +28,8 @@ public class HelpWindow extends UiPart<Stage> {
             + "- add_hw: add_hw i/NETID a/ASSIGNMENT_ID or add_hw i/all a/ASSIGNMENT_ID\n"
             + "- mark_hw: mark_hw i/NUSNETID a/ASSIGNMENT_ID status/complete|incomplete|late\n"
             + "- delete_hw: delete_hw i/NUSNETID a/ASSIGNMENT_ID or delete_hw i/all a/ASSIGNMENT_ID\n"
-            + "- mark_attendance: mark_attendance i/NUSNETID w/WEEK STATUS(present|absent|excused)\n"
-            + "- mark_all_attendance: mark_all_attendance g/GROUP w/WEEK STATUS(present|absent|excused)\n"
+            + "- mark_attendance: mark_attendance i/NUSNETID w/WEEK status/STATUS(present|absent|excused)\n"
+            + "- mark_all_attendance: mark_all_attendance g/GROUP w/WEEK status/STATUS(present|absent|excused)\n"
             + "- create_group: create_group g/GROUPID\n"
             + "- add_consult: add_consult i/NUSNETID from/START_TIME to/END_TIME\n"
             + "- delete_consult: delete_consult i/NUSNETID\n";
