@@ -5,8 +5,8 @@
 
 # AddressBook Level-3
 
-[![CI Status](https://github.com/ay2526s1-cs2103t-w11-1.github.io/tp/Java%20CI/badge.svg)]([https://github.com/ay2526s1-cs2103t-w11-1.github.io/tp/actions](https://github.com/AY2526S1-CS2103T-W11-1/tp/actions))
-[![codecov](https://codecov.io/gh/ay2526s1-cs2103t-w11-1.github.io/tp/branch/master/graph/badge.svg)](https://codecov.io/gh/ay2526s1-cs2103t-w11-1.github.io/tp)
+[![CI Status](https://github.com/AY2526S1-CS2103T-W11-1/tp/actions/workflows/gradle.yml/badge.svg)](https://github.com/AY2526S1-CS2103T-W11-1/tp/actions/workflows/gradle.yml)
+[![codecov](https://codecov.io/gh/AY2526S1-CS2103T-W11-1/tp/branch/master/graph/badge.svg)](https://codecov.io/gh/AY2526S1-CS2103T-W11-1/tp)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
 <img width="3199" height="1846" alt="image" src="https://github.com/user-attachments/assets/8f5587dc-70fb-41bc-ac4c-a8cfebc6cb19" />
