@@ -25,6 +25,8 @@ public class JsonSerializableAddressBookTest {
     private static final Path INVALID_PERSON_FILE = TEST_DATA_FOLDER.resolve("invalidPersonAddressBook.json");
     private static final Path DUPLICATE_PERSON_FILE = TEST_DATA_FOLDER.resolve("duplicatePersonAddressBook.json");
     private static final Path TYPICAL_GROUPS_FILE = TEST_DATA_FOLDER.resolve("typicalGroupAddressBook.json");
+    private static final Path EMPTY_GROUP_FILE = TEST_DATA_FOLDER
+            .resolve("emptyGroupAddressBook.json");
     private static final Person JOHN = new PersonBuilder().withName("John Doe")
             .withNusnetid("E1234567").withEmail("johnd@u.nus.edu")
             .withPhone("98765432")
@@ -71,5 +73,12 @@ public class JsonSerializableAddressBookTest {
         group.addStudent(JOHN);
         group.addStudent(SEB);
         assertEquals(addressBookFromFile, expectedAddressBook);
+    }
+    @Test
+    public void toModelType_emptyGroups_success() throws Exception {
+        JsonSerializableAddressBook dataFromFile = JsonUtil.readJsonFile(EMPTY_GROUP_FILE,
+                JsonSerializableAddressBook.class).get();
+        AddressBook addressBookFromFile = dataFromFile.toModelType();
+        assertEquals(addressBookFromFile.getGroupList().size(), 1);
     }
 }
