@@ -31,7 +31,7 @@ class JsonSerializableAddressBook {
             "Group references a person that does not exist in persons list.";
     public static final String MESSAGE_GROUP_CONTAINS_INVALID_NUSNETID =
             "Group contains invalid nusnetid(s).";
-    private static final String MESSAGE_STUDENT_NOT_IN_GROUP =
+    public static final String MESSAGE_STUDENT_NOT_IN_GROUP =
             "Student %s in persons list is not in any group.";
     private static final String MESSAGE_STUDENT_IN_MULTIPLE_GROUPS =
             "Student %s in persons list is in multiple groups.";
@@ -118,6 +118,10 @@ class JsonSerializableAddressBook {
                 }
                 studentsInGroup.add(student);
             }
+            // if no student is in the group, we remove the empty group
+            if (studentsInGroup.isEmpty()) {
+                continue;
+            }
             Group modelGroup = new Group(modelGroupId, studentsInGroup);
             modelGroups.add(modelGroup);
         }
@@ -128,23 +132,9 @@ class JsonSerializableAddressBook {
             throw new IllegalValueException(MESSAGE_DUPLICATE_GROUP);
         }
         addressBook.setGroups(modelGroups);
-        // check every student is in one existing group only
-        for (Person person : addressBook.getPersonList()) {
-            int groupCount = 0;
-            for (Group group : modelGroups) {
-                if (group.getAllPersons().contains(person)) {
-                    groupCount++;
-                }
-            }
-            if (groupCount == 0) {
-                throw new IllegalValueException(
-                        String.format(MESSAGE_STUDENT_NOT_IN_GROUP, person.getNusnetid().toString()));
-            }
-            if (groupCount > 1) {
-                throw new IllegalValueException(
-                        String.format(MESSAGE_STUDENT_IN_MULTIPLE_GROUPS, person.getNusnetid().toString()));
-            }
-        }
+        // no need to check every student is in one existing group only
+        // if the group is not found, addPerson will auto create in model
+        // if a student is in multiple groups, the group addition will fail
         return addressBook;
     }
 }
