@@ -184,7 +184,7 @@ The add homework feature allows users to assign a homework task to either a spec
 
 The sequence diagram below illustrates the interactions within the `Logic` component for adding homework:
 
-<puml src="diagrams/AddHomeworkSequenceDiagram.puml" width="550" alt="Interactions Inside the Logic Component for the `addhomework` Command" />
+<puml src="diagrams/AddHomeworkSequenceDiagram.puml" alt="Interactions Inside the Logic Component for the `addhomework` Command" />
 
 <box type="info" seamless>
 
@@ -209,7 +209,7 @@ The delete homework feature allows users to remove an existing homework assignme
 
 The sequence diagram below illustrates the interactions within the `Logic` component for deleting homework:
 
-<puml src="diagrams/DeleteHomeworkSequenceDiagram.puml" width="550" alt="Interactions Inside the Logic Component for the `deletehomework` Command" />
+<puml src="diagrams/DeleteHomeworkSequenceDiagram.puml" alt="Interactions Inside the Logic Component for the `deletehomework` Command" />
 
 <box type="info" seamless>
 
@@ -234,7 +234,7 @@ The mark homework feature allows users to update the status (e.g., `done`, `pend
 
 The sequence diagram below illustrates the interactions within the `Logic` component for marking homework:
 
-<puml src="diagrams/MarkHomeworkSequenceDiagram.puml" width="550" alt="Interactions Inside the Logic Component for the `markhomework` Command" />
+<puml src="diagrams/MarkHomeworkSequenceDiagram.puml" alt="Interactions Inside the Logic Component for the `markhomework` Command" />
 
 <box type="info" seamless>
 
@@ -258,7 +258,7 @@ The mark attendance feature allows users to mark the attendance status (e.g., `p
 
 The sequence diagram below illustrates the interactions within the `Logic` component for marking attendance:
 
-<puml src="diagrams/MarkAttendanceSequenceDiagram.puml" width="550" alt="Interactions Inside the Logic Component for the `markhomework` Command" />
+<puml src="diagrams/MarkAttendanceSequenceDiagram.puml" alt="Interactions Inside the Logic Component for the `markhomework` Command" />
 
 <box type="info" seamless>
 
@@ -282,7 +282,7 @@ The mark all attendance feature allows users to mark the attendance status (e.g.
 
 The sequence diagram below illustrates the interactions within the `Logic` component for marking attendance:
 
-<puml src="diagrams/MarkAllAttendanceSequenceDiagram.puml" width="550" alt="Interactions Inside the Logic Component for the `markhomework` Command" />
+<puml src="diagrams/MarkAllAttendanceSequenceDiagram.puml" alt="Interactions Inside the Logic Component for the `markhomework` Command" />
 
 <box type="info" seamless>
 
@@ -305,10 +305,10 @@ How the `markAllAttendance` command works:
 The add consultation feature allows users to add consultation slots for students.
 
 The sequence diagram below illustrates the interactions within the `Logic` component for adding a consultation:
-<puml src="diagrams/AddConsultationSequenceDiagram-Logic.puml" width="550" alt="Interactions inside the Logic Component for the `add_consult` Command" />
+<puml src="diagrams/AddConsultationSequenceDiagram-Logic.puml" alt="Interactions inside the Logic Component for the `add_consult` Command" />
 
 The sequence diagram below illustrates the interactions within the `Model` component for adding a consultation:
-<puml src="diagrams/AddConsultationSequenceDiagram-Model.puml" width="550" alt="Interactions inside the Model Component for the `add_consult` Command" />
+<puml src="diagrams/AddConsultationSequenceDiagram-Model.puml" alt="Interactions inside the Model Component for the `add_consult` Command" />
 
 How the `add_consult` command works:
 1. When the user enters an `add_consult` command, `LogicManager` passes it to `AddressBookParser`.
@@ -326,10 +326,10 @@ How the `add_consult` command works:
 The delete consultation feature allows users to delete existing consultations from students.
 
 The sequence diagram below illustrates the interactions within the `Logic` component for deleting a consultation:
-<puml src="diagrams/DeleteConsultationSequenceDiagram-Logic.puml" width="550" alt="Interactions inside the Logic Component for the `delete_consult` Command" />
+<puml src="diagrams/DeleteConsultationSequenceDiagram-Logic.puml" alt="Interactions inside the Logic Component for the `delete_consult` Command" />
 
 The sequence diagram below illustrates the interactions within the `Model` component for deleting a consultation:
-<puml src="diagrams/DeleteConsultationSequenceDiagram-Model.puml" width="550" alt="Interactions inside the Model Component for the `delete_consult` Command" />
+<puml src="diagrams/DeleteConsultationSequenceDiagram-Model.puml" alt="Interactions inside the Model Component for the `delete_consult` Command" />
 
 How the `delete_consult` command works:
 1. When the user enters a `delete_consult` command, `LogicManager` passes it to `AddressBookParser`.
@@ -347,10 +347,10 @@ How the `delete_consult` command works:
 The list consultation feature allows users to view all scheduled consultations.
 
 The sequence diagram below illustrates the interactions within the `Logic` component for listing consultations:
-<puml src="diagrams/ListConsultationSequenceDiagram-Logic.puml" width="550" alt="Interactions inside the Logic Component for the `list_consult` Command" />
+<puml src="diagrams/ListConsultationSequenceDiagram-Logic.puml" alt="Interactions inside the Logic Component for the `list_consult` Command" />
 
 The sequence diagram below illustrates the interactions within the `Model` component for listing consultations:
-<puml src="diagrams/ListConsultationSequenceDiagram-Model.puml" width="550" alt="Interactions inside the Model Component for the `list_consult` Command" />
+<puml src="diagrams/ListConsultationSequenceDiagram-Model.puml" alt="Interactions inside the Model Component for the `list_consult` Command" />
 
 How the `list_consult` command works:
 1. When the user enters a `list_consult` command, `LogicManager` passes it to `AddressBookParser`.
@@ -365,7 +365,7 @@ The create group feature allows users to create a new group by specifying a uniq
 
 The sequence diagram below illustrates the interactions within the `Logic` and `Model` component for creating a group:
 
-<puml src="diagrams/CreateGroupSequenceDiagram.puml" width="550" alt="Interactions Inside the Logic Component for the `creategroup` Command" />
+<puml src="diagrams/CreateGroupSequenceDiagram.puml" alt="Interactions Inside the Logic Component for the `creategroup` Command" />
 
 <box type="info" seamless>
 
@@ -388,7 +388,7 @@ The add student to group feature allows users to assign a student to an existing
 
 The sequence diagram below illustrates the interactions within the `Logic` and `Model` component for adding a student to a group:
 
-<puml src="diagrams/AddToGroupSequenceDiagram.puml" width="550" alt="Interactions Inside the Logic Component for the `addstudenttogroup` Command" />
+<puml src="diagrams/AddToGroupSequenceDiagram.puml" alt="Interactions Inside the Logic Component for the `addstudenttogroup` Command" />
 
 <box type="info" seamless>
 
@@ -415,7 +415,7 @@ The find student by group feature allows users to search for students belonging 
 
 The sequence diagram below illustrates the interactions within the `Logic` and `Model` component for finding students by group:
 
-<puml src="diagrams/FindStudentByGroupSequenceDiagram.puml" width="550" alt="Interactions Inside the Logic Component for the `findstudentbygroup` Command" />
+<puml src="diagrams/FindStudentByGroupSequenceDiagram.puml" alt="Interactions Inside the Logic Component for the `findstudentbygroup` Command" />
 
 <box type="info" seamless>
 
