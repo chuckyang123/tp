@@ -9,7 +9,7 @@
 [![codecov](https://codecov.io/gh/AY2526S1-CS2103T-W11-1/tp/branch/master/graph/badge.svg)](https://codecov.io/gh/AY2526S1-CS2103T-W11-1/tp)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
-<img width="3199" height="1846" alt="image" src="https://github.com/user-attachments/assets/8f5587dc-70fb-41bc-ac4c-a8cfebc6cb19" />
+<img width="3199" height="1846" alt="image" src="images/Ui.png" />
 
 **SoCTAssist is a desktop application for managing your contact details.** While it has a GUI, most of the user interactions happen using a CLI (Command Line Interface).
 

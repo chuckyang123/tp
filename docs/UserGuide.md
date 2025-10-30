@@ -6,7 +6,7 @@
 
 # SoCTAssist User Guide
 
-SoCTAssist is a **desktop app designed specifically to help Teaching Assistants manage their students' information,
+SoCTAssist is a desktop app designed specifically to help Teaching Assistants manage their students' information,
 homework, attendance, and consultation sessions more efficiently.
 
 If you are a Teaching Assistance who can type fast, SoCTAssist can get your contact management tasks
@@ -514,12 +514,23 @@ Furthermore, certain edits can cause the AddressBook to behave in unexpected way
 **Q**: How can I see a student’s homework and attendance quickly?
 **A**: Use `list` to show students; details appear in the student panel. There is no separate `list_hw` command.
 
+**Q**: What if I want to add another consultation to a student who already has one?<br>
+**A**: A student can only have one consultation at a time. If you want to add another consultation, please delete the existing consultation first using the `delete_consult` command.
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## Known Issues
 
-1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen. The remedy is to delete the `preferences.json` file created by the application before running the application again.
-2. **If you minimize the Help Window** and then run the `help` command (or use the `Help` menu, or the keyboard shortcut `F1`) again, the original Help Window will remain minimized, and no new Help Window will appear. The remedy is to manually restore the minimized Help Window.
+1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen.
+
+   **Remedy:** Delete the `preferences.json` file created by the application before running the application again.
+
+2. **If you minimize the Help Window** and then run the `help` command (or use the `Help` menu, or the keyboard shortcut `F1`) again, the original Help Window will remain minimized, and no new Help Window will appear.
+   
+   **Remedy:** Manually restore the minimized Help Window.
+3. **When using `edit` or `delete` commands on the consultation view page**, the index of student to be edited or deleted cannot be seen.
+   
+   **Remedy:** Use the `list` command to return to the student view page to obtain the target student's index before using the `edit` or `delete` command.
 
 --------------------------------------------------------------------------------------------------------------------
 

@@ -126,7 +126,7 @@ public class AddressBookTest {
         assertTrue(hasNew);
 
         // Assert person's optional consultation updated
-        Person stored = ab.getPersonByNusnetId(new Nusnetid("E1111111"));
+        Person stored = ab.getPerson(new Nusnetid("E1111111"));
         assertTrue(stored.hasConsultation());
         assertEquals("E2222222", stored.getConsultation().get().getNusnetid().value);
     }
