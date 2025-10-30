@@ -177,99 +177,6 @@ Classes used by multiple components are in the `seedu.address.commons` package.
 
 This section describes some noteworthy details on how certain features are implemented.
 
-### \[Proposed\] Undo/redo feature
-
-#### Proposed Implementation
-
-The proposed undo/redo mechanism is facilitated by `VersionedAddressBook`. It extends `AddressBook` with an undo/redo history, stored internally as an `addressBookStateList` and `currentStatePointer`. Additionally, it implements the following operations:
-
-* `VersionedAddressBook#commit()` — Saves the current address book state in its history.
-* `VersionedAddressBook#undo()` — Restores the previous address book state from its history.
-* `VersionedAddressBook#redo()` — Restores a previously undone address book state from its history.
-
-These operations are exposed in the `Model` interface as `Model#commitAddressBook()`, `Model#undoAddressBook()` and `Model#redoAddressBook()` respectively.
-
-Given below is an example usage scenario and how the undo/redo mechanism behaves at each step.
-
-Step 1. The user launches the application for the first time. The `VersionedAddressBook` will be initialized with the initial address book state, and the `currentStatePointer` pointing to that single address book state.
-
-<puml src="diagrams/UndoRedoState0.puml" alt="UndoRedoState0" />
-
-Step 2. The user executes `delete 5` command to delete the 5th person in the address book. The `delete` command calls `Model#commitAddressBook()`, causing the modified state of the address book after the `delete 5` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state.
-
-<puml src="diagrams/UndoRedoState1.puml" alt="UndoRedoState1" />
-
-Step 3. The user executes `add n/David …​` to add a new person. The `add` command also calls `Model#commitAddressBook()`, causing another modified address book state to be saved into the `addressBookStateList`.
-
-<puml src="diagrams/UndoRedoState2.puml" alt="UndoRedoState2" />
-
-<box type="info" seamless>
-
-**Note:** If a command fails its execution, it will not call `Model#commitAddressBook()`, so the address book state will not be saved into the `addressBookStateList`.
-
-</box>
-
-Step 4. The user now decides that adding the person was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoAddressBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous address book state, and restores the address book to that state.
-
-<puml src="diagrams/UndoRedoState3.puml" alt="UndoRedoState3" />
-
-
-<box type="info" seamless>
-
-**Note:** If the `currentStatePointer` is at index 0, pointing to the initial AddressBook state, then there are no previous AddressBook states to restore. The `undo` command uses `Model#canUndoAddressBook()` to check if this is the case. If so, it will return an error to the user rather
-than attempting to perform the undo.
-
-</box>
-
-The following sequence diagram shows how an undo operation goes through the `Logic` component:
-
-<puml src="diagrams/UndoSequenceDiagram-Logic.puml" alt="UndoSequenceDiagram-Logic" />
-
-<box type="info" seamless>
-
-**Note:** The lifeline for `UndoCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
-
-</box>
-
-Similarly, how an undo operation goes through the `Model` component is shown below:
-
-<puml src="diagrams/UndoSequenceDiagram-Model.puml" alt="UndoSequenceDiagram-Model" />
-
-The `redo` command does the opposite — it calls `Model#redoAddressBook()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the address book to that state.
-
-<box type="info" seamless>
-
-**Note:** If the `currentStatePointer` is at index `addressBookStateList.size() - 1`, pointing to the latest address book state, then there are no undone AddressBook states to restore. The `redo` command uses `Model#canRedoAddressBook()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
-
-</box>
-
-Step 5. The user then decides to execute the command `list`. Commands that do not modify the address book, such as `list`, will usually not call `Model#commitAddressBook()`, `Model#undoAddressBook()` or `Model#redoAddressBook()`. Thus, the `addressBookStateList` remains unchanged.
-
-<puml src="diagrams/UndoRedoState4.puml" alt="UndoRedoState4" />
-
-Step 6. The user executes `clear`, which calls `Model#commitAddressBook()`. Since the `currentStatePointer` is not pointing at the end of the `addressBookStateList`, all address book states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add n/David …​` command. This is the behavior that most modern desktop applications follow.
-
-<puml src="diagrams/UndoRedoState5.puml" alt="UndoRedoState5" />
-
-The following activity diagram summarizes what happens when a user executes a new command:
-
-<puml src="diagrams/CommitActivityDiagram.puml" width="250" />
-
-#### Design considerations:
-
-**Aspect: How undo & redo executes:**
-
-* **Alternative 1 (current choice):** Saves the entire address book.
-  * Pros: Easy to implement.
-  * Cons: May have performance issues in terms of memory usage.
-
-* **Alternative 2:** Individual command knows how to undo/redo by
-  itself.
-  * Pros: Will use less memory (e.g. for `delete`, just save the person being deleted).
-  * Cons: We must ensure that the implementation of each individual command are correct.
-
-_{more aspects and alternatives to be added}_
-
 ---
 ### Add Homework Feature
 
@@ -290,10 +197,9 @@ How the `addhomework` command works:
 2. `AddressBookParser` creates an `AddHomeworkCommandParser` to parse the command arguments.
 3. `AddHomeworkCommandParser` validates and parses the NUSNET ID (or the keyword `all`) and the assignment ID.
 4. An `AddHomeworkCommand` object is created and executed.
-5. Before execution, the current state is committed for undo/redo functionality.
-6. `AddHomeworkCommand` checks if the homework assignment already exists for the specified student(s).
-7. If no duplicates are found, the homework is added to the target student(s)’ homework tracker(s).
-8. The updated address book is saved to storage.
+5. `AddHomeworkCommand` checks if the homework assignment already exists for the specified student(s).
+6. If no duplicates are found, the homework is added to the target student(s)’ homework tracker(s).
+7. The updated address book is saved to storage.
 
 ---
 
@@ -316,10 +222,9 @@ How the `deletehomework` command works:
 2. `AddressBookParser` creates a `DeleteHomeworkCommandParser` to parse the command arguments.
 3. `DeleteHomeworkCommandParser` validates and parses the NUSNET ID (or the keyword `all`) and the assignment ID.
 4. A `DeleteHomeworkCommand` object is created and executed.
-5. Before execution, the current state is committed for undo/redo functionality.
-6. `DeleteHomeworkCommand` verifies that the homework exists for the specified student(s).
-7. If found, the homework is removed from the respective homework tracker(s).
-8. The updated address book is saved to storage.
+5. `DeleteHomeworkCommand` verifies that the homework exists for the specified student(s).
+6. If found, the homework is removed from the respective homework tracker(s).
+7. The updated address book is saved to storage.
 
 ---
 
@@ -342,11 +247,9 @@ How the `markhomework` command works:
 2. `AddressBookParser` creates a `MarkHomeworkCommandParser` to parse the command arguments.
 3. `MarkHomeworkCommandParser` validates and parses the NUSNET ID, assignment ID, and status.
 4. A `MarkHomeworkCommand` object is created and executed.
-5. Before execution, the current state is committed for undo/redo functionality.
-6. `MarkHomeworkCommand` checks whether the specified homework exists for the student.
-7. If found, the homework’s status is updated to the new value.
-8. The updated address book is saved to storage.
-
+5.`MarkHomeworkCommand` checks whether the specified homework exists for the student.
+6. If found, the homework’s status is updated to the new value.
+7. The updated address book is saved to storage.
 
 --------------------------------------------------------------------------------------------------------------------
 ### Mark Attendance Feature
@@ -368,10 +271,9 @@ How the `markAttendance` command works:
 2. `AddressBookParser` creates a `MarkAttendanceCommandParser` to parse the command arguments.
 3. `MarkAttendanceCommandParser` validates and parses the NUSNET ID, week number, and attendance status.
 4. A `MarkAttendanceCommand` object is created and executed.
-5. Before execution, the current state is committed for undo/redo functionality.
-6. `MarkAttendanceCommand` checks whether the specified student exits.
-7. If exits, the attendance status of the student in the specified week is updated to the status.
-8. The updated address book is saved to storage.
+5. `MarkAttendanceCommand` checks whether the specified student exits.
+6. If exits, the attendance status of the student in the specified week is updated to the status.
+7. The updated address book is saved to storage.
 
 --------------------------------------------------------------------------------------------------------------------
 ### Mark All Attendance Feature
@@ -393,10 +295,69 @@ How the `markAllAttendance` command works:
 2. `AddressBookParser` creates a `MarkAllAttendanceCommandParser` to parse the command arguments.
 3. `MarkAllAttendanceCommandParser` validates and parses the GroupId, week number, and attendance status.
 4. A `MarkAllAttendanceCommand` object is created and executed.
-5. Before execution, the current state is committed for undo/redo functionality.
-6. `MarkAllAttendanceCommand` checks whether the specified group exits.
-7. If exits, the attendance status of students of the group in the specified week is updated to the status.
-8. The updated address book is saved to storage.
+5. `MarkAllAttendanceCommand` checks whether the specified group exits.
+6. If exits, the attendance status of students of the group in the specified week is updated to the status.
+7. The updated address book is saved to storage.
+
+---
+
+### Add Consultation Feature
+The add consultation feature allows users to add consultation slots for students.
+
+The sequence diagram below illustrates the interactions within the `Logic` component for adding a consultation:
+<puml src="diagrams/AddConsultationSequenceDiagram-Logic.puml" width="550" alt="Interactions inside the Logic Component for the `add_consult` Command" />
+
+The sequence diagram below illustrates the interactions within the `Model` component for adding a consultation:
+<puml src="diagrams/AddConsultationSequenceDiagram-Model.puml" width="550" alt="Interactions inside the Model Component for the `add_consult` Command" />
+
+How the `add_consult` command works:
+1. When the user enters an `add_consult` command, `LogicManager` passes it to `AddressBookParser`.
+2. `AddressBookParser` creates an `AddConsultationCommandParser` to parse the command arguments.
+3. `AddConsultationCommandParser` validates and parses the NUSNET ID, start time and end time.
+4. An `AddConsultationCommand` object is created and executed.
+5. During execution, `AddConsultationCommand` checks if the student exists in the model, if the consultation overlaps with other existing consultations in the model, and if the student already has a consultation.
+6. If all checks pass, the consultation is added to the student and the model is updated.
+7. The updated address book is saved to storage.
+8. A success message is returned to the user.
+
+---
+
+### Delete Consultation Feature
+The delete consultation feature allows users to delete existing consultations from students.
+
+The sequence diagram below illustrates the interactions within the `Logic` component for deleting a consultation:
+<puml src="diagrams/DeleteConsultationSequenceDiagram-Logic.puml" width="550" alt="Interactions inside the Logic Component for the `delete_consult` Command" />
+
+The sequence diagram below illustrates the interactions within the `Model` component for deleting a consultation:
+<puml src="diagrams/DeleteConsultationSequenceDiagram-Model.puml" width="550" alt="Interactions inside the Model Component for the `delete_consult` Command" />
+
+How the `delete_consult` command works:
+1. When the user enters a `delete_consult` command, `LogicManager` passes it to `AddressBookParser`.
+2. `AddressBookParser` creates a `DeleteConsultationCommandParser` to parse the command arguments.
+3. `DeleteConsultationCommandParser` validates and parses the NUSNET ID.
+4. A `DeleteConsultationCommand` object is created and executed.
+5. During execution, `DeleteConsultationCommand` checks if the student exists in the model and if the student has an existing consultation.
+6. If both checks pass, the consultation is removed from the student and the model is updated.
+7. The updated address book is saved to storage.
+8. A success message is returned to the user.
+
+---
+
+### List Consultation Feature
+The list consultation feature allows users to view all scheduled consultations.
+
+The sequence diagram below illustrates the interactions within the `Logic` component for listing consultations:
+<puml src="diagrams/ListConsultationSequenceDiagram-Logic.puml" width="550" alt="Interactions inside the Logic Component for the `list_consult` Command" />
+
+The sequence diagram below illustrates the interactions within the `Model` component for listing consultations:
+<puml src="diagrams/ListConsultationSequenceDiagram-Model.puml" width="550" alt="Interactions inside the Model Component for the `list_consult` Command" />
+
+How the `list_consult` command works:
+1. When the user enters a `list_consult` command, `LogicManager` passes it to `AddressBookParser`.
+2. `AddressBookParser` creates a `ListConsultationCommand` object.
+3. The `ListConsultationCommand` object is executed.
+4. During execution, `ListConsultationCommand` updates the filtered consultation list in the model.
+5. A success message is returned to the user.
 
 ### Create Group Feature
 
