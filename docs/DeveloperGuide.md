@@ -6,30 +6,6 @@ pageNav: 3
 
 # SoCTAssist Developer Guide
 
-<!-- * Table of Contents -->
-1. [Acknowledgements](#acknowledgements)
-2. [Setting up, getting started](#setting-up-getting-started)
-3. [Design](#design)
-    - [Architecture](#architecture)
-    - [UI component](#ui-component)
-    - [Logic component](#logic-component)
-    - [Model component](#model-component)
-    - [Storage component](#storage-component)
-    - [Common Classes](#common-classes)
-4. [Implementation](#implementation)
-5. [Documentation, logging, testing, configuration, dev-ops](#documentation-logging-testing-configuration-dev-ops)
-6. [Appendix: Requirements](#appendix-requirements)
-    - [Product scope](#product-scope)
-    - [User stories](#user-stories)
-    - [Use cases](#use-cases)
-    - [Non-functional requirements](#non-functional-requirements)
-    - [Glossary](#glossary)
-7. [Appendix: Instructions for manual testing](#appendix-instructions-for-manual-testing)
-
-<page-nav-print />
-
---------------------------------------------------------------------------------------------------------------------
-
 ## **Acknowledgements**
 
 This project is based on the AddressBook-Level3 project created by the [SE-EDU initiative](https://se-education.org).
@@ -184,7 +160,7 @@ The add homework feature allows users to assign a homework task to either a spec
 
 The sequence diagram below illustrates the interactions within the `Logic` component for adding homework:
 
-<puml src="diagrams/AddHomeworkSequenceDiagram.puml" width="550" alt="Interactions Inside the Logic Component for the `addhomework` Command" />
+<puml src="diagrams/AddHomeworkSequenceDiagram.puml" alt="Interactions Inside the Logic Component for the `addhomework` Command" />
 
 <box type="info" seamless>
 
@@ -209,7 +185,7 @@ The delete homework feature allows users to remove an existing homework assignme
 
 The sequence diagram below illustrates the interactions within the `Logic` component for deleting homework:
 
-<puml src="diagrams/DeleteHomeworkSequenceDiagram.puml" width="550" alt="Interactions Inside the Logic Component for the `deletehomework` Command" />
+<puml src="diagrams/DeleteHomeworkSequenceDiagram.puml" alt="Interactions Inside the Logic Component for the `deletehomework` Command" />
 
 <box type="info" seamless>
 
@@ -234,7 +210,7 @@ The mark homework feature allows users to update the status (e.g., `done`, `pend
 
 The sequence diagram below illustrates the interactions within the `Logic` component for marking homework:
 
-<puml src="diagrams/MarkHomeworkSequenceDiagram.puml" width="550" alt="Interactions Inside the Logic Component for the `markhomework` Command" />
+<puml src="diagrams/MarkHomeworkSequenceDiagram.puml" alt="Interactions Inside the Logic Component for the `markhomework` Command" />
 
 <box type="info" seamless>
 
@@ -258,7 +234,7 @@ The mark attendance feature allows users to mark the attendance status (e.g., `p
 
 The sequence diagram below illustrates the interactions within the `Logic` component for marking attendance:
 
-<puml src="diagrams/MarkAttendanceSequenceDiagram.puml" width="550" alt="Interactions Inside the Logic Component for the `markhomework` Command" />
+<puml src="diagrams/MarkAttendanceSequenceDiagram.puml" alt="Interactions Inside the Logic Component for the `markhomework` Command" />
 
 <box type="info" seamless>
 
@@ -282,7 +258,7 @@ The mark all attendance feature allows users to mark the attendance status (e.g.
 
 The sequence diagram below illustrates the interactions within the `Logic` component for marking attendance:
 
-<puml src="diagrams/MarkAllAttendanceSequenceDiagram.puml" width="550" alt="Interactions Inside the Logic Component for the `markhomework` Command" />
+<puml src="diagrams/MarkAllAttendanceSequenceDiagram.puml" alt="Interactions Inside the Logic Component for the `markhomework` Command" />
 
 <box type="info" seamless>
 
@@ -305,10 +281,10 @@ How the `markAllAttendance` command works:
 The add consultation feature allows users to add consultation slots for students.
 
 The sequence diagram below illustrates the interactions within the `Logic` component for adding a consultation:
-<puml src="diagrams/AddConsultationSequenceDiagram-Logic.puml" width="550" alt="Interactions inside the Logic Component for the `add_consult` Command" />
+<puml src="diagrams/AddConsultationSequenceDiagram-Logic.puml" alt="Interactions inside the Logic Component for the `add_consult` Command" />
 
 The sequence diagram below illustrates the interactions within the `Model` component for adding a consultation:
-<puml src="diagrams/AddConsultationSequenceDiagram-Model.puml" width="550" alt="Interactions inside the Model Component for the `add_consult` Command" />
+<puml src="diagrams/AddConsultationSequenceDiagram-Model.puml" alt="Interactions inside the Model Component for the `add_consult` Command" />
 
 How the `add_consult` command works:
 1. When the user enters an `add_consult` command, `LogicManager` passes it to `AddressBookParser`.
@@ -326,10 +302,10 @@ How the `add_consult` command works:
 The delete consultation feature allows users to delete existing consultations from students.
 
 The sequence diagram below illustrates the interactions within the `Logic` component for deleting a consultation:
-<puml src="diagrams/DeleteConsultationSequenceDiagram-Logic.puml" width="550" alt="Interactions inside the Logic Component for the `delete_consult` Command" />
+<puml src="diagrams/DeleteConsultationSequenceDiagram-Logic.puml" alt="Interactions inside the Logic Component for the `delete_consult` Command" />
 
 The sequence diagram below illustrates the interactions within the `Model` component for deleting a consultation:
-<puml src="diagrams/DeleteConsultationSequenceDiagram-Model.puml" width="550" alt="Interactions inside the Model Component for the `delete_consult` Command" />
+<puml src="diagrams/DeleteConsultationSequenceDiagram-Model.puml" alt="Interactions inside the Model Component for the `delete_consult` Command" />
 
 How the `delete_consult` command works:
 1. When the user enters a `delete_consult` command, `LogicManager` passes it to `AddressBookParser`.
@@ -347,10 +323,10 @@ How the `delete_consult` command works:
 The list consultation feature allows users to view all scheduled consultations.
 
 The sequence diagram below illustrates the interactions within the `Logic` component for listing consultations:
-<puml src="diagrams/ListConsultationSequenceDiagram-Logic.puml" width="550" alt="Interactions inside the Logic Component for the `list_consult` Command" />
+<puml src="diagrams/ListConsultationSequenceDiagram-Logic.puml" alt="Interactions inside the Logic Component for the `list_consult` Command" />
 
 The sequence diagram below illustrates the interactions within the `Model` component for listing consultations:
-<puml src="diagrams/ListConsultationSequenceDiagram-Model.puml" width="550" alt="Interactions inside the Model Component for the `list_consult` Command" />
+<puml src="diagrams/ListConsultationSequenceDiagram-Model.puml" alt="Interactions inside the Model Component for the `list_consult` Command" />
 
 How the `list_consult` command works:
 1. When the user enters a `list_consult` command, `LogicManager` passes it to `AddressBookParser`.
@@ -365,7 +341,7 @@ The create group feature allows users to create a new group by specifying a uniq
 
 The sequence diagram below illustrates the interactions within the `Logic` and `Model` component for creating a group:
 
-<puml src="diagrams/CreateGroupSequenceDiagram.puml" width="550" alt="Interactions Inside the Logic Component for the `creategroup` Command" />
+<puml src="diagrams/CreateGroupSequenceDiagram.puml" alt="Interactions Inside the Logic Component for the `creategroup` Command" />
 
 <box type="info" seamless>
 
@@ -388,7 +364,7 @@ The add student to group feature allows users to assign a student to an existing
 
 The sequence diagram below illustrates the interactions within the `Logic` and `Model` component for adding a student to a group:
 
-<puml src="diagrams/AddStudentToGroupSequenceDiagram.puml" width="550" alt="Interactions Inside the Logic Component for the `addstudenttogroup` Command" />
+<puml src="diagrams/AddToGroupSequenceDiagram.puml" alt="Interactions Inside the Logic Component for the `addstudenttogroup` Command" />
 
 <box type="info" seamless>
 
@@ -415,7 +391,7 @@ The find student by group feature allows users to search for students belonging 
 
 The sequence diagram below illustrates the interactions within the `Logic` and `Model` component for finding students by group:
 
-<puml src="diagrams/FindStudentByGroupSequenceDiagram.puml" width="550" alt="Interactions Inside the Logic Component for the `findstudentbygroup` Command" />
+<puml src="diagrams/FindStudentByGroupSequenceDiagram.puml" alt="Interactions Inside the Logic Component for the `findstudentbygroup` Command" />
 
 <box type="info" seamless>
 
@@ -494,11 +470,12 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 (For all use cases below, the **System** is the `SocTAssist` and the **Actor** is the `user`, unless specified otherwise)
 
 
-**Use case: Add a student**
+**Use case:** UC01 - Add a student
+**Actor**: TA
 
 **MSS**
 
-1. User requests to add a student by specifying full name, preferred name, email, Telegram handle, and group ID.
+1. User requests to add a student by specifying required fields: full name, NUSNET ID, email, Telegram handle ann optional fields: phone number, group ID.
 
 2. AddressBook validates all fields.
 
@@ -512,39 +489,34 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 2a. One or more required fields are missing.
 
-    * 2a1. AddressBook shows error: Missing required field: <field>.
+    * 2a1. AddressBook shows error: `Invalid command format!`.
 
         Use case ends.
 
 * 2b. Email format is invalid.
 
-    * 2b1. AddressBook shows error: Invalid email format. Use RFC-5322 pattern.
+    * 2b1. AddressBook shows error: `Invalid email format`.
 
         Use case ends.
 
-* 2c. Telegram handle format is invalid.
+* 2c. Group ID format is invalid.
 
-    * 2c1. AddressBook shows error message.
-
-        Use case ends.
-
-* 2d. Group ID format is invalid.
-
-    * 2d1. AddressBook shows error message.
+    * 2d1. AddressBook shows error message: `Invaid Group ID`.
 
         Use case ends.
 
-* 2e. A student with the same nusnetid already exists.
+* 2d. A student with the same nusnetid already exists.
 
-    * 2e1. AddressBook shows error: Student with this nusnetid already exists.
+    * 2e1. AddressBook shows error: `Student with this nusnetid already exists`.
 
        Use case ends.
 
-**Use case: Edit a student**
+**Use case:** UC02 - Edit a student
+**Actor**: TA
 
 **MSS**
 
-1. User requests to edit a student by specifying the email and updated fields.
+1. User requests to edit a student by specifying the index and updated fields.
 
 2. AddressBook validates that the student exists.
 
@@ -554,7 +526,28 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     Use case ends.
 
-**Use case: Delete a student**
+**Extensions**
+
+* 2a. Student index does not exist.
+
+    * 2a1. AddressBook shows error: `The person index provided is invalid`.
+
+      Use case ends.
+
+* 2b. Any updated field is invalid.
+
+    * 2c1. AddressBook shows corresponding validation error. (UC01 Extensions 2b, 2c).
+
+      Use case ends.
+
+* 2c. Try to update group id.
+
+    * 2c1. AddressBook shows error: `Group ID cannot be edited directly. Use add_to_group commands instead.`
+
+      Use case ends.
+
+**Use case:** UC03 - Delete a student
+**Actor**: TA
 
 **MSS**
 
@@ -569,27 +562,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 5. AddressBook UI updated.
     Use case ends.
 
-**Extensions**
-
-* 2a. Student email does not exist.
-
-    * 2a1. AddressBook shows error: Student not found.
-
-      Use case ends.
-
-* 2b. Edited email duplicates another existing student’s nusnetid.
-
-    * 2b1. AddressBook shows error: nusnetid already in use.
-
-      Use case ends.
-
-* 2c. Any updated field is invalid.
-
-    * 2c1. AddressBook shows corresponding validation error.
-
-      Use case ends.
-
-**Use Case: Create Homework**
+**Use Case:** UC04 - Create Homework
+**Actor**: TA
 
 **MSS**
 
@@ -618,7 +592,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     Use case ends.
     
-**Use case: Mark Homework completion**
+**Use case:** UC05 - Mark Homework completion
+**Actor**: TA
 
 **MSS**
 
@@ -656,7 +631,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case resumes at step 5.
 
-**Use case: Delete a homework**
+**Use case:** UC06 - Delete a homework
+**Actor**: TA
+
 **MSS**
 
 1. User requests to delete a homework for a student using their NUSNET ID.  
@@ -696,13 +673,14 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case ends.  
 
-**Use case: Add a consultation**
+**Use case:** UC07 - Add a consultation
+**User**: TA
 
 **MSS**
 
-1. User requests to add a consultation by specifying student email, date, start time, and end time.
+1. User requests to add a consultation by specifying student NUSNET ID, date_start_time, and date_end_time.
 
-2. AddressBook validates the student email, date, and times.
+2. AddressBook validates the student NUSNET ID, date, and times.
 
 3. AddressBook creates the consultation booking for the student.
 
@@ -712,37 +690,38 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Extensions**
 
-* 2a. Student nusnetid does not exist in the directory.
+* 2a. Student NUSNET ID does not exist in the directory.
 
-  * 2a1. AddressBook shows error: Student not found.
+  * 2a1. AddressBook shows error: `Student not found`.
 
        Use case ends.
 
 * 2b. End time is not after start time.
 
-    * 2b1. AddressBook shows error: End time must be after start time.
+    * 2b1. AddressBook shows error: `End time must be after start time`.
 
          Use case ends.
 
 * 2c. The new consultation overlaps with an existing one.
 
-    * 2c1. AddressBook shows error: Time conflict with existing booking.
+    * 2c1. AddressBook shows error: `Time conflict with existing booking`.
 
          Use case ends.
 
 * 2d. A consultation with identical date and time already exists.
 
-    * 2d1. AddressBook shows error: Duplicate consultation booking.
+    * 2d1. AddressBook shows error: `Duplicate consultation booking`.
 
          Use case ends.
 
-**Use case: Delete a consultation**
+**Use case:** UC08 - Delete a consultation
+**User**: TA
 
 **MSS**
 
-1. User requests to delete a consultation by specifying student email, date, start time, and end time.  
+1. User requests to delete a consultation by specifying student NUSNET ID, date_start_time, and date_end_time.  
 
-2. AddressBook validates the student email, date, and times.  
+2. AddressBook validates the student NUSNET ID, date, and times.  
 
 3. AddressBook locates the consultation record that matches the provided details.  
 
@@ -754,31 +733,32 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Extensions**
 
-* 2a. Student nusnetid does not exist in the directory.  
+* 2a. Student NUSNET ID does not exist in the directory.  
 
-  * 2a1. AddressBook shows error: Student not found.  
+  * 2a1. AddressBook shows error: `Student not found`.  
 
        Use case ends.  
 
 * 3a. Consultation record with the specified details does not exist.  
 
-  * 3a1. AddressBook shows error: Consultation not found.  
+  * 3a1. AddressBook shows error: `Consultation not found`.  
 
        Use case ends.  
 
 * 3b. Consultation list is empty.  
 
-  * 3b1. AddressBook shows error: No consultations available to delete.  
+  * 3b1. AddressBook shows error: `No consultations available to delete`.  
 
        Use case ends.  
 
-**Use case: Mark attendance**
+**Use case:** UC09 - Mark attendance
+**User**: TA
 
 **MSS**
 
-1. User requests to mark attendance for a student by specifying student nusnetid, date, and attendance status.
+1. User requests to mark attendance for a student by specifying student NUSNET ID, week, and attendance status.
 
-2. AddressBook validates that the student exists and the date/status are valid.
+2. AddressBook validates that the student exists and the week and status are valid.
 
 3. AddressBook records the attendance for the student.
 
@@ -788,70 +768,136 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Extensions**
 
-* 2a. Student nusnetid does not exist.
+* 2a. Student NUSNET ID does not exist.
 
-    * 2a1. AddressBook shows error: Student not found.
+    * 2a1. AddressBook shows error: `Student not found`.
 
          Use case ends.
 
 * 2b. Attendance status is invalid (not Present or Absent or Excused).
 
-    * 2b1. AddressBook shows error: Invalid attendance status.
+    * 2b1. AddressBook shows error: `Please enter present/absent/excused only`.
 
          Use case ends.
 
-**Use case: Create and manage student groups**
+
+**Use case: Mark all attendance**
+
+**MSS**
+
+1. User requests to mark attendance for a group of student by specifying GroupId, week, and attendance status.
+
+2. AddressBook validates that the group exists and the week and status are valid.
+
+3. AddressBook records the attendance for the student.
+
+4. AddressBook shows a confirmation message with details.
+
+    Use case ends.
+
+**Extensions**
+
+* 2a. GroupId does not exist.
+
+    * 2a1. AddressBook shows error: `Group not found`.
+
+         Use case ends.
+
+* 2b. Attendance status is invalid (not Present or Absent or Excused).
+
+    * 2b1. AddressBook shows error: `Please enter present/absent/excused only`.
+
+         Use case ends.
+
+**Use case:** UC10 - Create student groups
+**User**: TA
 
 **MSS**
 
 1. User requests to create a new group with a specified GroupName.
-2. Homework Tracker validates the GroupName.
+2. Address Book validates the GroupId.
 3. System creates the group.
-4. System shows confirmation message: `Group <GroupName> is created.`
+4. System shows confirmation message.
 
    Use case ends.
 
 **Extensions**
 
-* 2a. The GroupName is missing.
-    * 2a1. System shows error message: `Missing required field: GroupName`.
+* 2a. The GroupId is missing.
+    * 2a1. System shows error message, saying Group Id is missing.
+
+    Use case ends.
+
+* 2b. The GroupId is invalid.
+    * 2c1. System shows error message and indicates the valid format for Group Id.
 
       Use case ends.
 
-* 2b. The GroupName is a duplicate.
-    * 2b1. System shows error message: `Invalid Team Name`.
+* 2c. The GroupId is a duplicate.
+    * 2b1. System shows error message, saying Group Id already exists
 
       Use case ends.
-  
-**Use case: Add student to a group**
+
+
+**Use case:** UC11 - Add student to a group
+**User**: TA
 
 **MSS**
 
-1. User requests to add a student to an existing group using the student’s email and GroupName.
-2. System verifies the group exists.
-3. System verifies the student exists.
-4. System checks whether the student is already in the group.
-5. System adds the student to the group.
-6. System shows confirmation message: `Alice is added to Group <GroupName>.`
+1. User requests to add a student to an existing group using the student’s NUSNET ID and GroupId.
+2. System verifies the student exists.
+3. System checks whether the group id is the same as the student's existing group.
+4. System checks whether the group exists.
+5. System adds the student to the specified group.
+6. System shows confirmation message.
 
    Use case ends.
 
 **Extensions**
 
-* 2a. The GroupName is missing or invalid.
-    * 2a1. System shows error message: `Missing required field: GroupName` or `Invalid Team Name`.
+* 2a. The student with the NUSNET ID does not exist.
+    * 2a1. System shows error message.
 
       Use case ends.
 
-* 3a. The student's email is missing or invalid.
-    * 3a1. System shows error message: `Missing required field: Email` or `Student does not exist`.
+* 3a. The group id is the same as the student's existing group.
+    * 3a1. System shows error message, saying student already in that group.
 
       Use case ends.
 
-* 4a. The student is already in the group.
-    * 4a1. System shows error message: `Student already in this group`.
+* 4a. The group does not exist.
+    * 4a1. System creates the group.
+
+      Use case resumes at step 5.
+
+**Use case:** UC12 - Find students by group
+**User**: TA
+
+**Guarantees**: 
+* If the GroupId is valid and exists, at least one student is found.
+
+**MSS**
+
+1. User requests to find students by specifying a GroupId.
+2. System verifies the GroupId is valid.
+3. System checks whether the group exists.
+4. System retrieves the list of students in the specified group.
+5. System displays the list of students in the UI. 
+   
+   Use case ends.
+
+**Extensions**
+
+* 2a. The GroupId is invalid.
+    * 2a1. System shows error message and indicates the valid format for Group Id.
 
       Use case ends.
+
+* 3a. The group does not exist.
+    * 3a1. System shows error message, saying group does not exist.
+  
+      Use case ends.
+
 ### Non-Functional Requirements
 
 #### 1. Data Requirements
@@ -873,7 +919,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 - Group assignments: adjusted a few times during the semester
 
 **Low Volatility Data** (rarely changes):
-- Student directory (names, NusNET IDs): mostly stable after add/drop period
+- Student directory (names, NUSNET IDs): mostly stable after add/drop period
 - Tutorial group assignments: fixed after first few weeks
 
 ##### NFR-D3: Data Persistence
