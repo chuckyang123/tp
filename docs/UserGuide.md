@@ -212,7 +212,6 @@ Format: `add_hw i/NUSNETID (use 'i/all' for all students) a/ASSIGNMENT`
 * The NUSNET ID **must be valid** and the assignment identifier **must be specified**.
 * The newly added homework will have a default status of `incomplete`.
 * The assignment number should be a positive integer between 1 to 3.
-* Homework number must be between 1 to 3.
 * If adding homework for a specific student, NUSNET ID is used, which starts with E and has 7 numbers, and it should not be blank.
 * The NUSNET ID and homework number **must be valid**.
 * The system will check the validity of command format, followed by validity of input, and lastly the existence of the student.
