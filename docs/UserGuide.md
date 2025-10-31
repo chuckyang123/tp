@@ -400,21 +400,21 @@ Format: `exit`
 
 ## Saving the data
 
-AddressBook data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
+SoCTAssist data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
 
 ## Editing the data file
 
-AddressBook data are saved automatically as a JSON file in JAR `file_location/data/addressbook.json`. \
+SoCTAssist data are saved automatically as a JSON file in JAR `file_location/data/addressbook.json`. \
 Users are **NOT** recommended to edit the data file directly, but if you need to do so, please follow these guidelines:
 1. Ensure that the JSON format is valid after editing.
-2. Ensure that all fields have valid values according to the specifications of AddressBook.
+2. Ensure that all fields have valid values according to the specifications of SoCTAssist.
 
 
 <box type="warning" seamless>
 
 **Caution:**
-If your changes to the data file makes its format invalid, AddressBook will discard all data and start with an empty data file at the next run.  Hence, it is recommended to take a backup of the file before editing it.<br>
-Furthermore, certain edits can cause the AddressBook to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
+If your changes to the data file makes its format invalid, SoCTAssist will discard all data and start with an empty data file at the next run.  Hence, it is recommended to take a backup of the file before editing it.<br>
+Furthermore, certain edits can cause the SoCTAssist to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </box>
 --------------------------------------------------------------------------------------------------------------------
 
