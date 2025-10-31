@@ -66,7 +66,7 @@ done faster than traditional Graphical User Interface(GUI) app while still havin
 | **Create group**            | `create_group g/GROUPID`                                                                   | `create_group g/T03`                                                                 |
 | **Add student to group**    | `add_to_group i/NUSNETID g/GROUPID`                                                        | `add_to_group i/E1234567 g/T03`                                                      |
 | **Find students by group**  | `find_group g/GROUPID`                                                                     | `find_group g/T03`                                                                   |
-| **Clear address book**      | `clear`                                                                                    | `clear`                                                                              |
+| **Clear SoCTAssist**        | `clear`                                                                                    | `clear`                                                                              |
 | **Exit application**        | `exit`                                                                                     | `exit`                                                                               |
 
 --------------------------------------------------------------------------------------------------------------------
