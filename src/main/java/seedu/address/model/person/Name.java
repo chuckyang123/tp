@@ -10,15 +10,15 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class Name {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Names may contain letters (including accents), digits, spaces, and quotes (\" and '), "
+            "Names may contain letters (including accents), digits, spaces, quotes (\" and '), and commas, "
             + "must not be blank, and must not contain '/'";
 
     /*
      * The first character of the name must not be a whitespace.
-     * Allowed characters: Unicode letters, digits, spaces (after first char), and quotes (") and (').
+     * Allowed characters: Unicode letters, digits, spaces (after first char), quotes (") and ('), and comma (,).
      * Disallowed character: forward slash '/'.
      */
-    public static final String VALIDATION_REGEX = "[\\p{L}\\p{N}\"'][\\p{L}\\p{N} \"']*";
+    public static final String VALIDATION_REGEX = "[\\p{L}\\p{N}\"',][\\p{L}\\p{N} \"',]*";
 
     public final String fullName;
 
