@@ -9,8 +9,8 @@
 SoCTAssist is a desktop app designed specifically to help Teaching Assistants manage their students' information,
 homework, attendance, and consultation sessions more efficiently.
 
-If you are a Teaching Assistance who can type fast, SoCTAssist can get your contact management tasks
-done faster than traditional GUI app and 
+If you are a Teaching Assistant who can type fast, SoCTAssist can get your contact management tasks
+done faster than traditional Graphical User Interface(GUI) apps while still having the benefits of a GUI.
 <!-- * Table of Contents -->
 <page-nav-print />
 
@@ -66,7 +66,7 @@ done faster than traditional GUI app and
 | **Create group**            | `create_group g/GROUPID`                                                                   | `create_group g/T03`                                                                 |
 | **Add student to group**    | `add_to_group i/NUSNETID g/GROUPID`                                                        | `add_to_group i/E1234567 g/T03`                                                      |
 | **Find students by group**  | `find_group g/GROUPID`                                                                     | `find_group g/T03`                                                                   |
-| **Clear SoCTAssist**      | `clear`                                                                                    | `clear`                                                                              |
+| **Clear SoCTAssist**        | `clear`                                                                                    | `clear`                                                                              |
 | **Exit application**        | `exit`                                                                                     | `exit`                                                                               |
 
 --------------------------------------------------------------------------------------------------------------------
