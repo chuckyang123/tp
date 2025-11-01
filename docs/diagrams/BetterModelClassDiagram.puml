@@ -10,12 +10,9 @@ package "seedu.address.model" {
     - UniquePersonList persons
     - UniqueConsultationList consultations
     + hasPerson(Person)
-    + hasPerson(Nusnetid)
     + addPerson(Person)
     + setPerson(Person, Person)
-    + removePerson(Person)
     + hasConsultation(Consultation)
-    + hasOverlappingConsultation(Consultation)
     + addConsultation(Consultation)
     + deleteConsultation(Nusnetid)
     + addConsultationToPerson(Nusnetid, Consultation)
@@ -25,33 +22,7 @@ package "seedu.address.model" {
   }
 
   interface Model {
-    + setUserPrefs(ReadOnlyUserPrefs)
-    + getUserPrefs() : ReadOnlyUserPrefs
-    + getGuiSettings()
-    + setGuiSettings(GuiSettings)
-    + getAddressBookFilePath()
-    + setAddressBookFilePath(Path)
-    + setAddressBook(ReadOnlyAddressBook)
-    + getAddressBook() : ReadOnlyAddressBook
-    + hasPerson(Person) : boolean
-    + hasPerson(Nusnetid) : boolean
-    + deletePerson(Person)
-    + addPerson(Person)
-    + setPerson(Person, Person)
-    + getFilteredPersonList()
-    + updateFilteredPersonList(Predicate)
-    + hasConsultation(Consultation) : boolean
-    + hasOverlappingConsultation(Consultation) : boolean
-    + addConsultation(Consultation)
-    + deleteConsultation(Consultation)
-    + getFilteredConsultationList()
-    + updateFilteredConsultationList(Predicate)
-    + addConsultationToPerson(Nusnetid, Consultation)
-    + deleteConsultationFromPerson(Nusnetid) : Consultation
-    + addGroup(Group)
-    + getGroupList() : List<Group>
-    + markAttendance(Nusnetid, AttendanceStatus)
-    + markAllAttendance(GroupId, int, AttendanceStatus)
+
   }
 
   class ModelManager {
@@ -90,18 +61,8 @@ package "seedu.address.model.person" {
     + hasSameNusnetId(Nusnetid) : boolean
     + hasConsultation() : boolean
   }
-
-  class HomeworkTracker
-  class Homework
-  class AttendanceSheet
-  class Attendance
-  class AttendanceStatus
-  class Name
-  class Phone
-  class Email
-  class Nusnetid
-  class Telegram
-  class GroupId
+  class Fields {
+  }
 }
 
 package "seedu.address.model.event" {
@@ -131,14 +92,6 @@ UniqueConsultationList "1" o-- "0..*" Consultation
 Group "1" o-- "1" seedu.address.model.person.GroupId
 Group "1" o-- "1" UniquePersonList : students
 
-Person "1" o-- Name
-Person "0..1" o-- Phone
-Person "0..1" o-- Email
-Person "1" o-- Nusnetid
-Person "1" o-- Telegram
-Person "1" o-- GroupId
-Person "1" o-- HomeworkTracker
-Person "1" o-- AttendanceSheet
-Person "0..1" --> Consultation
+Person  o-- Fields
 
 @enduml

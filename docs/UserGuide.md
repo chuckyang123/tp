@@ -91,6 +91,18 @@ done faster than traditional GUI app and
   e.g. if the command specifies `help 123`, it will be interpreted as `help`.
 
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
+
+* A student is considered as duplicate if both their NUSNET ID or Telegram handle or Phone Number or Email is the same as another existing student in the address book.
+
+* Parameter Constraints:
+
+  * NUSNET ID: An `E` (case-insensitive) followed by 7 digits, e.g. `E1234567`.
+
+  * Telegram handle: Starts with `@` followed by at least 1 alphanumeric characters (underscores allowed), e.g. `@john_doe123`.
+
+  * Phone number: A string of 3 to 15 digits, e.g. `98765432`.
+
+  * Email: A valid NUS email address in the format `<NUSNETID>@u.nus.edu`, e.g. `
 </box>
 
 ## Viewing help : `help`
@@ -136,6 +148,7 @@ Format: `add_student n/NAME i/NUSNETID t/TELEGRAM g/GROUPID  [p/PHONE_NUMBER] [e
 <box type="tip" seamless>
 
 **Tip:** Phone and email are optional. You can omit either or both when adding a person.
+* For duplicate checking, NUSNET ID, Telegram handle, Phone Number and Email must be unique across all persons in the address book.
 </box>
 
 Examples:
@@ -143,11 +156,6 @@ Examples:
 * `add_student n/John Doe i/E1234567 t/@handle g/T01  p/98765432 e/johnd@u.nus.edu`
 * `add_student n/Betsy Crow i/E1234562 p/1234567 t/@betsy g/T02  e/betsycrowe@u.nus.edu`
 
-### Listing all persons : `list`
-
-Shows a list of all persons in the ADDRESS book.
-
-Format: `list`
 
 ### Editing a person : `edit_student`
 
@@ -159,6 +167,7 @@ Format: `edit_student INDEX [n/NAME] [i/NUSNETID]  [t/TELEGRAM] [p/PHONE] [e/EMA
 * At least one of the fields is provided to change the person's details.
 * Existing values will be updated to the input values.
 * You can not use this command to change a person's tutorial group. Use the `add_to_group` command instead.
+* For duplicate checking, NUSNET ID, Telegram handle, Phone Number and Email must be unique across all persons in the address book.
 
 
 Examples:
