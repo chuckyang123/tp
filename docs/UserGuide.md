@@ -6,7 +6,7 @@
 
 # SoCTAssist User Guide
 
-SoCTAssist is a **desktop app designed specifically to help Teaching Assistants manage their students' information,
+SoCTAssist is a desktop app designed specifically to help Teaching Assistants manage their students' information,
 homework, attendance, and consultation sessions more efficiently.
 
 If you are a Teaching Assistance who can type fast, SoCTAssist can get your contact management tasks
@@ -15,45 +15,8 @@ done faster than traditional GUI app and
 <page-nav-print />
 
 --------------------------------------------------------------------------------------------------------------------
-## Table of Contents
 
-- [Quick Start](#quick-start)
-- [Command Summary](#command-summary)
-- [Features](#features)
-    - [Viewing help](#viewing-help--help)
-    - [List Commands](#list-commands)
-      - [Listing all persons](#listing-all-persons--list)
-      - [Listing all consultations](#listing-all-consultations--list_consult)
-    - [Person Commands](#person-commands)
-      - [Adding a person](#adding-a-person-add_student)
-      - [Editing a person](#editing-a-person--edit_student)
-      - [Finding students by name](#finding-students-by-name-find)
-      - [Deleting a person](#deleting-a-person--delete)
-    - [Homework Commands](#homework-commands)
-      - [Adding homework](#adding-homework--add_hw)
-      - [Marking homework](#marking-homework--mark_hw)
-      - [Deleting homework](#deleting-homework--delete_hw)
-    - [Attendance Commands](#attendance-commands)
-      - [Marking attendance](#marking-attendance--mark_attendance)
-      - [Marking attendance for one group of students](#marking-attendance-for-one-group-of-students--mark_all_attendance)
-    - [Consultation Commands](#consultation-commands)
-      - [Adding a consultation](#adding-a-consultation--add_consult)
-      - [Deleting a consultation](#deleting-a-consultation--delete_consult)
-    - [Group Commands](#group-commands)
-      - [Creating a group](#creating-a-group--create_group)
-      - [Adding a student to a group](#adding-a-student-to-a-group--add_to_group)
-      - [Finding group members](#finding-group-members--find_group)
-    - [Clearing all entries](#clearing-all-entries--clear)
-    - [Exiting the program](#exiting-the-program--exit)
-    - [Saving the data](#saving-the-data)
-    - [Editing the data file](#editing-the-data-file)
-- [FAQs](#faqs)
-- [Known Issues](#known-issues)
-- [Glossary](#glossary)
-
----
-
-## Quick Start
+# Quick Start
 
 1. Ensure you have Java `17` or above installed in your Computer.<br>
    **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
@@ -82,7 +45,7 @@ done faster than traditional GUI app and
 1. Refer to the [Features](#features) below for details of each command.
 
 --------------------------------------------------------------------------------------------------------------------
-## Command Summary
+# Command Summary
 
 | Description                 | Format                                                                                     | Example                                                                              |
 |-----------------------------|--------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------|
@@ -94,7 +57,7 @@ done faster than traditional GUI app and
 | **Delete student**          | `delete INDEX`                                                                             | `delete 3`                                                                           |
 | **Find students by name**   | `find KEYWORD [MORE_KEYWORDS]`                                                             | `find James Jake`                                                                    |
 | **Add homework**            | `add_hw i/NUSNETID a/ASSIGNMENT`<br>(use `i/all` for all students)                         | `add_hw i/E1234567 a/1`                                                              |
-| **Mark homework**           | `mark_hw i/NUSNETID a/ASSIGNMENT status/STATUS`<br>(STATUS: complete, incomplete, late)    | `mark_hw i/E1234567 a/1 complete`                                                    |
+| **Mark homework**           | `mark_hw i/NUSNETID a/ASSIGNMENT status/STATUS`<br>(STATUS: complete, incomplete, late)    | `mark_hw i/E1234567 a/1 status/complete`                                                    |
 | **Delete homework**         | `delete_hw i/NUSNETID a/ASSIGNMENT`<br>(use `i/all` for all students)                      | `delete_hw i/E1234567 a/1`                                                           |
 | **Mark attendance**         | `mark_attendance i/NUSNETID w/WEEK status/ATTENDANCE_STATUS`<br>(STATUS: present, absent, excused)    | `mark_attendance i/E1234567 w/3 status/present`                                      |
 | **Mark attendance for all** | `mark_all_attendance g/GROUPID w/WEEK status/ATTENDANCE_STATUS`<br>(STATUS: present, absent, excused) | `mark_all_attendance g/T01 w/3 status/present`                                       |
@@ -108,7 +71,7 @@ done faster than traditional GUI app and
 
 --------------------------------------------------------------------------------------------------------------------
 
-## Features
+# Features
 
 <box type="info" seamless>
 
@@ -130,7 +93,7 @@ done faster than traditional GUI app and
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 </box>
 
-### Viewing help : `help`
+## Viewing help : `help`
 
 Shows a message summarising all commands and displays a URL link that directs user to the help page.
 
@@ -422,7 +385,7 @@ Examples:
 
 ---
 
-### Clearing all entries : `clear`
+## Clearing all entries : `clear`
 
 Clears all entries from the address book.
 
@@ -430,17 +393,17 @@ Clears all entries from the address book.
 
 Format: `clear`
 
-### Exiting the program : `exit`
+## Exiting the program : `exit`
 
 Exits the program.
 
 Format: `exit`
 
-### Saving the data
+## Saving the data
 
 AddressBook data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
 
-### Editing the data file
+## Editing the data file
 
 AddressBook data are saved automatically as a JSON file in JAR `file_location/data/addressbook.json`. \
 Users are **NOT** recommended to edit the data file directly, but if you need to do so, please follow these guidelines:
@@ -456,7 +419,7 @@ Furthermore, certain edits can cause the AddressBook to behave in unexpected way
 </box>
 --------------------------------------------------------------------------------------------------------------------
 
-## FAQs
+# FAQs
 
 **Q**: How do I back up or transfer my data to another computer?<br>
 **A**: Copy the data file at `file_location/data/addressbook.json` from your current machine and replace the same file on the other machine. Close the app before copying to avoid partial writes.
@@ -515,16 +478,27 @@ Furthermore, certain edits can cause the AddressBook to behave in unexpected way
 **Q**: How can I see a student’s homework and attendance quickly?
 **A**: Use `list` to show students; details appear in the student panel. There is no separate `list_hw` command.
 
---------------------------------------------------------------------------------------------------------------------
-
-## Known Issues
-
-1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen. The remedy is to delete the `preferences.json` file created by the application before running the application again.
-2. **If you minimize the Help Window** and then run the `help` command (or use the `Help` menu, or the keyboard shortcut `F1`) again, the original Help Window will remain minimized, and no new Help Window will appear. The remedy is to manually restore the minimized Help Window.
+**Q**: What if I want to add another consultation to a student who already has one?<br>
+**A**: A student can only have one consultation at a time. If you want to add another consultation, please delete the existing consultation first using the `delete_consult` command.
 
 --------------------------------------------------------------------------------------------------------------------
 
-## Glossary
+# Known Issues
+
+1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen.
+
+   **Remedy:** Delete the `preferences.json` file created by the application before running the application again.
+
+2. **If you minimize the Help Window** and then run the `help` command (or use the `Help` menu, or the keyboard shortcut `F1`) again, the original Help Window will remain minimized, and no new Help Window will appear.
+   
+   **Remedy:** Manually restore the minimized Help Window.
+3. **When using `edit_student` or `delete` commands on the consultation view page**, the index of student to be edited or deleted cannot be seen.
+   
+   **Remedy:** Use the `list` command to return to the student view page to obtain the target student's index before using the `edit_student` or `delete` command.
+
+--------------------------------------------------------------------------------------------------------------------
+
+# Glossary
 * **NUSNETID**: A unique identifier assigned to each student by the National University of Singapore (NUS) during matriculation. It is used for logging into various NUS systems.
 * **NUS email**: The official email address assigned to each student by NUS, typically in the format `<NUSNETID>@u.nus.edu`.
 * **Tutorial Group**: A smaller group of students within a course. Group IDs usually follow the format `TXX` or `BXX`, where `XX` represent 2 digits.

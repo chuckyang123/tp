@@ -63,9 +63,6 @@ public class MarkAttendanceCommandParser implements Parser<MarkAttendanceCommand
         } catch (IllegalArgumentException e) {
             errors.add(MarkAttendanceCommand.MESSAGE_INVALID_STATUS);
         }
-        if (status == null) {
-            errors.add(MarkAttendanceCommand.MESSAGE_INVALID_STATUS);
-        }
         Nusnetid nusnetIdObj = null;
         try {
             nusnetIdObj = new Nusnetid(nusnetIdRaw);

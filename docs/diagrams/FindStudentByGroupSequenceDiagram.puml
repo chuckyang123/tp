@@ -49,8 +49,9 @@ AddressBookParser --> LogicManager : d
 deactivate AddressBookParser
 
 LogicManager -> FindGroupCommand : execute(m)
-alt Group exists in Model
 activate FindGroupCommand
+
+alt Group exists in Model
 FindGroupCommand -> Model : updateFilteredPersonList(predicate))
 activate Model
 

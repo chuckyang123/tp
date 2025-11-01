@@ -120,7 +120,7 @@ public class ModelManager implements Model {
     @Override
     public Person findPerson(Nusnetid nusnetid) {
         requireNonNull(nusnetid);
-        return addressBook.findPerson(nusnetid);
+        return addressBook.getPerson(nusnetid);
     }
 
     @Override
@@ -167,21 +167,6 @@ public class ModelManager implements Model {
         requireAllNonNull(oldNusnetid, newNusnetid);
         this.addressBook.updateConsultationsForEditedPerson(oldNusnetid, newNusnetid);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-    }
-    /**
-     * Retrieves a person by their nusnetId.
-     * @param nusnetId the nusnetId of the person to be retrieved
-     * @return the person with the specified nusnetId
-     * @throws CommandException if no person with the given nusnetId is found
-     */
-    @Override
-    public Person getPersonByNusnetId(Nusnetid nusnetId) throws CommandException {
-        requireNonNull(nusnetId);
-        assert hasPerson(nusnetId) : "Person with given nusnetId should exist in the address book.";
-        Person target = this.getFilteredPersonList()
-                .stream().filter(p -> p.getNusnetid().equals(nusnetId))
-                .findFirst().orElseThrow(() -> new CommandException(MESSAGE_STUDENT_NOT_FOUND));
-        return target;
     }
     /**
      * Marks attendance for a student identified by their nusnetId.
@@ -252,7 +237,19 @@ public class ModelManager implements Model {
         Predicate<Person> predicate = person -> person.getGroupId().equals(groupId);
         updateFilteredPersonList(predicate);
     }
-
+    /**
+     * Retrieves a person by their nusnetId.
+     * @param nusnetId the nusnetId of the person to be retrieved
+     * @return the person with the specified nusnetId
+     * @throws CommandException if no person with the given nusnetId is found
+     */
+    @Override
+    public Person getPersonByNusnetId(Nusnetid nusnetId) throws CommandException {
+        requireNonNull(nusnetId);
+        assert hasPerson(nusnetId) : "Person with given nusnetId should exist in the address book.";
+        Person target = this.addressBook.getPerson(nusnetId);
+        return target;
+    }
     /**
      * Retrieves a person by their nusnetId in the Unique Person List
      * @param nusnetId the nusnetId of the person to be retrieved
