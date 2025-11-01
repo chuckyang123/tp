@@ -5,6 +5,7 @@ import static java.util.Objects.requireNonNull;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.time.format.ResolverStyle;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
@@ -116,7 +117,8 @@ public class ParserUtil {
         requireNonNull(input);
         String trimmedInput = input.trim();
         try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd HHmm");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("uuuuMMdd HHmm")
+                    .withResolverStyle(ResolverStyle.STRICT);
             LocalDateTime dateTime = LocalDateTime.parse(trimmedInput, formatter);
             return dateTime;
         } catch (DateTimeParseException e) {
