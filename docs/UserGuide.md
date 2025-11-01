@@ -34,7 +34,7 @@ done faster than traditional GUI app and
 
    * `list` : Lists all contacts.
 
-   * `add_student n/John Doe  i/E1234567 t/@john g/T01 p/98765432 e/johnd@@u.nus.edu` : Adds a contact named `John Doe` to the address book.
+   * `add_student n/John Doe  i/E1234567 t/@john g/T01 p/98765432 e/johnd@u.nus.edu` : Adds a contact named `John Doe` to the address book.
 
    * `delete 3` : Deletes the 3rd contact shown in the current list.
 
@@ -94,15 +94,23 @@ done faster than traditional GUI app and
 
 * A student is considered as duplicate if both their NUSNET ID or Telegram handle or Phone Number or Email is the same as another existing student in the address book.
 
-* Parameter Constraints:
+## Parameter Constraints
 
+  * Name: May contain letters (including accents), digits, spaces, and quotes (\" and '), must not be blank, and must not contain '/' because '/' is used to identify different fields. e.g. `John Doe`.
   * NUSNET ID: An `E` (case-insensitive) followed by 7 digits, e.g. `E1234567`.
 
   * Telegram handle: Starts with `@` followed by at least 1 alphanumeric characters (underscores allowed), e.g. `@john_doe123`.
 
-  * Phone number: A string of 3 to 15 digits, e.g. `98765432`.
+  * Phone number: A string of 3 to 30 digits can start with + to indicate country code, e.g. `+6598765432`.
 
-  * Email: A valid NUS email address in the format `<NUSNETID>@u.nus.edu`, e.g. `
+  * Email: A valid NUS email address in the format `localdomain@u.nus.edu`, e.g. `e1234567@u.nus.edu`.
+  * Group ID: Starts with `T` or `B` (case-insensitive) followed by exactly two digits, e.g., `T01`, `B04`.
+  * Assignment number: A positive integer between 1 to 3.
+  * Attendance week: An integer between 2 to 13.
+  * Attendance status: One of `present`, `absent`, or `excused`.
+  * Homework status: One of `complete`, `incomplete`, or `late`.
+  * DateTime: In the format `YYYYMMDD HHmm`, e.g. `20240915 1400` for 2:00 PM on 15 Sep 2024
+  * Index: A positive integer 1, 2, 3, …​
 </box>
 
 ## Viewing help : `help`
@@ -149,6 +157,7 @@ Format: `add_student n/NAME i/NUSNETID t/TELEGRAM g/GROUPID  [p/PHONE_NUMBER] [e
 
 **Tip:** Phone and email are optional. You can omit either or both when adding a person.
 * For duplicate checking, NUSNET ID, Telegram handle, Phone Number and Email must be unique across all persons in the address book.
+* The paprameter constraints are listed [here](#Parameter-Constraints).
 </box>
 
 Examples:
@@ -168,6 +177,9 @@ Format: `edit_student INDEX [n/NAME] [i/NUSNETID]  [t/TELEGRAM] [p/PHONE] [e/EMA
 * Existing values will be updated to the input values.
 * You can not use this command to change a person's tutorial group. Use the `add_to_group` command instead.
 * For duplicate checking, NUSNET ID, Telegram handle, Phone Number and Email must be unique across all persons in the address book.
+* You can use p/ to remove the phone number or e/ to remove the email address of a person by leaving the parameter value empty.
+  e.g. `edit_student 2 p/` will remove the phone number of the 2nd person in the displayed person list.
+* The paprameter constraints are listed [here](#Parameter-Constraints).
 
 
 Examples:
@@ -221,9 +233,9 @@ Format: `add_hw i/NUSNETID (use 'i/all' for all students) a/ASSIGNMENT`
 * The NUSNET ID **must be valid** and the assignment identifier **must be specified**.
 * The newly added homework will have a default status of `incomplete`.
 * The assignment number should be a positive integer between 1 to 3.
-* Homework number must be between 1 to 3.
 * If adding homework for a specific student, NUSNET ID is used, which starts with E and has 7 numbers, and it should not be blank.
 * The NUSNET ID and homework number **must be valid**.
+* The paprameter constraints are listed [here](#Parameter-Constraints).
 * The system will check the validity of command format, followed by validity of input, and lastly the existence of the student.
 
 Examples:
@@ -242,6 +254,7 @@ Format: `mark_hw i/NUSNETID a/ASSIGNMENT status/STATUS`
 * The assignment must exist for the student.
 * The `STATUS` can be one of the following: `complete`, `incomplete`, or `late`.
 * The NUSNET ID, homework number and status **must be valid**.
+* The paprameter constraints are listed [here](#Parameter-Constraints).
 * The system will check the validity of command format, followed by validity of input, and lastly the existence of the student.
 
 Examples:
@@ -260,6 +273,7 @@ Format: `delete_hw i/NUSNETID (use 'i/all' for all students) a/ASSIGNMENT`
 * The assignment must exist for the student.
 * If `i/all` is used, the homework is deleted for all students.
 * The NUSNET ID and homework number **must be valid**.
+* The paprameter constraints are listed [here](#Parameter-Constraints).
 * The system will check the validity of command format, followed by validity of input, and lastly the existence of the student.
 
 Examples:
@@ -280,6 +294,7 @@ Format: `mark_attendance i/NUSNETID w/WEEK status/ATTENDANCE_STATUS`
 * NUSNET ID can start with E and has 7 numbers, and it should not be blank.
 * The `ATTENDANCE_STATUS` can be one of the following: `present`, `absent`, or `excused`.
 * The NUSNET ID, week number and status **must be valid**.
+* The paprameter constraints are listed [here](#Parameter-Constraints).
 * The system will check the validity of command format, followed by validity of input, and lastly the existence of the student.
 
 Examples:
@@ -299,6 +314,7 @@ Format: `mark_all_attendance g/GROUPID w/WEEK status/ATTENDANCE_STATUS`
 * Group IDs should start with T or B (case-insensitive) and be followed by strictly 2 digits.
 * The `ATTENDANCE_STATUS` can be one of the following: `present`, `absent`, or `excused`.
 * The groupId, week number and status **must be valid**.
+* The paprameter constraints are listed [here](#Parameter-Constraints).
 * The system will check the validity of command format, followed by validity of input, and lastly the existence of the group.
 
 Examples:
@@ -317,6 +333,7 @@ Format: `add_consult i/NUSNETID from/DATE_TIME to/DATE_TIME`
 * Both start (`from`) and end (`to`) times **must be in `YYYYMMDD HHmm` format**.
 * The start time must be **earlier** than the end time**.
 * The NUSNET ID, start time and end time **must be valid**.
+* The paprameter constraints are listed [here](#Parameter-Constraints).
 * If a consultation already exists for the student, it will be unavailable to add a new consultation to the student.
 * If the consultation time overlaps with an existing consultation for another student, it will be unavailable to add the new consultation.
 
@@ -336,6 +353,7 @@ Format: `delete_consult i/NUSNETID`
 
 * Deletes the consultation for the specified student.
 * The NUSNET ID **must be valid**.
+* The paprameter constraints are listed [here](#Parameter-Constraints).
 
 Examples:
 * `delete_consult i/E1234567` deletes consultation for student `E1234567`.

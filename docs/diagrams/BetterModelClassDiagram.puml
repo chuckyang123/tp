@@ -1,97 +1,78 @@
 @startuml
-' Better Model Class Diagram (accurate to current codebase)
+!include style.puml
+skinparam arrowThickness 1.1
+skinparam arrowColor MODEL_COLOR
+skinparam classBackgroundColor MODEL_COLOR
 
-skinparam classAttributeIconSize 0
+Package Model as ModelPackage <<Rectangle>>{
+Class "<<interface>>\nReadOnlyAddressBook" as ReadOnlyAddressBook
+Class "<<interface>>\nReadOnlyUserPrefs" as ReadOnlyUserPrefs
+Class "<<interface>>\nModel" as Model
+Class AddressBook
+Class ModelManager
+Class UserPrefs
 
-package "seedu.address.model" {
-  interface ReadOnlyAddressBook
+Class UniquePersonList
+Class UniqueConsultationList
+Class Consultation
+Class Group
+Class GroupId
+Class Person
+Class Email
+Class Name
+Class Phone
+Class Nusnetid
+Class Telegram
+Class HomeworkTracker
+Class AttendanceSheet
 
-  class AddressBook {
-    - UniquePersonList persons
-    - UniqueConsultationList consultations
-    + hasPerson(Person)
-    + addPerson(Person)
-    + setPerson(Person, Person)
-    + hasConsultation(Consultation)
-    + addConsultation(Consultation)
-    + deleteConsultation(Nusnetid)
-    + addConsultationToPerson(Nusnetid, Consultation)
-    + deleteConsultationFromPerson(Nusnetid)
-    + getPersonList()
-    + getConsultationList()
-  }
-
-  interface Model {
-
-  }
-
-  class ModelManager {
-    - AddressBook addressBook
-    - UserPrefs userPrefs
-    - FilteredList<Person> filteredPersons
-    - FilteredList<Consultation> filteredConsultations
-    - List<Group> groupList
-  }
-
-  class UserPrefs
-  interface ReadOnlyUserPrefs
-
-  class Group {
-    - GroupId groupId
-    - UniquePersonList students
-    + addStudent(Person)
-    + removeStudent(Nusnetid)
-    + hasStudent(Nusnetid) : boolean
-  }
+Class I #FFFFFF
 }
 
-package "seedu.address.model.person" {
-  class UniquePersonList
+Class HiddenOutside #FFFFFF
+HiddenOutside ..> Model
 
-  class Person {
-    - Name name
-    - Optional<Phone> phone
-    - Optional<Email> email
-    - Nusnetid nusnetid
-    - Telegram telegram
-    - GroupId groupId
-    - HomeworkTracker homeworkTracker
-    - AttendanceSheet attendanceSheet
-    - Optional<Consultation> consultation
-    + hasSameNusnetId(Nusnetid) : boolean
-    + hasConsultation() : boolean
-  }
-  class Fields {
-  }
-}
+AddressBook .up.|> ReadOnlyAddressBook
 
-package "seedu.address.model.event" {
-  class Consultation {
-    - Nusnetid nusnetid
-    - LocalDateTime from
-    - LocalDateTime to
-  }
-  class UniqueConsultationList
-}
+ModelManager .up.|> Model
+Model .right.> ReadOnlyUserPrefs
+Model .left.> ReadOnlyAddressBook
+ModelManager -left-> "1" AddressBook
+ModelManager -right-> "1" UserPrefs
+UserPrefs .up.|> ReadOnlyUserPrefs
 
-' interfaces and implementation
-ReadOnlyAddressBook <|.. AddressBook
-Model <|.. ModelManager
-ReadOnlyUserPrefs <|.. UserPrefs
+' AddressBook contents
+AddressBook *--> "1" UniquePersonList
+AddressBook *--> "1" UniqueConsultationList
+UniquePersonList --> "~* all" Person
+UniqueConsultationList --> "~* all" Consultation
 
-' major compositions/associations
-ModelManager o-- AddressBook
-ModelManager o-- UserPrefs
-ModelManager "1" o-- "0..*" Group : groupList
+' Person contents
+Person *--> Name
+Person *--> Phone
+Person *--> Email
+Person *--> Nusnetid
+Person *--> Telegram
+Person *--> HomeworkTracker
+Person *--> AttendanceSheet
+Person *--> GroupId
+Person --> "0..1" Consultation
 
-AddressBook "1" o-- "1" UniquePersonList
-AddressBook "1" o-- "1" UniqueConsultationList
-UniquePersonList "1" o-- "0..*" Person
-UniqueConsultationList "1" o-- "0..*" Consultation
+' Groups are stored in ModelManager
+ModelManager *--> "~* groups" Group
+Group *--> GroupId
+Group *--> "students" UniquePersonList
 
-Group "1" o-- "1" seedu.address.model.person.GroupId
-Group "1" o-- "1" UniquePersonList : students
+' Hidden aligners for layout consistency
+Person -[hidden]up--> I
+UniquePersonList -[hidden]right-> I
 
-Person  o-- Fields
+Name -[hidden]right-> Phone
+Phone -[hidden]right-> Email
+Email -[hidden]right-> Telegram
+Telegram -[hidden]right-> Nusnetid
+Consultation -[hidden]right-> Email
 
+' filtered person view in model manager
+ModelManager --> "~* filtered" Person
 @enduml
