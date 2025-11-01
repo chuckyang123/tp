@@ -32,6 +32,8 @@ public class JsonSerializableAddressBookTest {
             .resolve("emptyGroupAddressBook.json");
     private static final Path VALID_CONSULTATION_FILE = TEST_DATA_FOLDER
             .resolve("typicalConsultationAddressBook.json");
+    private static final Path INVALID_CONSULTATION_FILE = TEST_DATA_FOLDER
+            .resolve("duplicateConsultationAddressBook.json");
     private static final Person JOHN = new PersonBuilder().withName("John Doe")
             .withNusnetid("E1234567").withEmail("johnd@u.nus.edu")
             .withPhone("98765432")
@@ -99,5 +101,12 @@ public class JsonSerializableAddressBookTest {
         LocalDateTime endTime = LocalDateTime.parse("2024-09-15T15:00:00");
         assertEquals(addressBookFromFile.getConsultationList().size(), 1);
         assertEquals(addressBookFromFile.getConsultationList().get(0), new Consultation(id, startTime, endTime));
+    }
+    @Test
+    public void toModelType_duplicateConsultations_throwsIllegalValueException() throws Exception {
+        JsonSerializableAddressBook dataFromFile = JsonUtil.readJsonFile(INVALID_CONSULTATION_FILE,
+                JsonSerializableAddressBook.class).get();
+        assertThrows(IllegalValueException.class, JsonSerializableAddressBook.MESSAGE_DUPLICATE_CONSULTATION,
+                dataFromFile::toModelType);
     }
 }
