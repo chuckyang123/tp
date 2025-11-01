@@ -34,7 +34,7 @@ done faster than traditional GUI app and
 
    * `list` : Lists all contacts.
 
-   * `add_student n/John Doe  i/E1234567 t/@john g/T01 p/98765432 e/johnd@u.nus.edu` : Adds a contact named `John Doe` to the address book.
+   * `add_student n/John Doe  i/E1234567 t/@john g/T01 p/98765432 e/johnd@u.nus.edu` : Adds a contact named `John Doe` to the SoCTAssist.
 
    * `delete 3` : Deletes the 3rd contact shown in the current list.
 
@@ -66,7 +66,7 @@ done faster than traditional GUI app and
 | **Create group**            | `create_group g/GROUPID`                                                                   | `create_group g/T03`                                                                 |
 | **Add student to group**    | `add_to_group i/NUSNETID g/GROUPID`                                                        | `add_to_group i/E1234567 g/T03`                                                      |
 | **Find students by group**  | `find_group g/GROUPID`                                                                     | `find_group g/T03`                                                                   |
-| **Clear address book**      | `clear`                                                                                    | `clear`                                                                              |
+| **Clear SoCTAssist**      | `clear`                                                                                    | `clear`                                                                              |
 | **Exit application**        | `exit`                                                                                     | `exit`                                                                               |
 
 --------------------------------------------------------------------------------------------------------------------
@@ -92,7 +92,7 @@ done faster than traditional GUI app and
 
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 
-* A student is considered as duplicate if both their NUSNET ID or Telegram handle or Phone Number or Email is the same as another existing student in the address book.
+* A student is considered as duplicate if both their NUSNET ID or Telegram handle or Phone Number or Email is the same as another existing student in the SoCTAssist
 
 ## Parameter Constraints
 
@@ -126,14 +126,14 @@ Format: `help`
 
 ### Listing all persons : `list`
 
-Shows a list of all persons in the address book.
+Shows a list of all persons in the SoCTAssist.
 
 Format: `list`
 
 
 ### Listing all consultations : `list_consult`
 
-Displays list of all consultations in the address book.
+Displays list of all consultations in the SoCTAssist.
 
 Format: `list_consult`
 
@@ -149,14 +149,14 @@ Note:
 
 ### Adding a person: `add_student`
 
-Adds a person to the address book.
+Adds a person to the SoCTAssist.
 
 Format: `add_student n/NAME i/NUSNETID t/TELEGRAM g/GROUPID  [p/PHONE_NUMBER] [e/EMAIL]`
 
 <box type="tip" seamless>
 
 **Tip:** Phone and email are optional. You can omit either or both when adding a person.
-* For duplicate checking, NUSNET ID, Telegram handle, Phone Number and Email must be unique across all persons in the address book.
+* For duplicate checking, NUSNET ID, Telegram handle, Phone Number and Email must be unique across all persons in the SoCTAssist.
 * The paprameter constraints are listed [here](#Parameter-Constraints).
 </box>
 
@@ -168,7 +168,7 @@ Examples:
 
 ### Editing a person : `edit_student`
 
-Edits an existing person in the address book.
+Edits an existing person in the SoCTAssist.
 
 Format: `edit_student INDEX [n/NAME] [i/NUSNETID]  [t/TELEGRAM] [p/PHONE] [e/EMAIL]`
 
@@ -176,7 +176,7 @@ Format: `edit_student INDEX [n/NAME] [i/NUSNETID]  [t/TELEGRAM] [p/PHONE] [e/EMA
 * At least one of the fields is provided to change the person's details.
 * Existing values will be updated to the input values.
 * You can not use this command to change a person's tutorial group. Use the `add_to_group` command instead.
-* For duplicate checking, NUSNET ID, Telegram handle, Phone Number and Email must be unique across all persons in the address book.
+* For duplicate checking, NUSNET ID, Telegram handle, Phone Number and Email must be unique across all persons in the SoCTAssist.
 * You can use p/ to remove the phone number or e/ to remove the email address of a person by leaving the parameter value empty.
   e.g. `edit_student 2 p/` will remove the phone number of the 2nd person in the displayed person list.
 * The paprameter constraints are listed [here](#Parameter-Constraints).
@@ -189,7 +189,7 @@ Examples:
 
 ### Deleting a person : `delete`
 
-Deletes the specified person from the address book.
+Deletes the specified person from the SoCTAssist.
 
 Format: `delete INDEX`
 
@@ -413,9 +413,9 @@ Examples:
 
 ## Clearing all entries : `clear`
 
-Clears all entries from the address book.
+Clears all entries from the SoCTAssist.
 
-* Deletes all students, groups and consultations from the address book.
+* Deletes all students, groups and consultations from the SoCTAssist
 
 Format: `clear`
 
@@ -427,21 +427,21 @@ Format: `exit`
 
 ## Saving the data
 
-AddressBook data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
+SoCTAssist data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
 
 ## Editing the data file
 
-AddressBook data are saved automatically as a JSON file in JAR `file_location/data/addressbook.json`. \
+SoCTAssist data are saved automatically as a JSON file in JAR `file_location/data/addressbook.json`. \
 Users are **NOT** recommended to edit the data file directly, but if you need to do so, please follow these guidelines:
 1. Ensure that the JSON format is valid after editing.
-2. Ensure that all fields have valid values according to the specifications of AddressBook.
+2. Ensure that all fields have valid values according to the specifications of SoCTAssist.
 
 
 <box type="warning" seamless>
 
 **Caution:**
-If your changes to the data file makes its format invalid, AddressBook will discard all data and start with an empty data file at the next run.  Hence, it is recommended to take a backup of the file before editing it.<br>
-Furthermore, certain edits can cause the AddressBook to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
+If your changes to the data file makes its format invalid, SoCTAssist will discard all data and start with an empty data file at the next run.  Hence, it is recommended to take a backup of the file before editing it.<br>
+Furthermore, certain edits can cause the SoCTAssist to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </box>
 --------------------------------------------------------------------------------------------------------------------
 
