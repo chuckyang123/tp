@@ -10,7 +10,7 @@ SoCTAssist is a desktop app designed specifically to help Teaching Assistants ma
 homework, attendance, and consultation sessions more efficiently.
 
 If you are a Teaching Assistant who can type fast, SoCTAssist can get your contact management tasks
-done faster than traditional Graphical User Interface(GUI) app while still having the benefits of a GUI.
+done faster than traditional Graphical User Interface(GUI) apps while still having the benefits of a GUI.
 <!-- * Table of Contents -->
 <page-nav-print />
 
