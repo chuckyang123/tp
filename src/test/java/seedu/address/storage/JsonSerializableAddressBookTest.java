@@ -7,8 +7,6 @@ import static seedu.address.testutil.Assert.assertThrows;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
