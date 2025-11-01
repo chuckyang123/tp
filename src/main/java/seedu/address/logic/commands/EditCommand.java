@@ -46,6 +46,7 @@ public class EditCommand extends Command {
             + "[" + PREFIX_TELEGRAM + "TELEGRAM] "
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] " + "\n"
+            + "Tip: use '" + PREFIX_PHONE + "' or '" + PREFIX_EMAIL + "' with no value to clear phone/email.\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
             + PREFIX_EMAIL + "johndoe@u.nus.edu";
@@ -114,10 +115,15 @@ public class EditCommand extends Command {
         assert personToEdit != null;
 
         Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
-        Phone updatedPhone = editPersonDescriptor.phone == null
-                ? null : editPersonDescriptor.getPhone().orElse(personToEdit.getPhone().orElse(null));
-        Email updatedEmail = editPersonDescriptor.email == null
-                ? null : editPersonDescriptor.getEmail().orElse(personToEdit.getEmail().orElse(null));
+
+        Phone updatedPhone = editPersonDescriptor.isPhoneEdited()
+                ? editPersonDescriptor.getPhone().orElse(null)
+                : personToEdit.getPhone().orElse(null);
+
+        Email updatedEmail = editPersonDescriptor.isEmailEdited()
+                ? editPersonDescriptor.getEmail().orElse(null)
+                : personToEdit.getEmail().orElse(null);
+
         Nusnetid updatedNusnetid = editPersonDescriptor.getNusnetid().orElse(personToEdit.getNusnetid());
         Telegram updatedTelegram = editPersonDescriptor.getTelegram().orElse(personToEdit.getTelegram());
         GroupId groupId = personToEdit.getGroupId();
@@ -179,16 +185,21 @@ public class EditCommand extends Command {
         private Nusnetid nusnetid;
         private Telegram telegram;
 
+        // Tri-state flags: false = not edited; true = edited (value may be null => clear)
+        private boolean phoneEdited;
+        private boolean emailEdited;
+
         public EditPersonDescriptor() {}
 
         /**
          * Copy constructor.
-         * A defensive copy of {@code tags} is used internally.
          */
         public EditPersonDescriptor(EditPersonDescriptor toCopy) {
             setName(toCopy.name);
-            setPhone(toCopy.phone);
-            setEmail(toCopy.email);
+            this.phoneEdited = toCopy.phoneEdited;
+            this.emailEdited = toCopy.emailEdited;
+            this.phone = toCopy.phone;
+            this.email = toCopy.email;
             setNusnetid(toCopy.nusnetid);
             setTelegram(toCopy.telegram);
         }
@@ -197,7 +208,8 @@ public class EditCommand extends Command {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, nusnetid, telegram, phone, email);
+            return CollectionUtil.isAnyNonNull(name, nusnetid, telegram)
+                    || phoneEdited || emailEdited;
         }
 
         public void setName(Name name) {
@@ -208,17 +220,25 @@ public class EditCommand extends Command {
         }
 
         public void setPhone(Phone phone) {
-            this.phone = phone;
+            this.phoneEdited = true;
+            this.phone = phone; // null means clear
         }
         public Optional<Phone> getPhone() {
             return Optional.ofNullable(phone);
         }
+        public boolean isPhoneEdited() {
+            return phoneEdited;
+        }
 
         public void setEmail(Email email) {
-            this.email = email;
+            this.emailEdited = true;
+            this.email = email; // null means clear
         }
         public Optional<Email> getEmail() {
             return Optional.ofNullable(email);
+        }
+        public boolean isEmailEdited() {
+            return emailEdited;
         }
 
         public void setNusnetid(Nusnetid nusnetid) {
@@ -250,14 +270,18 @@ public class EditCommand extends Command {
                     && Objects.equals(phone, o.phone)
                     && Objects.equals(email, o.email)
                     && Objects.equals(nusnetid, o.nusnetid)
-                    && Objects.equals(telegram, o.telegram);
+                    && Objects.equals(telegram, o.telegram)
+                    && phoneEdited == o.phoneEdited
+                    && emailEdited == o.emailEdited;
         }
 
         @Override
         public String toString() {
             return new ToStringBuilder(this)
                     .add("name", name)
+                    .add("phoneEdited", phoneEdited)
                     .add("phone", phone)
+                    .add("emailEdited", emailEdited)
                     .add("email", email)
                     .add("nusnetid", nusnetid)
                     .add("telegram", telegram)

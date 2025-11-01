@@ -80,10 +80,10 @@ public class AddressBookTest {
     }
 
     @Test
-    public void hasPerson_personWithSameIdentityFieldsInAddressBook_returnsFalse() {
+    public void hasPerson_personWithSameIdentityFieldsInAddressBook_returnsTrue() {
         addressBook.addPerson(ALICE);
         Person editedAlice = new PersonBuilder(ALICE).withNusnetid(VALID_NUSNETID_BOB).build();
-        assertFalse(addressBook.hasPerson(editedAlice));
+        assertTrue(addressBook.hasPerson(editedAlice));
     }
 
     @Test

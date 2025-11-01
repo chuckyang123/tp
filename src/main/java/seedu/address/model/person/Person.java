@@ -234,7 +234,10 @@ public class Person {
             return true;
         }
         return otherPerson != null
-                && otherPerson.getNusnetid().equals(getNusnetid());
+                && (otherPerson.getNusnetid().equals(getNusnetid())
+                || otherPerson.getTelegram().equals(getTelegram())
+                || otherPerson.getPhone().flatMap(g1 -> getPhone().map(g1::equals)).orElse(false)
+                || otherPerson.getEmail().flatMap(e1 -> getEmail().map(e1::equals)).orElse(false));
     }
 
     /**

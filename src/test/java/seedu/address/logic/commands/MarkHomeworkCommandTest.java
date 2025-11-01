@@ -20,9 +20,21 @@ public class MarkHomeworkCommandTest {
     @BeforeEach
     public void setUp() {
         model = new ModelManager();
-        // Add sample students
-        Person alice = new PersonBuilder().withNusnetid("E1234567").withName("Alice").build();
-        Person bob = new PersonBuilder().withNusnetid("E1234568").withName("Bob").build();
+        // Add sample students with distinct identity fields to avoid duplicate detection
+        Person alice = new PersonBuilder()
+                .withNusnetid("E1234567")
+                .withName("Alice")
+                .withTelegram("@alice")
+                .withPhone(null)
+                .withEmail(null)
+                .build();
+        Person bob = new PersonBuilder()
+                .withNusnetid("E1234568")
+                .withName("Bob")
+                .withTelegram("@bob")
+                .withPhone(null)
+                .withEmail(null)
+                .build();
 
         // Add initial homework
         alice = alice.withAddedHomework(1);
