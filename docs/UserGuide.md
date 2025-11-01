@@ -9,8 +9,8 @@
 SoCTAssist is a desktop app designed specifically to help Teaching Assistants manage their students' information,
 homework, attendance, and consultation sessions more efficiently.
 
-If you are a Teaching Assistance who can type fast, SoCTAssist can get your contact management tasks
-done faster than traditional GUI app and 
+If you are a Teaching Assistant who can type fast, SoCTAssist can get your contact management tasks
+done faster than traditional Graphical User Interface(GUI) apps while still having the benefits of a GUI.
 <!-- * Table of Contents -->
 <page-nav-print />
 
@@ -34,7 +34,7 @@ done faster than traditional GUI app and
 
    * `list` : Lists all contacts.
 
-   * `add_student n/John Doe  i/E1234567 t/@john g/T01 p/98765432 e/johnd@@u.nus.edu` : Adds a contact named `John Doe` to the address book.
+   * `add_student n/John Doe  i/E1234567 t/@john g/T01 p/98765432 e/johnd@u.nus.edu` : Adds a contact named `John Doe` to the SoCTAssist.
 
    * `delete 3` : Deletes the 3rd contact shown in the current list.
 
@@ -66,7 +66,7 @@ done faster than traditional GUI app and
 | **Create group**            | `create_group g/GROUPID`                                                                   | `create_group g/T03`                                                                 |
 | **Add student to group**    | `add_to_group i/NUSNETID g/GROUPID`                                                        | `add_to_group i/E1234567 g/T03`                                                      |
 | **Find students by group**  | `find_group g/GROUPID`                                                                     | `find_group g/T03`                                                                   |
-| **Clear address book**      | `clear`                                                                                    | `clear`                                                                              |
+| **Clear SoCTAssist**        | `clear`                                                                                    | `clear`                                                                              |
 | **Exit application**        | `exit`                                                                                     | `exit`                                                                               |
 
 --------------------------------------------------------------------------------------------------------------------
@@ -91,6 +91,26 @@ done faster than traditional GUI app and
   e.g. if the command specifies `help 123`, it will be interpreted as `help`.
 
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
+
+* A student is considered as duplicate if both their NUSNET ID or Telegram handle or Phone Number or Email is the same as another existing student in the SoCTAssist
+
+## Parameter Constraints
+
+  * Name: May contain letters (including accents), digits, spaces, and quotes (\" and '), must not be blank, and must not contain '/' because '/' is used to identify different fields. e.g. `John Doe`.
+  * NUSNET ID: An `E` (case-insensitive) followed by 7 digits, e.g. `E1234567`.
+
+  * Telegram handle: Starts with `@` followed by at least 1 alphanumeric characters (underscores allowed), e.g. `@john_doe123`.
+
+  * Phone number: A string of 3 to 30 digits can start with + to indicate country code, e.g. `+6598765432`.
+
+  * Email: A valid NUS email address in the format `localdomain@u.nus.edu`, e.g. `e1234567@u.nus.edu`.
+  * Group ID: Starts with `T` or `B` (case-insensitive) followed by exactly two digits, e.g., `T01`, `B04`.
+  * Assignment number: A positive integer between 1 to 3.
+  * Attendance week: An integer between 2 to 13.
+  * Attendance status: One of `present`, `absent`, or `excused`.
+  * Homework status: One of `complete`, `incomplete`, or `late`.
+  * DateTime: In the format `YYYYMMDD HHmm`, e.g. `20240915 1400` for 2:00 PM on 15 Sep 2024
+  * Index: A positive integer 1, 2, 3, …​
 </box>
 
 ## Viewing help : `help`
@@ -106,14 +126,14 @@ Format: `help`
 
 ### Listing all persons : `list`
 
-Shows a list of all persons in the address book.
+Shows a list of all persons in the SoCTAssist.
 
 Format: `list`
 
 
 ### Listing all consultations : `list_consult`
 
-Displays list of all consultations in the address book.
+Displays list of all consultations in the SoCTAssist.
 
 Format: `list_consult`
 
@@ -129,13 +149,15 @@ Note:
 
 ### Adding a person: `add_student`
 
-Adds a person to the address book.
+Adds a person to the SoCTAssist.
 
 Format: `add_student n/NAME i/NUSNETID t/TELEGRAM g/GROUPID  [p/PHONE_NUMBER] [e/EMAIL]`
 
 <box type="tip" seamless>
 
 **Tip:** Phone and email are optional. You can omit either or both when adding a person.
+* For duplicate checking, NUSNET ID, Telegram handle, Phone Number and Email must be unique across all persons in the SoCTAssist.
+* The paprameter constraints are listed [here](#Parameter-Constraints).
 </box>
 
 Examples:
@@ -143,15 +165,10 @@ Examples:
 * `add_student n/John Doe i/E1234567 t/@handle g/T01  p/98765432 e/johnd@u.nus.edu`
 * `add_student n/Betsy Crow i/E1234562 p/1234567 t/@betsy g/T02  e/betsycrowe@u.nus.edu`
 
-### Listing all persons : `list`
-
-Shows a list of all persons in the ADDRESS book.
-
-Format: `list`
 
 ### Editing a person : `edit_student`
 
-Edits an existing person in the address book.
+Edits an existing person in the SoCTAssist.
 
 Format: `edit_student INDEX [n/NAME] [i/NUSNETID]  [t/TELEGRAM] [p/PHONE] [e/EMAIL]`
 
@@ -159,6 +176,10 @@ Format: `edit_student INDEX [n/NAME] [i/NUSNETID]  [t/TELEGRAM] [p/PHONE] [e/EMA
 * At least one of the fields is provided to change the person's details.
 * Existing values will be updated to the input values.
 * You can not use this command to change a person's tutorial group. Use the `add_to_group` command instead.
+* For duplicate checking, NUSNET ID, Telegram handle, Phone Number and Email must be unique across all persons in the SoCTAssist.
+* You can use p/ to remove the phone number or e/ to remove the email address of a person by leaving the parameter value empty.
+  e.g. `edit_student 2 p/` will remove the phone number of the 2nd person in the displayed person list.
+* The paprameter constraints are listed [here](#Parameter-Constraints).
 
 
 Examples:
@@ -168,7 +189,7 @@ Examples:
 
 ### Deleting a person : `delete`
 
-Deletes the specified person from the address book.
+Deletes the specified person from the SoCTAssist.
 
 Format: `delete INDEX`
 
@@ -213,9 +234,9 @@ Format: `add_hw i/NUSNETID (use 'i/all' for all students) a/ASSIGNMENT`
 * The NUSNET ID **must be valid** and the assignment identifier **must be specified**.
 * The newly added homework will have a default status of `incomplete`.
 * The assignment number should be a positive integer between 1 to 3.
-* Homework number must be between 1 to 3.
 * If adding homework for a specific student, NUSNET ID is used, which starts with E and has 7 numbers, and it should not be blank.
 * The NUSNET ID and homework number **must be valid**.
+* The paprameter constraints are listed [here](#Parameter-Constraints).
 * The system will check the validity of command format, followed by validity of input, and lastly the existence of the student.
 
 Examples:
@@ -234,6 +255,7 @@ Format: `mark_hw i/NUSNETID a/ASSIGNMENT status/STATUS`
 * The assignment must exist for the student.
 * The `STATUS` can be one of the following: `complete`, `incomplete`, or `late`.
 * The NUSNET ID, homework number and status **must be valid**.
+* The paprameter constraints are listed [here](#Parameter-Constraints).
 * The system will check the validity of command format, followed by validity of input, and lastly the existence of the student.
 
 Examples:
@@ -252,6 +274,7 @@ Format: `delete_hw i/NUSNETID (use 'i/all' for all students) a/ASSIGNMENT`
 * The assignment must exist for the student.
 * If `i/all` is used, the homework is deleted for all students.
 * The NUSNET ID and homework number **must be valid**.
+* The paprameter constraints are listed [here](#Parameter-Constraints).
 * The system will check the validity of command format, followed by validity of input, and lastly the existence of the student.
 
 Examples:
@@ -272,6 +295,7 @@ Format: `mark_attendance i/NUSNETID w/WEEK status/ATTENDANCE_STATUS`
 * NUSNET ID can start with E and has 7 numbers, and it should not be blank.
 * The `ATTENDANCE_STATUS` can be one of the following: `present`, `absent`, or `excused`.
 * The NUSNET ID, week number and status **must be valid**.
+* The paprameter constraints are listed [here](#Parameter-Constraints).
 * The system will check the validity of command format, followed by validity of input, and lastly the existence of the student.
 
 Examples:
@@ -291,6 +315,7 @@ Format: `mark_all_attendance g/GROUPID w/WEEK status/ATTENDANCE_STATUS`
 * Group IDs should start with T or B (case-insensitive) and be followed by strictly 2 digits.
 * The `ATTENDANCE_STATUS` can be one of the following: `present`, `absent`, or `excused`.
 * The groupId, week number and status **must be valid**.
+* The paprameter constraints are listed [here](#Parameter-Constraints).
 * The system will check the validity of command format, followed by validity of input, and lastly the existence of the group.
 
 Examples:
@@ -309,6 +334,7 @@ Format: `add_consult i/NUSNETID from/DATE_TIME to/DATE_TIME`
 * Both start (`from`) and end (`to`) times **must be in `YYYYMMDD HHmm` format**.
 * The start time must be **earlier** than the end time**.
 * The NUSNET ID, start time and end time **must be valid**.
+* The paprameter constraints are listed [here](#Parameter-Constraints).
 * If a consultation already exists for the student, it will be unavailable to add a new consultation to the student.
 * If the consultation time overlaps with an existing consultation for another student, it will be unavailable to add the new consultation.
 
@@ -328,6 +354,7 @@ Format: `delete_consult i/NUSNETID`
 
 * Deletes the consultation for the specified student.
 * The NUSNET ID **must be valid**.
+* The paprameter constraints are listed [here](#Parameter-Constraints).
 
 Examples:
 * `delete_consult i/E1234567` deletes consultation for student `E1234567`.
@@ -387,9 +414,9 @@ Examples:
 
 ## Clearing all entries : `clear`
 
-Clears all entries from the address book.
+Clears all entries from the SoCTAssist.
 
-* Deletes all students, groups and consultations from the address book.
+* Deletes all students, groups and consultations from the SoCTAssist
 
 Format: `clear`
 
@@ -401,21 +428,21 @@ Format: `exit`
 
 ## Saving the data
 
-AddressBook data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
+SoCTAssist data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
 
 ## Editing the data file
 
-AddressBook data are saved automatically as a JSON file in JAR `file_location/data/addressbook.json`. \
+SoCTAssist data are saved automatically as a JSON file in JAR `file_location/data/addressbook.json`. \
 Users are **NOT** recommended to edit the data file directly, but if you need to do so, please follow these guidelines:
 1. Ensure that the JSON format is valid after editing.
-2. Ensure that all fields have valid values according to the specifications of AddressBook.
+2. Ensure that all fields have valid values according to the specifications of SoCTAssist.
 
 
 <box type="warning" seamless>
 
 **Caution:**
-If your changes to the data file makes its format invalid, AddressBook will discard all data and start with an empty data file at the next run.  Hence, it is recommended to take a backup of the file before editing it.<br>
-Furthermore, certain edits can cause the AddressBook to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
+If your changes to the data file makes its format invalid, SoCTAssist will discard all data and start with an empty data file at the next run.  Hence, it is recommended to take a backup of the file before editing it.<br>
+Furthermore, certain edits can cause the SoCTAssist to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </box>
 --------------------------------------------------------------------------------------------------------------------
 
