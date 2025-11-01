@@ -54,7 +54,7 @@ public class EditCommandParser implements Parser<EditCommand> {
                 errors.add("Name: " + e.getMessage());
             }
         }
-        // Phone (optional)
+        // Phone (optional, allow clearing with empty value)
         if (argMultimap.getValue(PREFIX_PHONE).isPresent()) {
             try {
                 editPersonDescriptor.setPhone(ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get()));
@@ -62,7 +62,7 @@ public class EditCommandParser implements Parser<EditCommand> {
                 errors.add("Phone: " + e.getMessage());
             }
         }
-        // Email (optional)
+        // Email (optional, allow clearing with empty value)
         if (argMultimap.getValue(PREFIX_EMAIL).isPresent()) {
             try {
                 editPersonDescriptor.setEmail(ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get()));

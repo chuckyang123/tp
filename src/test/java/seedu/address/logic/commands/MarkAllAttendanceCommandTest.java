@@ -27,8 +27,20 @@ public class MarkAllAttendanceCommandTest {
         Group group = new Group(groupId);
         model.addGroup(group);
         // Add sample students
-        Person alice = new PersonBuilder().withNusnetid("E1234567").withName("Alice").build();
-        Person bob = new PersonBuilder().withNusnetid("E1234568").withName("Bob").build();
+        Person alice = new PersonBuilder()
+                .withNusnetid("E1234567")
+                .withName("Alice")
+                .withTelegram("@alice")
+                .withPhone(null)
+                .withEmail(null)
+                .build();
+        Person bob = new PersonBuilder()
+                .withNusnetid("E1234568")
+                .withName("Bob")
+                .withTelegram("@bob")
+                .withPhone(null)
+                .withEmail(null)
+                .build();
         group.addStudent(alice);
         group.addStudent(bob);
         model.addPerson(alice);
