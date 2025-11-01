@@ -122,8 +122,13 @@ public class ParserUtil {
             LocalDateTime dateTime = LocalDateTime.parse(trimmedInput, formatter);
             return dateTime;
         } catch (DateTimeParseException e) {
-            throw new ParseException(
-                    "Invalid date & time format. Please use yyyyMMdd HHmm format! (Eg. 20251010 1800)");
+            String errorMessage = e.getMessage().toLowerCase();
+            if (errorMessage.contains("invalid")) { // Invalid date or time (e.g., 30 Feb, Month 13, Hour 25)
+                throw new ParseException("Invalid date or time. Please ensure the date exists and time is valid!");
+            } else { // Wrong format
+                throw new ParseException(
+                        "Incorrect date & time format. Please use yyyyMMdd HHmm format! (Eg. 20251010 1800)");
+            }
         }
     }
     /**
