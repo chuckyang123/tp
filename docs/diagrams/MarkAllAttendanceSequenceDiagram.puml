@@ -92,6 +92,8 @@ else invalid / missing arguments
     activate CommandResult
     CommandResult --> LogicManager : r
     deactivate CommandResult
+
+
 end
 
 [<--LogicManager

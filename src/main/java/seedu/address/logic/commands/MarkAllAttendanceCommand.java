@@ -6,7 +6,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_WEEK;
 
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.Group;
 import seedu.address.model.Model;
 import seedu.address.model.person.AttendanceStatus;
 import seedu.address.model.person.GroupId;
@@ -41,7 +40,8 @@ public class MarkAllAttendanceCommand extends Command {
     public static final String MESSAGE_MARK_ATTENDANCE_SUCCESS = "Marked attendance for Group %1$s: "
             + "%2$s in week %3$d.\n";
     public static final String MESSAGE_GROUP_NOT_FOUND = "Group not found.";
-    public static final String MESSAGE_INVALID_WEEK = "Invalid Week. Week should be between 2 and 13 and be a positive integer.";
+    public static final String MESSAGE_INVALID_WEEK = "Invalid Week. "
+            + "Week should be between 2 and 13 and be a positive integer.";
     public static final String MESSAGE_INVALID_STATUS = "Please enter present/absent/excused only.";
 
     private final GroupId groupId;
@@ -74,7 +74,7 @@ public class MarkAllAttendanceCommand extends Command {
         if (!model.hasGroup(groupId)) {
             throw new CommandException(MESSAGE_GROUP_NOT_FOUND);
         }
-        try{
+        try {
             model.markAllAttendance(groupId, week, attendanceStatus);
         } catch (CommandException e) {
             throw new CommandException(e.getMessage());

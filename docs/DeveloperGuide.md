@@ -225,7 +225,7 @@ The mark attendance feature allows users to mark the attendance status (e.g., `p
 
 The sequence diagram below illustrates the interactions within the `Logic` component for marking attendance:
 
-<puml src="diagrams/MarkAttendanceSequenceDiagram.puml" alt="Interactions Inside the Logic Component for the `markhomework` Command" />
+<puml src="diagrams/MarkAttendanceSequenceDiagram.puml" width ="900" alt="Interactions Inside the Logic Component for the `mark_attendance` Command" />
 
 <box type="info" seamless>
 
@@ -249,7 +249,7 @@ The mark all attendance feature allows users to mark the attendance status (e.g.
 
 The sequence diagram below illustrates the interactions within the `Logic` component for marking attendance:
 
-<puml src="diagrams/MarkAllAttendanceSequenceDiagram.puml" alt="Interactions Inside the Logic Component for the `markhomework` Command" />
+<puml src="diagrams/MarkAllAttendanceSequenceDiagram.puml" width ="900" alt="Interactions Inside the Logic Component for the `mark_all_attendance` Command" />
 
 <box type="info" seamless>
 
