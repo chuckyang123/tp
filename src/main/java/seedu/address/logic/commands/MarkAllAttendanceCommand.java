@@ -74,11 +74,7 @@ public class MarkAllAttendanceCommand extends Command {
         if (!model.hasGroup(groupId)) {
             throw new CommandException(MESSAGE_GROUP_NOT_FOUND);
         }
-        try {
-            model.markAllAttendance(groupId, week, attendanceStatus);
-        } catch (CommandException e) {
-            throw new CommandException(e.getMessage());
-        }
+        model.markAllAttendance(groupId, week, attendanceStatus);
         return new CommandResult(String.format(MESSAGE_MARK_ATTENDANCE_SUCCESS,
                     groupId, attendanceStatus.getStatus(), week));
     }

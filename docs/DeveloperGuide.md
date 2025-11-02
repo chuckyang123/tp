@@ -777,9 +777,14 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
          Use case ends.
 
-* 2b. Attendance status is invalid (not Present or Absent or Excused).
+* 2b. Attendance status is invalid (input is not present or absent or excused).
 
     * 2b1. AddressBook shows error: `Please enter present/absent/excused only`.
+
+         Use case ends.
+* 2c. Week is invalid (input is not between 2 and 13 or is not an integer.").
+
+    * 2c1. AddressBook shows error: `Invalid Week. Week should be between 2 and 13 and be a positive integer.`.
 
          Use case ends.
 
@@ -809,6 +814,17 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * 2b. Attendance status is invalid (not Present or Absent or Excused).
 
     * 2b1. AddressBook shows error: `Please enter present/absent/excused only`.
+
+         Use case ends.
+
+* 2c. Week is invalid (input is not between 2 and 13 or is not an integer.").
+
+    * 2c1. AddressBook shows error: `Invalid Week. Week should be between 2 and 13 and be a positive integer.`.
+
+         Use case ends.
+* 2d. Group does not have students.
+
+    * 2d1. AddressBook shows error: `No students in the group.`.
 
          Use case ends.
 
