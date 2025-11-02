@@ -88,7 +88,7 @@ else invalid / missing arguments
     deactivate AddressBookParser
 
     create CommandResult
-    LogicManager -> CommandResult : new CommandResult("Invalid command format\n" + errorMessage)
+    LogicManager -> CommandResult : new CommandResult("Invalid command format" + errorMessage)
     activate CommandResult
     CommandResult --> LogicManager : r
     deactivate CommandResult
