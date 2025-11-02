@@ -34,9 +34,8 @@ public class MarkAttendanceCommand extends Command {
 
     public static final String MESSAGE_MARK_ATTENDANCE_SUCCESS = "Marked attendance for %1$s: %2$s in week %3$d.";
     public static final String MESSAGE_STUDENT_NOT_FOUND = "Student not found.";
-    public static final String MESSAGE_INVALID_WEEK = "Invalid Week.";
+    public static final String MESSAGE_INVALID_WEEK = "Invalid Week.Week should be between 2 and 13 and be a positive integer.";
     public static final String MESSAGE_INVALID_STATUS = "Please enter present/absent/excused only.";
-    public static final String MESSAGE_MISSING_FIELD = "Missing required field: %s.";
 
     private final Nusnetid nusnetId;
     private final int week;

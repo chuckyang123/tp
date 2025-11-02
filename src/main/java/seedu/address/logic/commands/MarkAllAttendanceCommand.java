@@ -41,7 +41,7 @@ public class MarkAllAttendanceCommand extends Command {
     public static final String MESSAGE_MARK_ATTENDANCE_SUCCESS = "Marked attendance for Group %1$s: "
             + "%2$s in week %3$d.\n";
     public static final String MESSAGE_GROUP_NOT_FOUND = "Group not found.";
-    public static final String MESSAGE_INVALID_WEEK = "Invalid Week.";
+    public static final String MESSAGE_INVALID_WEEK = "Invalid Week. Week should be between 2 and 13 and be a positive integer.";
     public static final String MESSAGE_INVALID_STATUS = "Please enter present/absent/excused only.";
 
     private final GroupId groupId;
@@ -74,7 +74,11 @@ public class MarkAllAttendanceCommand extends Command {
         if (!model.hasGroup(groupId)) {
             throw new CommandException(MESSAGE_GROUP_NOT_FOUND);
         }
-        model.markAllAttendance(groupId, week, attendanceStatus);
+        try{
+            model.markAllAttendance(groupId, week, attendanceStatus);
+        } catch (CommandException e) {
+            throw new CommandException(e.getMessage());
+        }
         return new CommandResult(String.format(MESSAGE_MARK_ATTENDANCE_SUCCESS,
                     groupId, attendanceStatus.getStatus(), week));
     }

@@ -1013,53 +1013,117 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ## **Appendix: Instructions for manual testing**
 
-Given below are instructions to test the app manually.
+This section provides step-by-step, comprehensive instructions for performing **manual testing** of the application. These steps ensure that testers can validate the app’s functionality, usability, and reliability without the need for automated test tools.
 
-<box type="info" seamless>
+> **Note:** These instructions serve as a foundation for manual testing. Testers are strongly encouraged to perform **exploratory testing** beyond the described cases to uncover edge cases and unexpected behaviors.
 
-**Note:** These instructions only provide a starting point for testers to work on;
-testers are expected to do more *exploratory* testing.
+---
 
-</box>
+### **1. Launch and Shutdown Tests**
 
-### Launch and shutdown
+#### **1.1 Initial Launch**
 
-1. Initial launch
+1. **Download and Setup:**
 
-   1. Download the jar file and copy into an empty folder
+   * Obtain the latest `soctassist.jar` file of the application.
+   * Copy the `soctassist.jar` file into a **new, empty folder** to avoid interference from previous data files.
 
-   1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
+2. **Launch Application:**
 
-1. Saving window preferences
+   * Double-click the `soctassist.jar` file to start the application.
+   * Open a terminal or command prompt in the folder containing the .jar file.
+   * Run the following command:
+     * `java -jar socassisst.jar`
+   * **Expected Result:**
+     * The main GUI should appear with a **set of sample data** (e.g., sample students).
+     * The window size and position may initially not be optimized.
+     * The app should **not crash or freeze** upon startup.
 
-   1. Resize the window to an optimum size. Move the window to a different location. Close the window.
+#### **1.2 Saving Window Preferences**
 
-   1. Re-launch the app by double-clicking the jar file.<br>
-       Expected: The most recent window size and location is retained.
+1. **Change and Save Window State:**
 
-1. _{ more test cases …​ }_
+   * Resize and reposition the main application window.
+   * Close the application normally.
 
-### Deleting a person
+2. **Re-launch Application:**
 
-1. Deleting a person while all persons are being shown
+   * Open the `soctassist.jar` file again.
+   * **Expected Result:**
+     * The window should reopen **at the same size and position** as before.
+     * All layout and visual preferences should persist across restarts.
 
-   1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+---
 
-   1. Test case: `delete 1`<br>
-      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
+### **2. Data Management Tests**
 
-   1. Test case: `delete 0`<br>
-      Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
+#### **2.1 Deleting a Person (Functional Test)**
 
-   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
-      Expected: Similar to previous.
+1. **Preparation:**
 
-1. _{ more test cases …​ }_
+   * Use the `list` command to ensure that multiple persons are visible in the list.
 
-### Saving data
+2. **Valid Deletion Command:**
 
-1. Dealing with missing/corrupted data files
+   * Command: `delete 1`
+   * **Expected Result:**
 
-   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
+     * The first person in the list is deleted.
+     * The status bar updates with the details of the deleted student.
+     * The total count of persons decreases by one.
 
-1. _{ more test cases …​ }_
+3. **Invalid Deletion Commands:**
+
+   * Try the following commands:
+
+     * `delete 0`
+     * `delete` (no index)
+     * `delete x` (where *x* is greater than the list size)
+   * **Expected Result:**
+
+     * Appropriate error messages displayed.
+     * No data is deleted.
+---
+
+### **3. Saving and Loading Data**
+
+#### **3.1 Data Persistence Check**
+
+1. Add a few entries (new students).
+2. Close and reopen the application.
+3. **Expected Result:**
+
+   * All newly added data should reappear, confirming that data was correctly saved to disk.
+
+---
+
+### **4. User Interface and Command Behavior**
+
+#### **4.1 Command Validation**
+
+* Test all supported commands (e.g., `add`, `edit`, `list`, `help`) with correct and incorrect parameters.
+* **Expected Result:**
+
+  * Correct commands execute successfully.
+  * Incorrect ones show meaningful error messages (no technical jargon).
+
+#### **4.2 Keyboard Accessibility**
+
+* Verify that all major commands can be executed via keyboard only.
+* **Expected Result:** No mouse interaction should be required for primary operations.
+
+#### **4.3 Error Message Clarity**
+
+* Trigger various input errors intentionally.
+* **Expected Result:**
+
+  * Messages should explain what went wrong and how to fix it.
+  * Messages should use simple, clear language.
+
+---
+
+### **5. Exploratory Testing Suggestions**
+
+* Try adding invalid characters.
+* Test compatibility on different operating systems (Windows, macOS, Linux).
+
