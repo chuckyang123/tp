@@ -233,8 +233,8 @@ public class EditCommandTest {
                 .build();
         EditCommand editCommand = new EditCommand(INDEX_SECOND_PERSON, descriptor);
 
-        CommandException thrown = org.junit.jupiter.api.Assertions.assertThrows(CommandException.class,
-                () -> editCommand.execute(model));
+        CommandException thrown = org.junit.jupiter.api.Assertions.assertThrows(
+                CommandException.class, () -> editCommand.execute(model));
         String msg = thrown.getMessage();
         org.junit.jupiter.api.Assertions.assertTrue(msg.startsWith(EditCommand.MESSAGE_DUPLICATE_PERSON));
         org.junit.jupiter.api.Assertions.assertTrue(msg.contains("NUSNET ID"));
