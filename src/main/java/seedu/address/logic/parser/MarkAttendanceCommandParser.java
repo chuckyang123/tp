@@ -61,7 +61,6 @@ public class MarkAttendanceCommandParser implements Parser<MarkAttendanceCommand
         } catch (NumberFormatException e) {
             errors.add(MarkAttendanceCommand.MESSAGE_INVALID_WEEK);
         }
-
         AttendanceStatus status = null;
         try {
             status = AttendanceStatus.fromString(statusRaw);
