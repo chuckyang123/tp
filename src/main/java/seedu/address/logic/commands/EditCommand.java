@@ -53,7 +53,8 @@ public class EditCommand extends Command {
 
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
+    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.\n"
+            + "Please ensure that the person is unique with his NUSNETID, Phone, Telegram, Email..";
 
     private static final Logger logger = LogsCenter.getLogger(EditCommand.class);
 
@@ -84,7 +85,12 @@ public class EditCommand extends Command {
         Person personToEdit = lastShownList.get(index.getZeroBased());
         Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
 
-        if (!personToEdit.isSamePerson(editedPerson) && model.hasPerson(editedPerson)) {
+        // Robust duplicate check: consider duplicates with others, but ignore the current target person
+        boolean duplicatesAnother = model.getAddressBook().getPersonList().stream()
+                .anyMatch(p -> !p.equals(personToEdit) && editedPerson.isSamePerson(p));
+        if (duplicatesAnother) {
+            logger.info(() -> String.format("Edit blocked due to duplicate with another person (target index=%d).",
+                    index.getOneBased()));
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
 

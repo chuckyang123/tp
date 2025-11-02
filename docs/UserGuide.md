@@ -26,13 +26,19 @@ done faster than traditional Graphical User Interface(GUI) apps while still havi
 
 1. Copy the file to the folder you want to use as the _home folder_ for your SoCTAssist.
 
-1. Open a command terminal, using command `cd` + the path to get into the folder you put the jar file in, and use the `java -jar soctassist.jar` command to run the application.<br>
-   Assuming the folder path is `/Users/your_username/Documents/Folder`, the commands will be:<br>
+1. Open a command terminal, using command `cd` + the path to get into the folder you put the jar file in, and use the `java -jar soctassist.jar` command to run the application.
+<br>Assuming the folder path is `/Users/your_username/Documents/Folder`, the commands will be:<br>
    Example for Mac/Linux:
    ```
    cd /Users/your_username/Documents/Folder
    java -jar soctassist.jar
    ```
+    Example for Windows:
+    ```
+    cd C:\Users\your_username\Documents\Folder
+    java -jar soctassist.jar
+    ```
+   
    A GUI similar to the below should appear in a few seconds. <br>
    ![Ui](images/Ui.png)
 
@@ -162,6 +168,7 @@ Format: `add_student n/NAME i/NUSNETID t/TELEGRAM g/GROUPID  [p/PHONE_NUMBER] [e
 **Tip:** Phone and email are optional. You can omit either or both when adding a person.
 * For duplicate checking, NUSNET ID, Telegram handle, Phone Number and Email must be unique across all persons in the SoCTAssist.
 * The paprameter constraints are listed [here](#Parameter-Constraints).
+* The duplicate checking is done in the fields of NUSNET ID, Telegram handle, Phone Number and Email. Now the exact duplicated field will not be reported in the error message.Need to find out by the User manually.
 </box>
 
 Examples:
@@ -180,7 +187,7 @@ Format: `edit_student INDEX [n/NAME] [i/NUSNETID]  [t/TELEGRAM] [p/PHONE] [e/EMA
 * At least one of the fields is provided to change the person's details.
 * Existing values will be updated to the input values.
 * You CANNOT use this command to change the tutorial group that this student belongs to. Use the `add_to_group` command instead.
-* For duplicate checking, NUSNET ID, Telegram handle, Phone Number and Email must be unique across all persons in the SoCTAssist.
+* The duplicate checking is done in the fields of NUSNET ID, Telegram handle, Phone Number and Email. Now the exact duplicated field will not be reported in the error message.Need to find out by the User manually.
 * You can use p/ to remove the phone number or e/ to remove the email address of a person by leaving the parameter value empty.
   e.g. `edit_student 2 p/` will remove the phone number of the 2nd person in the displayed person list.
 * The paprameter constraints are listed [here](#Parameter-Constraints).
