@@ -84,7 +84,12 @@ public class EditCommand extends Command {
         Person personToEdit = lastShownList.get(index.getZeroBased());
         Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
 
-        if (!personToEdit.isSamePerson(editedPerson) && model.hasPerson(editedPerson)) {
+        // Robust duplicate check: consider duplicates with others, but ignore the current target person
+        boolean duplicatesAnother = model.getAddressBook().getPersonList().stream()
+                .anyMatch(p -> !p.equals(personToEdit) && editedPerson.isSamePerson(p));
+        if (duplicatesAnother) {
+            logger.info(() -> String.format("Edit blocked due to duplicate with another person (target index=%d).",
+                    index.getOneBased()));
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
 

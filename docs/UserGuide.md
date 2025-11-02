@@ -26,13 +26,19 @@ done faster than traditional Graphical User Interface(GUI) apps while still havi
 
 1. Copy the file to the folder you want to use as the _home folder_ for your SoCTAssist.
 
-1. Open a command terminal, using command `cd` + the path to get into the folder you put the jar file in, and use the `java -jar soctassist.jar` command to run the application.<br>
-   Assuming the folder path is `/Users/your_username/Documents/Folder`, the commands will be:<br>
+1. Open a command terminal, using command `cd` + the path to get into the folder you put the jar file in, and use the `java -jar soctassist.jar` command to run the application.
+<br>Assuming the folder path is `/Users/your_username/Documents/Folder`, the commands will be:<br>
    Example for Mac/Linux:
    ```
    cd /Users/your_username/Documents/Folder
    java -jar soctassist.jar
    ```
+    Example for Windows:
+    ```
+    cd C:\Users\your_username\Documents\Folder
+    java -jar soctassist.jar
+    ```
+   
    A GUI similar to the below should appear in a few seconds. <br>
    ![Ui](images/Ui.png)
 
