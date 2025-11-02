@@ -262,7 +262,7 @@ How the `markAllAttendance` command works:
 2. `AddressBookParser` creates a `MarkAllAttendanceCommandParser` to parse the command arguments.
 3. `MarkAllAttendanceCommandParser` validates and parses the GroupId, week number, and attendance status.
 4. A `MarkAllAttendanceCommand` object is created and executed.
-5. `MarkAllAttendanceCommand` checks whether the specified group exits.
+5. `MarkAllAttendanceCommand` checks whether the specified group exists.
 6. If exits, the attendance status of students of the group in the specified week is updated to the status.
 7. The updated address book is saved to storage.
 
