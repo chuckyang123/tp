@@ -466,7 +466,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1. User requests to add a student by specifying required fields: full name, NUSNET ID, email, Telegram handle ann optional fields: phone number, group ID.
+1. User requests to add a student by specifying required fields: full name, NUSNET ID, email, Telegram handle and optional fields: phone number, group ID.
 
 2. AddressBook validates all fields.
 
