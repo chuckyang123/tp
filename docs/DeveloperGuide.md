@@ -492,7 +492,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 2c. Group ID format is invalid.
 
-    * 2c1. AddressBook shows error message: `Invaid Group ID`.
+    * 2c1. AddressBook shows error message: `Invalid Group ID`.
 
         Use case ends.
 
