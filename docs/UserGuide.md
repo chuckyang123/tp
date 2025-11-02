@@ -168,6 +168,7 @@ Format: `add_student n/NAME i/NUSNETID t/TELEGRAM g/GROUPID  [p/PHONE_NUMBER] [e
 **Tip:** Phone and email are optional. You can omit either or both when adding a person.
 * For duplicate checking, NUSNET ID, Telegram handle, Phone Number and Email must be unique across all persons in the SoCTAssist.
 * The paprameter constraints are listed [here](#Parameter-Constraints).
+* The duplicate checking is done in the fields of NUSNET ID, Telegram handle, Phone Number and Email. Now the exact duplicated field will not be reported in the error message.Need to find out by the User manually.
 </box>
 
 Examples:
@@ -186,7 +187,7 @@ Format: `edit_student INDEX [n/NAME] [i/NUSNETID]  [t/TELEGRAM] [p/PHONE] [e/EMA
 * At least one of the fields is provided to change the person's details.
 * Existing values will be updated to the input values.
 * You CANNOT use this command to change the tutorial group that this student belongs to. Use the `add_to_group` command instead.
-* For duplicate checking, NUSNET ID, Telegram handle, Phone Number and Email must be unique across all persons in the SoCTAssist.
+* The duplicate checking is done in the fields of NUSNET ID, Telegram handle, Phone Number and Email. Now the exact duplicated field will not be reported in the error message.Need to find out by the User manually.
 * You can use p/ to remove the phone number or e/ to remove the email address of a person by leaving the parameter value empty.
   e.g. `edit_student 2 p/` will remove the phone number of the 2nd person in the displayed person list.
 * The paprameter constraints are listed [here](#Parameter-Constraints).
