@@ -1065,7 +1065,6 @@ testers are expected to do more *exploratory* testing.
 ### Add homework
 1. Add homework to a single student
    1. Setup: Ensure that there is at least one student in the system with NUSNET ID `E1234567`.
-
    2. Execute the command:
       `add_hw i/E1234567 a/1`
    3. **Expected:**
@@ -1077,12 +1076,9 @@ testers are expected to do more *exploratory* testing.
    - The command box is cleared and ready for the next input.
 
 2. Add homework to all students
-
    1. Setup: Ensure multiple students are present in the system.
-   
    2. Execute the command:
       `add_hw i/all a/2`
-      
    3. **Expected:**
    - Success message is displayed:  
      ```
@@ -1100,4 +1096,45 @@ testers are expected to do more *exploratory* testing.
      Invalid NUSNET ID format.
      ```
    - No homework is added.
-   
+
+4. Add homework (Missing parameters)
+   1. Execute the command:
+      `add_hw a/1`
+   2. **Expected:**
+   - Error message is displayed:  
+     ```
+     Invalid command format! <With the rest of helping information>
+     ```
+   - No homework is added.
+
+5. Add homework (Invalid homework ID: out of range)
+   1. Execute the command:
+      `add_hw i/E1234567 a/100`
+   2. **Expected:**
+   - Error message is displayed:  
+     ```
+     Homework id must be between 1 and 13.
+     ```
+   - No homework is added.
+
+6. Add homework (Duplicate prefixes)
+   1. Setup: Make sure that the person with NUSNET ID E1234567 already has homework 1
+   2. Execute the command:
+      `add_hw i/E1234567 a/1`
+   3. **Expected:**
+   - Error message is displayed:  
+     ```
+     Homework 1 already exists for <STUDNET_NAME>.
+     ```
+   - No homework is added.
+
+**Summary of Expected Results**
+
+| Test Case | Command | Expected Outcome |
+|------------|----------|------------------|
+| 1 | `add_hw i/E1234567 a/1` | ✅ Homework 1 added to student E1234567 |
+| 2 | `add_hw i/all a/2` | ✅ Homework 2 added to all students |
+| 3 | `add_hw i/E0000000 a/3` | ❌ Invalid NUSNET ID |
+| 4 | `add_hw a/4` | ❌ Missing NUSNET ID |
+| 5 | `add_hw i/E1234567 a/14` | ❌ Homework ID out of range |
+| 6 | `add_hw i/E1234567 i/E7654321 a/1` | ❌ Duplicate prefixes |
