@@ -40,7 +40,7 @@
       "src": "DeveloperGuide.md",
       "title": "Developer Guide",
       "headings": {
-        "ab-3-developer-guide": "AB-3 Developer Guide",
+        "soctassist-developer-guide": "SoCTAssist Developer Guide",
         "acknowledgements": "Acknowledgements",
         "setting-up-getting-started": "Setting up, getting started",
         "design": "Design",
@@ -51,8 +51,17 @@
         "storage-component": "Storage component",
         "common-classes": "Common classes",
         "implementation": "Implementation",
-        "proposed-undo-redo-feature": "[Proposed] Undo/redo feature",
-        "proposed-data-archiving": "[Proposed] Data archiving",
+        "add-homework-feature": "Add Homework Feature",
+        "delete-homework-feature": "Delete Homework Feature",
+        "mark-homework-feature": "Mark Homework Feature",
+        "mark-attendance-feature": "Mark Attendance Feature",
+        "mark-all-attendance-feature": "Mark All Attendance Feature",
+        "add-consultation-feature": "Add Consultation Feature",
+        "delete-consultation-feature": "Delete Consultation Feature",
+        "list-consultation-feature": "List Consultation Feature",
+        "create-group-feature": "Create Group Feature",
+        "add-student-to-group-feature": "Add Student to Group Feature",
+        "find-student-by-group-feature": "Find Student by Group Feature",
         "documentation-logging-testing-configuration-dev-ops": "Documentation, logging, testing, configuration, dev-ops",
         "appendix-requirements": "Appendix: Requirements",
         "product-scope": "Product scope",
@@ -108,10 +117,10 @@
       "title": "User Guide",
       "headings": {
         "soctassist-user-guide": "SoCTAssist User Guide",
-        "table-of-contents": "Table of Contents",
         "quick-start": "Quick Start",
         "command-summary": "Command Summary",
         "features": "Features",
+        "parameter-constraints": "Parameter Constraints",
         "viewing-help-help": "Viewing help : help",
         "list-commands": "List Commands",
         "listing-all-persons-list": "Listing all persons : list",
@@ -126,7 +135,7 @@
         "marking-homework-mark-hw": "Marking homework : mark_hw",
         "deleting-homework-delete-hw": "Deleting homework : delete_hw",
         "attendance-commands": "Attendance Commands",
-        "marking-attendance-mark-attendance": "Marking attendance : mark_attendance",
+        "marking-attendance-for-one-student-mark-attendance": "Marking attendance for one student: mark_attendance",
         "marking-attendance-for-one-group-of-students-mark-all-attendance": "Marking attendance for one group of students : mark_all_attendance",
         "consultation-commands": "Consultation Commands",
         "adding-a-consultation-add-consult": "Adding a consultation : add_consult",
@@ -149,7 +158,7 @@
       "src": "index.md",
       "title": "",
       "headings": {
-        "addressbook-level-3": "AddressBook Level-3"
+        "soctassist": "SoCTAssist"
       },
       "headingKeywords": {}
     },
