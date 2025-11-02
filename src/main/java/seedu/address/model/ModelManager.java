@@ -260,11 +260,14 @@ public class ModelManager implements Model {
     @Override
     public Person getPersonByNusnetIdFullList(Nusnetid nusnetId) throws CommandException {
         requireNonNull(nusnetId);
-        assert hasPerson(nusnetId) : "Person with given nusnetId should exist in the address book.";
-        Person target = this.addressBook.getUniquePersonList()
-                .stream().filter(p -> p.getNusnetid().equals(nusnetId))
-                .findFirst().orElseThrow(() -> new CommandException(MESSAGE_STUDENT_NOT_FOUND));
-        return target;
+        if (hasPerson(nusnetId)) {
+            Person target = this.addressBook.getUniquePersonList()
+                    .stream().filter(p -> p.getNusnetid().equals(nusnetId))
+                    .findFirst().orElseThrow(() -> new CommandException(MESSAGE_STUDENT_NOT_FOUND));
+            return target;
+        } else {
+            throw new CommandException(MESSAGE_STUDENT_NOT_FOUND);
+        }
     }
     @Override
     public boolean hasConsultation(Consultation consultation) {
