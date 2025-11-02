@@ -817,7 +817,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1. User requests to create a new group with a specified GroupName.
+1. User requests to create a new group with a specified GroupId.
 2. Address Book validates the GroupId.
 3. System creates the group.
 4. System shows confirmation message.
@@ -827,17 +827,17 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **Extensions**
 
 * 2a. The GroupId is missing.
-    * 2a1. System shows error message, saying Group Id is missing.
+    * 2a1. System shows error message, saying GroupId is missing.
 
     Use case ends.
 
 * 2b. The GroupId is invalid.
-    * 2c1. System shows error message and indicates the valid format for Group Id.
+    * 2c1. System shows error message and indicates the valid format for GroupId.
 
       Use case ends.
 
 * 2c. The GroupId is a duplicate.
-    * 2b1. System shows error message, saying Group Id already exists
+    * 2b1. System shows error message, saying GroupId already exists
 
       Use case ends.
 
