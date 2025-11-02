@@ -23,6 +23,7 @@ import org.junit.jupiter.api.Test;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -114,7 +115,8 @@ public class EditCommandTest {
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(firstPerson).build();
         EditCommand editCommand = new EditCommand(INDEX_SECOND_PERSON, descriptor);
 
-        assertCommandFailure(editCommand, model, EditCommand.MESSAGE_DUPLICATE_PERSON);
+        assertCommandFailure(editCommand, model, EditCommand.MESSAGE_DUPLICATE_PERSON
+                + ". Duplicate field(s): Telegram, Email, NUSNET ID, Phone.");
     }
 
     @Test
@@ -126,7 +128,8 @@ public class EditCommandTest {
         EditCommand editCommand = new EditCommand(INDEX_FIRST_PERSON,
                 new EditPersonDescriptorBuilder(personInList).build());
 
-        assertCommandFailure(editCommand, model, EditCommand.MESSAGE_DUPLICATE_PERSON);
+        assertCommandFailure(editCommand, model, EditCommand.MESSAGE_DUPLICATE_PERSON
+                + ". Duplicate field(s): Telegram, Email, NUSNET ID, Phone.");
     }
 
     @Test
@@ -222,4 +225,18 @@ public class EditCommandTest {
         assertEquals(newIdStr, updated.getConsultation().get().getNusnetid().value);
     }
 
+    @Test
+    public void execute_duplicatePerson_reportsDuplicatedField() {
+        // Make second person clash with first person's NUSNET ID
+        Person first = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withNusnetid(first.getNusnetid().value)
+                .build();
+        EditCommand editCommand = new EditCommand(INDEX_SECOND_PERSON, descriptor);
+
+        CommandException thrown = org.junit.jupiter.api.Assertions.assertThrows(CommandException.class,
+                () -> editCommand.execute(model));
+        String msg = thrown.getMessage();
+        org.junit.jupiter.api.Assertions.assertTrue(msg.startsWith(EditCommand.MESSAGE_DUPLICATE_PERSON));
+        org.junit.jupiter.api.Assertions.assertTrue(msg.contains("NUSNET ID"));
+    }
 }

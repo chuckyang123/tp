@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 
@@ -52,11 +53,24 @@ public class AddCommandTest {
 
     @Test
     public void execute_duplicatePerson_throwsCommandException() {
-        Person validPerson = new PersonBuilder().build();
-        AddCommand addCommand = new AddCommand(validPerson);
-        ModelStub modelStub = new ModelStubWithPerson(validPerson);
+        Person existing = new PersonBuilder()
+                .withNusnetid("E1234567").withTelegram("@t1").withPhone("1111111").withEmail("e1@u.nus.edu")
+                .build();
+        ModelStubWithPerson modelStub = new ModelStubWithPerson(existing);
 
-        assertThrows(CommandException.class, AddCommand.MESSAGE_DUPLICATE_PERSON, () -> addCommand.execute(modelStub));
+        // Candidate duplicates by NUSNET ID only (other fields differ)
+        Person duplicateById = new PersonBuilder()
+                .withNusnetid("E1234567").withTelegram("@t2").withPhone("2222222").withEmail("e2@u.nus.edu")
+                .build();
+        AddCommand addCommand = new AddCommand(duplicateById);
+
+        try {
+            addCommand.execute(modelStub);
+            fail("Expected CommandException to be thrown");
+        } catch (CommandException ce) {
+            assertTrue(ce.getMessage().startsWith(AddCommand.MESSAGE_DUPLICATE_PERSON));
+            assertTrue(ce.getMessage().contains("NUSNET ID"));
+        }
     }
 
     @Test
@@ -295,6 +309,13 @@ public class AddCommandTest {
         public boolean hasPerson(Person person) {
             requireNonNull(person);
             return this.person.isSamePerson(person);
+        }
+
+        @Override
+        public ReadOnlyAddressBook getAddressBook() {
+            AddressBook ab = new AddressBook();
+            ab.addPerson(person);
+            return ab;
         }
     }
 

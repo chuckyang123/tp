@@ -8,6 +8,10 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NUSNETID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TELEGRAM;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.logging.Logger;
 
 import seedu.address.commons.util.ToStringBuilder;
@@ -58,9 +62,13 @@ public class AddCommand extends Command {
 
         logger.info("Executing AddCommand for person: " + toAdd);
 
-        if (model.hasPerson(toAdd)) {
-            logger.warning("Attempted to add duplicate person: " + toAdd);
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        // Build list of exact conflicting fields against any existing person
+        List<String> duplicateFields = detectDuplicateFields(model, toAdd);
+        if (!duplicateFields.isEmpty()) {
+            String details = String.join(", ", duplicateFields);
+            String message = MESSAGE_DUPLICATE_PERSON + ". Duplicate field(s): " + details + ".";
+            logger.warning("Attempted to add duplicate person: " + toAdd + " | " + message);
+            throw new CommandException(message);
         }
 
         model.addPerson(toAdd);
@@ -69,6 +77,27 @@ public class AddCommand extends Command {
         model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
 
         return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toAdd)));
+    }
+
+    private static List<String> detectDuplicateFields(Model model, Person candidate) {
+        Set<String> fields = new HashSet<>();
+        for (Person p : model.getAddressBook().getPersonList()) {
+            if (p.getNusnetid().equals(candidate.getNusnetid())) {
+                fields.add("NUSNET ID");
+            }
+            if (p.getTelegram().equals(candidate.getTelegram())) {
+                fields.add("Telegram");
+            }
+            if (candidate.getPhone().isPresent() && p.getPhone().isPresent()
+                    && candidate.getPhone().get().equals(p.getPhone().get())) {
+                fields.add("Phone");
+            }
+            if (candidate.getEmail().isPresent() && p.getEmail().isPresent()
+                    && candidate.getEmail().get().equals(p.getEmail().get())) {
+                fields.add("Email");
+            }
+        }
+        return new ArrayList<>(fields);
     }
 
     @Override

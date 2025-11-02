@@ -53,8 +53,7 @@ public class EditCommand extends Command {
 
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.\n"
-            + "Please ensure that the person is unique with his NUSNETID, Phone, Telegram, Email..";
+    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
 
     private static final Logger logger = LogsCenter.getLogger(EditCommand.class);
 
@@ -85,13 +84,14 @@ public class EditCommand extends Command {
         Person personToEdit = lastShownList.get(index.getZeroBased());
         Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
 
-        // Robust duplicate check: consider duplicates with others, but ignore the current target person
-        boolean duplicatesAnother = model.getAddressBook().getPersonList().stream()
-                .anyMatch(p -> !p.equals(personToEdit) && editedPerson.isSamePerson(p));
-        if (duplicatesAnother) {
+        // Robust duplicate check against other persons and collect exact fields
+        List<String> duplicateFields = detectDuplicateFields(model, personToEdit, editedPerson);
+        if (!duplicateFields.isEmpty()) {
+            String details = String.join(", ", duplicateFields);
+            String message = MESSAGE_DUPLICATE_PERSON + ". Duplicate field(s): " + details + ".";
             logger.info(() -> String.format("Edit blocked due to duplicate with another person (target index=%d).",
                     index.getOneBased()));
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+            throw new CommandException(message);
         }
 
         // First remove the old person's membership from their existing group (handles nusnetid or group changes)
@@ -111,6 +111,30 @@ public class EditCommand extends Command {
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         model.updateGroupWhenAddPerson(editedPerson);
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson)));
+    }
+
+    private static List<String> detectDuplicateFields(Model model, Person original, Person edited) {
+        java.util.Set<String> fields = new java.util.HashSet<>();
+        for (Person p : model.getAddressBook().getPersonList()) {
+            if (p.equals(original)) {
+                continue; // skip self
+            }
+            if (p.getNusnetid().equals(edited.getNusnetid())) {
+                fields.add("NUSNET ID");
+            }
+            if (p.getTelegram().equals(edited.getTelegram())) {
+                fields.add("Telegram");
+            }
+            if (edited.getPhone().isPresent() && p.getPhone().isPresent()
+                    && edited.getPhone().get().equals(p.getPhone().get())) {
+                fields.add("Phone");
+            }
+            if (edited.getEmail().isPresent() && p.getEmail().isPresent()
+                    && edited.getEmail().get().equals(p.getEmail().get())) {
+                fields.add("Email");
+            }
+        }
+        return new java.util.ArrayList<>(fields);
     }
 
     /**

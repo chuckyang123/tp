@@ -168,7 +168,7 @@ Format: `add_student n/NAME i/NUSNETID t/TELEGRAM g/GROUPID  [p/PHONE_NUMBER] [e
 **Tip:** Phone and email are optional. You can omit either or both when adding a person.
 * For duplicate checking, NUSNET ID, Telegram handle, Phone Number and Email must be unique across all persons in the SoCTAssist.
 * The paprameter constraints are listed [here](#Parameter-Constraints).
-* The duplicate checking is done in the fields of NUSNET ID, Telegram handle, Phone Number and Email. Now the exact duplicated field will not be reported in the error message.Need to find out by the User manually.
+* If a duplicate is detected, the error message will include the exact duplicated field(s), e.g. "Duplicate field(s): NUSNET ID, Email".
 </box>
 
 Examples:
@@ -185,9 +185,11 @@ Format: `edit_student INDEX [n/NAME] [i/NUSNETID]  [t/TELEGRAM] [p/PHONE] [e/EMA
 
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the fields is provided to change the person's details.
+* The command accepts the original value of the person's fields. The result will be the person not being changed.
 * Existing values will be updated to the input values.
 * You CANNOT use this command to change the tutorial group that this student belongs to. Use the `add_to_group` command instead.
-* The duplicate checking is done in the fields of NUSNET ID, Telegram handle, Phone Number and Email. Now the exact duplicated field will not be reported in the error message.Need to find out by the User manually.
+* For duplicate checking, NUSNET ID, Telegram handle, Phone Number and Email must be unique across all persons in the SoCTAssist.
+* If a duplicate is detected during edit, the error message will include the exact duplicated field(s), e.g. "Duplicate field(s): Telegram".
 * You can use p/ to remove the phone number or e/ to remove the email address of a person by leaving the parameter value empty.
   e.g. `edit_student 2 p/` will remove the phone number of the 2nd person in the displayed person list.
 * The paprameter constraints are listed [here](#Parameter-Constraints).
