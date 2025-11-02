@@ -30,7 +30,7 @@ Given below is a quick overview of main components and how they interact with ea
 
 **Main components of the architecture**
 
-**`Main`** (consisting of classes [`Main`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/Main.java) and [`MainApp`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/MainApp.java)) is in charge of the app launch and shut down.
+**`Main`** (consisting of classes [`Main`](https://github.com/AY2526S1-CS2103T-W11-1/tp/blob/master/src/main/java/seedu/address/Main.java) and [`MainApp`](https://github.com/AY2526S1-CS2103T-W11-1/tp/blob/master/src/main/java/seedu/address/MainApp.java)) is in charge of the app launch and shut down.
 * At app launch, it initializes the other components in the correct sequence, and connects them up with each other.
 * At shut down, it shuts down the other components and invokes cleanup methods where necessary.
 
@@ -466,7 +466,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1. User requests to add a student by specifying required fields: full name, NUSNET ID, email, Telegram handle ann optional fields: phone number, group ID.
+1. User requests to add a student by specifying required fields: full name, NUSNET ID, email, Telegram handle and optional fields: phone number, group ID.
 
 2. AddressBook validates all fields.
 
@@ -492,7 +492,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 2c. Group ID format is invalid.
 
-    * 2c1. AddressBook shows error message: `Invaid Group ID`.
+    * 2c1. AddressBook shows error message: `Invalid Group ID`.
 
         Use case ends.
 
@@ -533,7 +533,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 2c. Try to update group id.
 
-    * 2c1. AddressBook shows error: `Group ID cannot be edited directly. Use add_to_group commands instead.`
+    * 2c1. AddressBook shows error and states the correct format.
 
       Use case ends.
 
@@ -817,7 +817,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1. User requests to create a new group with a specified GroupName.
+1. User requests to create a new group with a specified GroupId.
 2. Address Book validates the GroupId.
 3. System creates the group.
 4. System shows confirmation message.
@@ -827,17 +827,17 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **Extensions**
 
 * 2a. The GroupId is missing.
-    * 2a1. System shows error message, saying Group Id is missing.
+    * 2a1. System shows error message, saying GroupId is missing.
 
     Use case ends.
 
 * 2b. The GroupId is invalid.
-    * 2c1. System shows error message and indicates the valid format for Group Id.
+    * 2c1. System shows error message and indicates the valid format for GroupId.
 
       Use case ends.
 
 * 2c. The GroupId is a duplicate.
-    * 2b1. System shows error message, saying Group Id already exists
+    * 2b1. System shows error message, saying GroupId already exists
 
       Use case ends.
 

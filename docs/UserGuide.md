@@ -19,13 +19,20 @@ done faster than traditional Graphical User Interface(GUI) apps while still havi
 # Quick Start
 
 1. Ensure you have Java `17` or above installed in your Computer.<br>
+   **Windows users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationWindows.html).
    **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
-1. Download the latest `.jar` file from [here](https://github.com/AY2526S1-CS2103T-W11-1/tp/releases/tag/v1.4).
+1. Download the latest `.jar` file from [here](https://github.com/AY2526S1-CS2103T-W11-1/tp/releases).
 
 1. Copy the file to the folder you want to use as the _home folder_ for your SoCTAssist.
 
 1. Open a command terminal, using command `cd` + the path to get into the folder you put the jar file in, and use the `java -jar soctassist.jar` command to run the application.<br>
+   Assuming the folder path is `/Users/your_username/Documents/Folder`, the commands will be:<br>
+   Example for Mac/Linux:
+   ```
+   cd /Users/your_username/Documents/Folder
+   java -jar soctassist.jar
+   ```
    A GUI similar to the below should appear in a few seconds. <br>
    ![Ui](images/Ui.png)
 
@@ -172,7 +179,7 @@ Format: `edit_student INDEX [n/NAME] [i/NUSNETID]  [t/TELEGRAM] [p/PHONE] [e/EMA
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the fields is provided to change the person's details.
 * Existing values will be updated to the input values.
-* You can not use this command to change a person's tutorial group. Use the `add_to_group` command instead.
+* You CANNOT use this command to change the tutorial group that this student belongs to. Use the `add_to_group` command instead.
 * For duplicate checking, NUSNET ID, Telegram handle, Phone Number and Email must be unique across all persons in the SoCTAssist.
 * You can use p/ to remove the phone number or e/ to remove the email address of a person by leaving the parameter value empty.
   e.g. `edit_student 2 p/` will remove the phone number of the 2nd person in the displayed person list.
@@ -384,9 +391,9 @@ Adds a student to a tutorial group.
 
 Format: `add_to_group i/NUSNETID g/GROUPID`
 
-* move a student with the specified NUSNET ID to a group with the specified group ID.
+* move a student with the specified NUSNET ID to a new group with the specified group ID.
 * If the specified group does not exist, it will be created.
-* If the group exists, the student will be added to that group.
+* If the group exists, the student will be added to that new group.
 * Student cannot be moved to the same group they are already in; an error message will be shown in such cases.
 * Since a student can only belong to one group at a time, adding them to a new group will remove them from their previous group.
 * The NUSNET ID and group ID **must be valid**. For group ID, refer [here](#creating-a-group--create_group).
