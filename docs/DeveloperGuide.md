@@ -533,7 +533,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 2c. Try to update group id.
 
-    * 2c1. AddressBook shows error: `Group ID cannot be edited directly. Use add_to_group commands instead.`
+    * 2c1. AddressBook shows error and states the correct format.
 
       Use case ends.
 
