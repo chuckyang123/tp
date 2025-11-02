@@ -19,6 +19,7 @@ done faster than traditional Graphical User Interface(GUI) apps while still havi
 # Quick Start
 
 1. Ensure you have Java `17` or above installed in your Computer.<br>
+   **Windows users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationWindows.html).
    **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
 1. Download the latest `.jar` file from [here](https://github.com/AY2526S1-CS2103T-W11-1/tp/releases/tag/v1.4).
