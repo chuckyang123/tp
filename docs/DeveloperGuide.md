@@ -1138,3 +1138,92 @@ testers are expected to do more *exploratory* testing.
 | 4 | `add_hw a/4` | ❌ Missing NUSNET ID |
 | 5 | `add_hw i/E1234567 a/14` | ❌ Homework ID out of range |
 | 6 | `add_hw i/E1234567 i/E7654321 a/1` | ❌ Duplicate prefixes |
+
+### Delete homework
+1. Delete homework from a single student  
+   1. Setup: Ensure that there is at least one student in the system with NUSNET ID `E1234567`, and that the student already has homework **1** assigned.  
+   2. Execute the command:  
+      `delete_hw i/E1234567 a/1`  
+   3. **Expected:**  
+   - Success message is displayed:  
+     ```
+     Deleted homework 1 for <STUDENT_NAME>.
+     ```
+   - Homework **1** is removed from the student’s homework tracker.
+   - The command box is cleared and ready for the next input.
+
+2. Delete homework from all students  
+   1. Setup: Ensure multiple students are present in the system, each with homework **2** assigned.  
+   2. Execute the command:  
+      `delete_hw i/all a/2`  
+   3. **Expected:**  
+   - Success message is displayed:  
+     ```
+     Deleted homework 2 for all students.
+     ```
+   - Homework **2** is removed from every student’s homework tracker.
+
+3. Delete homework (Invalid NUSNET ID)  
+   1. Setup: Ensure that there is no student with the NUSNET ID `E0000000` in the system.  
+   2. Execute the command:  
+      `delete_hw i/E0000000 a/1`  
+   3. **Expected:**  
+   - Error message is displayed:  
+     ```
+     Invalid NUSNET ID format.
+     ```
+   - No homework is deleted.
+
+4. Delete homework (Missing parameters)  
+   1. Execute the command:  
+      `delete_hw a/1`  
+   2. **Expected:**  
+   - Error message is displayed:  
+     ```
+     Invalid command format! <With the rest of helping information>
+     ```
+   - No homework is deleted.
+
+5. Delete homework (Invalid homework ID: out of range)  
+   1. Execute the command:  
+      `delete_hw i/E1234567 a/100`  
+   2. **Expected:**  
+   - Error message is displayed:  
+     ```
+     Homework id must be between 1 and 13.
+     ```
+   - No homework is deleted.
+
+6. Delete homework (Homework not found)  
+   1. Setup: Ensure that the student with NUSNET ID `E1234567` **does not** have homework **3** assigned.  
+   2. Execute the command:  
+      `delete_hw i/E1234567 a/3`  
+   3. **Expected:**  
+   - Error message is displayed:  
+     ```
+     Homework 3 does not exist for <STUDENT_NAME>.
+     ```
+   - No homework is deleted.
+
+7. Delete homework (Duplicate prefixes)  
+   1. Execute the command:  
+      `delete_hw i/E1234567 i/E7654321 a/1`  
+   2. **Expected:**  
+   - Error message is displayed:  
+     ```
+     Invalid command format! <With the rest of helping information>
+     ```
+   - No homework is deleted.
+
+**Summary of Expected Results**
+
+| Test Case | Command | Expected Outcome |
+|------------|----------|------------------|
+| 1 | `delete_hw i/E1234567 a/1` | ✅ Homework 1 deleted from student E1234567 |
+| 2 | `delete_hw i/all a/2` | ✅ Homework 2 deleted from all students |
+| 3 | `delete_hw i/E0000000 a/1` | ❌ Invalid NUSNET ID |
+| 4 | `delete_hw a/1` | ❌ Missing NUSNET ID |
+| 5 | `delete_hw i/E1234567 a/100` | ❌ Homework ID out of range |
+| 6 | `delete_hw i/E1234567 a/3` | ❌ Homework does not exist |
+| 7 | `delete_hw i/E1234567 i/E7654321 a/1` | ❌ Duplicate prefixes |
+
