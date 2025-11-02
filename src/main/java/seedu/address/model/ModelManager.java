@@ -328,8 +328,8 @@ public class ModelManager implements Model {
     @Override
     public void addHomework(Nusnetid nusnetId, int assignmentId) throws CommandException {
         List<String> errors = new ArrayList<>();
-        if (assignmentId < 1 || assignmentId > 3) {
-            errors.add("Homework ID must be between 1 and 3.");
+        if (assignmentId < 1 || assignmentId > 13) {
+            errors.add("Homework ID must be between 1 and 13.");
         }
 
         if (nusnetId != null) {

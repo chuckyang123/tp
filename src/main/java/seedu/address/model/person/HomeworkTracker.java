@@ -25,7 +25,7 @@ import java.util.Objects;
 public class HomeworkTracker {
 
     /** The maximum number of assignments a person can have (IDs range from 1 to MAX_ASSIGNMENTS). */
-    public static final int MAX_ASSIGNMENTS = 3; // 1..3
+    public static final int MAX_ASSIGNMENTS = 13; // 1..13
 
     /** Internal map storing assignment IDs and their corresponding statuses. */
     private final Map<Integer, Homework> statuses;
@@ -53,7 +53,7 @@ public class HomeworkTracker {
     /** Add a new homework with status incomplete by default. */
     public HomeworkTracker addHomework(int assignmentId) {
         if (assignmentId < 0 || assignmentId > MAX_ASSIGNMENTS) {
-            throw new IllegalArgumentException("Assignment ID must be between 1 and 3.");
+            throw new IllegalArgumentException("Assignment ID must be between 1 and 13.");
         }
         if (statuses.containsKey(assignmentId)) {
             return this; // already exists
