@@ -1037,8 +1037,6 @@ testers are expected to do more *exploratory* testing.
    1. Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
 
-1. _{ more test cases …​ }_
-
 ### Deleting a person
 
 1. Deleting a person while all persons are being shown
@@ -1054,7 +1052,6 @@ testers are expected to do more *exploratory* testing.
    1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
       Expected: Similar to previous.
 
-1. _{ more test cases …​ }_
 
 ### Saving data
 
@@ -1063,3 +1060,44 @@ testers are expected to do more *exploratory* testing.
    1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
 
 1. _{ more test cases …​ }_
+
+
+### Add homework
+1. Add homework to a single student
+   1. Setup: Ensure that there is at least one student in the system with NUSNET ID `E1234567`.
+
+   2. Execute the command:
+      `add_hw i/E1234567 a/1`
+   3. **Expected:**
+   - Success message is displayed:  
+     ```
+     Added assignment 1 for <STUDENT_NAME> (default incomplete).
+     ```
+   - The student’s homework tracker now includes homework **1**, marked as **incomplete** by default.
+   - The command box is cleared and ready for the next input.
+
+2. Add homework to all students
+
+   1. Setup: Ensure multiple students are present in the system.
+   
+   2. Execute the command:
+      `add_hw i/all a/2`
+      
+   3. **Expected:**
+   - Success message is displayed:  
+     ```
+     Added assignment 2 for all students (default incomplete).
+     ```
+   - All students’ homework trackers now contain homework **2**.
+  
+3. Add homework (Invalid NUSNET ID)
+   1. Setup: Ensure the student with the NUSNET ID E0000000 is not present in the system.
+   2. Execute the command:
+      `add_hw i/E0000000 a/3`
+   3. **Expected:**
+   - Error message is displayed:  
+     ```
+     Invalid NUSNET ID format.
+     ```
+   - No homework is added.
+   
