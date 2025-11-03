@@ -52,9 +52,13 @@ public class MarkAttendanceCommandParser implements Parser<MarkAttendanceCommand
         String statusRaw = argMultimap.getValue(PREFIX_STATUS).get().trim();
 
         List<String> errors = new ArrayList<>();
-        int week;
-        week = Integer.parseInt(weekRaw);
-        if (week < 2 || week > 13) {
+        int week = 0;
+        try {
+            week = Integer.parseInt(weekRaw);
+            if (week < 2 || week > 13) {
+                errors.add(MarkAttendanceCommand.MESSAGE_INVALID_WEEK);
+            }
+        } catch (NumberFormatException e) {
             errors.add(MarkAttendanceCommand.MESSAGE_INVALID_WEEK);
         }
         AttendanceStatus status = null;
