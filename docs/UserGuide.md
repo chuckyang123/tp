@@ -89,26 +89,23 @@ done faster than traditional Graphical User Interface(GUI) apps while still havi
 
 <box type="info" seamless>
 
-> [!NOTE]
+  > [!NOTE]
+> * Words in `UPPER_CASE` are parameters to be supplied by the user.  
+>   e.g. in `add_student n/NAME`, `NAME` can be replaced as `add_student n/John Doe`.
 > 
-  **Notes about the command format:**<br>
-  
-  * Words in `UPPER_CASE` are the parameters to be supplied by the user.<br>
-    e.g. in `add_student n/NAME`, `NAME` is a parameter which can be used as `add_student n/John Doe`.
-  
-  * Items in square brackets are **optional**.<br>
-    e.g `n/NAME [p/PHONE]` can be used as `n/John Doe p/87415612` or as `n/John Doe`.
-  
-  * Parameters can be in **any** order.<br>
-    e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable. \
-    But the index parameter must always come directly after the command word for commands that require an index.
-  
-  * Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `clear`) will be ignored.<br>
-    e.g. if the command specifies `help 123`, it will be interpreted as `help`.
-  
-  * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
-  
-  * A student is considered as duplicate if both their NUSNET ID or Telegram handle or Phone Number or Email is the same as another existing student in the SoCTAssist
+> * Items in square brackets are **optional**.  
+>   e.g. `n/NAME [p/PHONE]` can be used as `n/John Doe p/87415612` or simply `n/John Doe`.
+> 
+> * Parameters can be in **any** order.  
+>   e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also valid.  
+>   ⚠️ But the **index parameter** must always come directly after the command word for commands that require an index.
+> 
+> * Extraneous parameters for commands that do not take parameters (like `help`, `list`, `exit`, and `clear`) will be ignored.  
+>   e.g. `help 123` will still be interpreted as `help`.
+> 
+> * When using a PDF version, be careful copying commands that span multiple lines — spaces around line-breaks may be omitted.
+> 
+> * A student is considered a **duplicate** if their NUSNET ID, Telegram handle, Phone Number, or Email matches another existing student in SoCTAssist.
 
 ## Parameter Constraints
 
