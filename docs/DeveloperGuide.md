@@ -583,17 +583,17 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **Extensions**
 * 2a. Student with the given NUSNET ID does not exist
   
-    * 2a1. Homework Tracker displays an error: `Student not found`.
+    * 2a1. Homework Tracker displays an error message.
 
       Use case ends.
 * 3a. Homework ID already exists for this student
   
-  * 3a1. Homework Tracker displays an error: `Assignment ID already exists`.
+  * 3a1. Homework Tracker displays an error message.
 
     Use case ends.
 * 3b. Homework ID is invalid (not between 1–3)
   
-  * 3b1. Homework Tracker displays an error: `Assignment ID must be between 1 and 3`.
+  * 3b1. Homework Tracker displays an error message.
 
     Use case ends.
     
