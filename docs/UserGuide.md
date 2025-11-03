@@ -293,6 +293,9 @@ Examples:
 * `delete_hw i/E1234567 a/1` deletes assignment 1 for the student with NUSNET ID `E1234567`.
 * `delete_hw i/all a/2` deletes assignment 2 for all students.
 
+> [!NOTE]
+> Only adding and deleting homework can be done to all student. Marking homework cannot be done for all students, since tutors are expected to mark each student's homework one by one. 
+
 ---
 ## Attendance Commands
 
