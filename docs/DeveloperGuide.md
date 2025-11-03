@@ -197,7 +197,7 @@ How the `deletehomework` command works:
 
 ### Mark Homework Feature
 
-The mark homework feature allows users to update the status (e.g., `done`, `pending`) of a homework assignment for a specific student.
+The mark homework feature allows users to update the status (e.g., `complete`, `incomplete`, 'late') of a homework assignment for a specific student.
 
 The sequence diagram below illustrates the interactions within the `Logic` component for marking homework:
 
@@ -1325,7 +1325,7 @@ This section provides step-by-step, comprehensive instructions for performing **
      ```
    - Homework **1** is now marked as **incomplete** in the student’s homework tracker.
 
-3. Mark homework as pending for a single student  
+3. Mark homework as late for a single student  
    1. Setup: Ensure homework **2** is assigned to student `E1234567`.  
    2. Execute the command:  
       `mark_hw i/E1234567 a/2 status/late`  
@@ -1393,7 +1393,7 @@ This section provides step-by-step, comprehensive instructions for performing **
 |------------|----------|------------------|
 | 1 | `mark_hw i/E1234567 a/1 status/completed` | ✅ Homework 1 marked completed |
 | 2 | `mark_hw i/E1234567 a/1 status/incomplete` | ✅ Homework 1 marked incomplete |
-| 3 | `mark_hw i/E1234567 a/2 status/pending` | ✅ Homework 2 marked pending |
+| 3 | `mark_hw i/E1234567 a/2 status/late` | ✅ Homework 2 marked late |
 | 4 | `mark_hw i/E0000000 a/1 status/completed` | ❌ Invalid NUSNET ID |
 | 5 | `mark_hw i/E1234567 a/3 status/completed` | ❌ Homework does not exist |
 | 6 | `mark_hw i/E1234567 a/1 status/done` | ❌ Invalid status |
