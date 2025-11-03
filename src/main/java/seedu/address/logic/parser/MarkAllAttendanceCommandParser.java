@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import seedu.address.logic.commands.MarkAllAttendanceCommand;
+import seedu.address.logic.commands.MarkAttendanceCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.AttendanceStatus;
 import seedu.address.model.person.GroupId;
@@ -50,16 +51,15 @@ public class MarkAllAttendanceCommandParser implements Parser<MarkAllAttendanceC
         String groupIdRaw = argMultimap.getValue(PREFIX_GROUP).get().trim();
         String weekRaw = argMultimap.getValue(PREFIX_WEEK).get().trim();
         String statusRaw = argMultimap.getValue(PREFIX_STATUS).get().trim();
-        int week;
+        List<String> errors = new ArrayList<>();
+        int week = 0;
         try {
             week = Integer.parseInt(weekRaw);
+            if (week < 2 || week > 13) {
+                errors.add(MarkAttendanceCommand.MESSAGE_INVALID_WEEK);
+            }
         } catch (NumberFormatException e) {
-            throw new ParseException(e.getMessage());
-        }
-
-        List<String> errors = new ArrayList<>();
-        if (week < 2 || week > 13) {
-            errors.add(MarkAllAttendanceCommand.MESSAGE_INVALID_WEEK);
+            errors.add(MarkAttendanceCommand.MESSAGE_INVALID_WEEK);
         }
         AttendanceStatus status = null;
         try {

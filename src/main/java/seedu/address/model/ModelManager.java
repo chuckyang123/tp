@@ -214,6 +214,9 @@ public class ModelManager implements Model {
         requireAllNonNull(groupId, status);
         Group targetGroup = getGroup(groupId);
         ArrayList<Person> studentsInGroup = targetGroup.getAllPersons();
+        if (studentsInGroup.isEmpty()) {
+            throw new CommandException("No students in the group.");
+        }
         for (Person targetStudent: studentsInGroup) {
             AttendanceSheet updatedSheet = new AttendanceSheet();
             for (Attendance attendance : targetStudent.getAttendanceSheet().getAttendanceList()) {
