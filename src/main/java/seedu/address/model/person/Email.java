@@ -60,12 +60,14 @@ public class Email {
         }
 
         Email otherEmail = (Email) other;
-        return value.equals(otherEmail.value);
+        // Case-insensitive comparison to treat emails equivalently regardless of case
+        return value.equalsIgnoreCase(otherEmail.value);
     }
 
     @Override
     public int hashCode() {
-        return value.hashCode();
+        // Ensure consistency with equals by hashing lower-cased value
+        return value.toLowerCase().hashCode();
     }
 
 }
