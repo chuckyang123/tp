@@ -20,6 +20,7 @@ done faster than traditional Graphical User Interface(GUI) apps while still havi
 
 1. Ensure you have Java `17` or above installed in your Computer.<br>
    **Windows users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationWindows.html).
+
    **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
 1. Download the latest `.jar` file from [here](https://github.com/AY2526S1-CS2103T-W11-1/tp/releases).
@@ -115,10 +116,10 @@ done faster than traditional Graphical User Interface(GUI) apps while still havi
   * Phone number: A string of 3 to 30 digits can start with + to indicate country code, and only accept single phone number, e.g. `+6598765432`.
   * Email: A valid NUS email address in the format `localdomain@u.nus.edu`, e.g. `e1234567@u.nus.edu`.
   * Group ID: Starts with `T` or `B` (case-insensitive) followed by exactly two digits, e.g., `T01`, `B04`.
-  * Assignment number: A positive integer between 1 to 3.
+  * Homework number: A positive integer between 1 to 13 inclusive.
+  * Homework status: One of `complete`, `incomplete`, or `late`.
   * Attendance week: An integer between 2 to 13.
   * Attendance status: One of `present`, `absent`, or `excused`.
-  * Homework status: One of `complete`, `incomplete`, or `late`.
   * DateTime: In the format `YYYYMMDD HHmm`, e.g. `20240915 1400` for 2:00 PM on 15 Sep 2024
   * Index: A positive integer 1, 2, 3, …​
 </box>
@@ -242,16 +243,16 @@ Format: `add_hw i/NUSNETID (use 'i/all' for all students) a/ASSIGNMENT`
 
 * Adds the homework with the given assignment number for the specified student.
 * If `i/all` is used, the homework is added for all students.
-* The NUSNET ID **must be valid** and the assignment identifier **must be specified**.
+* The user can add homework to all students as long as at least one of the students do not have the homework yet. (i.e., adding homework is **successful** if **no one has the homework or some of them have the homework**, and is unsuccessful if all students already have the homework).
 * The newly added homework will have a default status of `incomplete`.
-* The assignment number should be a positive integer between 1 to 3.
-* If adding homework for a specific student, NUSNET ID is used, which starts with E and has 7 numbers, and it should not be blank.
+* The assignment number should be a positive integer between 1 to 13.
+* If adding homework for a specific student, NUSNET ID is used, which starts with E and has 7 integer numbers (e.g., E1234567), and it should not be blank.
 * The NUSNET ID and homework number **must be valid**.
-* The paprameter constraints are listed [here](#Parameter-Constraints).
-* The system will check the validity of command format, followed by validity of input, and lastly the existence of the student.
+* The parameter constraints are listed [here](#Parameter-Constraints).
+* The system will check the validity of command format, followed by validity of input, the existence of the student, and lastly whether the homework has been added already.
 
 Examples:
-* `add_hw i/E1234567 a/1` adds assignment 1 for the student with NUSNET ID `E1234567`.
+* `add_hw i/E1234567 a/1` adds assignment 1 for the student with NUSNET ID `E1234567`, if it is not already added.
 * `add_hw i/all a/2` adds assignment 2 for all students.
 
 
@@ -261,13 +262,13 @@ Marks the homework status for the specified student.
 
 Format: `mark_hw i/NUSNETID a/ASSIGNMENT status/STATUS`
 
-* Marks the specified assignment for the given student.
-* The assignment number should be a positive integer between 1 to 3.
+* Marks the specified assignment for the given student with the specified status. The same homework can be marked for several times, and the most recent status will be saved.
+* The assignment number should be a positive integer between 1 to 13.
 * The assignment must exist for the student.
 * The `STATUS` can be one of the following: `complete`, `incomplete`, or `late`.
 * The NUSNET ID, homework number and status **must be valid**.
-* The paprameter constraints are listed [here](#Parameter-Constraints).
-* The system will check the validity of command format, followed by validity of input, and lastly the existence of the student.
+* The parameter constraints are listed [here](#Parameter-Constraints).
+* The system will check the validity of command format, followed by validity of input, the existence of the student, and lastly whether the homework can be marked (i.e., whether the homework exists for the student).
 
 Examples:
 * `mark_hw i/E1234567 a/1 status/complete` marks assignment 1 as complete for student `E1234567`.
@@ -281,12 +282,12 @@ Deletes the homework for the specified student or for all students.
 Format: `delete_hw i/NUSNETID (use 'i/all' for all students) a/ASSIGNMENT`
 
 * Deletes the homework with the given assignment number for the specified student. 
-* The assignment number should be a positive integer between 1 to 3.
-* The assignment must exist for the student.
+* The assignment number should be a positive integer between 1 to 13, and the assignment must exist for the student.
 * If `i/all` is used, the homework is deleted for all students.
+* The user can add homework to all students as long as at least one of the students have the homework. (i.e., deleting homework is successful if everyone has the homework or some of them have the homework, and is unsuccessful if none of the students has the homework).
 * The NUSNET ID and homework number **must be valid**.
-* The paprameter constraints are listed [here](#Parameter-Constraints).
-* The system will check the validity of command format, followed by validity of input, and lastly the existence of the student.
+* The parameter constraints are listed [here](#Parameter-Constraints).
+* The system will check the validity of command format, followed by validity of input, the existence of the student, and lastly whether the student has the homework.
 
 Examples:
 * `delete_hw i/E1234567 a/1` deletes assignment 1 for the student with NUSNET ID `E1234567`.
@@ -306,7 +307,7 @@ Format: `mark_attendance i/NUSNETID w/WEEK status/ATTENDANCE_STATUS`
 * NUSNET ID can start with E and has 7 numbers, and it should not be blank.
 * The `ATTENDANCE_STATUS` can be one of the following: `present`, `absent`, or `excused`.
 * The NUSNET ID, week number and status **must be valid**.
-* The paprameter constraints are listed [here](#Parameter-Constraints).
+* The parameter constraints are listed [here](#Parameter-Constraints).
 * The system will check the validity of command format, followed by validity of input, and lastly the existence of the student.
 
 Examples:
@@ -326,7 +327,7 @@ Format: `mark_all_attendance g/GROUPID w/WEEK status/ATTENDANCE_STATUS`
 * Group IDs should start with T or B (case-insensitive) and be followed by strictly 2 digits.
 * The `ATTENDANCE_STATUS` can be one of the following: `present`, `absent`, or `excused`.
 * The groupId, week number and status **must be valid**.
-* The paprameter constraints are listed [here](#Parameter-Constraints).
+* The parameter constraints are listed [here](#Parameter-Constraints).
 * The system will check the validity of command format, followed by validity of input, and lastly the existence of the group.
 
 Examples:
@@ -345,7 +346,7 @@ Format: `add_consult i/NUSNETID from/DATE_TIME to/DATE_TIME`
 * Both start (`from`) and end (`to`) times **must be in `YYYYMMDD HHmm` format**.
 * The start time must be **earlier** than the end time**.
 * The NUSNET ID, start time and end time **must be valid**.
-* The paprameter constraints are listed [here](#Parameter-Constraints).
+* The parameter constraints are listed [here](#Parameter-Constraints).
 * If a consultation already exists for the student, it will be unavailable to add a new consultation to the student.
 * If the consultation time overlaps with an existing consultation for another student, it will be unavailable to add the new consultation.
 
@@ -365,7 +366,7 @@ Format: `delete_consult i/NUSNETID`
 
 * Deletes the consultation for the specified student.
 * The NUSNET ID **must be valid**.
-* The paprameter constraints are listed [here](#Parameter-Constraints).
+* The parameter constraints are listed [here](#Parameter-Constraints).
 
 Examples:
 * `delete_consult i/E1234567` deletes consultation for student `E1234567`.
@@ -449,12 +450,10 @@ Users are **NOT** recommended to edit the data file directly, but if you need to
 2. Ensure that all fields have valid values according to the specifications of SoCTAssist.
 
 
-<box type="warning" seamless>
-
-**Caution:**
+[!CAUTION]
 If your changes to the data file makes its format invalid, SoCTAssist will discard all data and start with an empty data file at the next run.  Hence, it is recommended to take a backup of the file before editing it.<br>
 Furthermore, certain edits can cause the SoCTAssist to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
-</box>
+
 --------------------------------------------------------------------------------------------------------------------
 
 # FAQs
@@ -475,7 +474,7 @@ Furthermore, certain edits can cause the SoCTAssist to behave in unexpected ways
 **A**: They use NUSNET ID. For example, `mark_hw i/E1234567 a/1 status/complete` and `mark_attendance i/E1234567 w/3 status/present`.
 
 **Q**: What values are valid for assignment numbers?<br>
-**A**: Positive integers from 1 to 3.
+**A**: Positive integers from 1 to 13.
 
 **Q**: What is the valid range for attendance week?<br>
 **A**: Weeks 2 to 13 inclusive.
@@ -510,10 +509,10 @@ Furthermore, certain edits can cause the SoCTAssist to behave in unexpected ways
 **Q**: Can I delete a tutorial group?<br>
 **A**: There is no explicit delete command for groups. Groups are created automatically when needed. Move students to other groups as required.
 
-**Q**: Can I mark attendance for all students across all groups?
+**Q**: Can I mark attendance for all students across all groups?<br>
 **A**: Not directly. Use `mark_all_attendance` per group (`g/GROUPID`). There is no global "all students" attendance command.
 
-**Q**: How can I see a student’s homework and attendance quickly?
+**Q**: How can I see a student’s homework and attendance quickly?<br>
 **A**: Use `list` to show students; details appear in the student panel. There is no separate `list_hw` command.
 
 **Q**: What if I want to add another consultation to a student who already has one?<br>
