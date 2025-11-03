@@ -253,12 +253,11 @@ Format: `add_hw i/NUSNETID (use 'i/all' for all students) a/ASSIGNMENT`
 
 Examples:
 * `add_hw i/E1234567 a/1` adds assignment 1 for the student with NUSNET ID `E1234567`, if it is not already added.
-* `add_hw i/all a/2` adds assignment 2 for all students.
-
 <p align="center">
   <img src="https://github.com/user-attachments/assets/9b06a90e-ac91-403f-bab7-a518f2676da6" alt="image1" width="70%" />
 </p>
 
+* `add_hw i/all a/2` adds assignment 2 for all students.
 <p align="center">
   <img src="https://github.com/user-attachments/assets/46677cf8-e493-4e13-8a13-762bdea83587" alt="image2" width="70%" />
 </p>
@@ -281,7 +280,10 @@ Format: `mark_hw i/NUSNETID a/ASSIGNMENT status/STATUS`
 
 Examples:
 * `mark_hw i/E1234567 a/1 status/complete` marks assignment 1 as complete for student `E1234567`.
-* `mark_hw i/E2345678 a/2 status/late` marks assignment 2 as late for student `E2345678`.
+<img width="3199" height="1900" alt="image" src="https://github.com/user-attachments/assets/d17b54dc-421b-4cef-beb0-435b3b2551b7" />
+
+* `mark_hw i/E1234568 a/2 status/late` marks assignment 2 as late for student `E1234568`.
+<img width="3199" height="1898" alt="image" src="https://github.com/user-attachments/assets/699fcea0-d1e1-443c-b391-5006f29e8d8a" />
 
 
 ### Deleting homework : `delete_hw`
@@ -300,7 +302,10 @@ Format: `delete_hw i/NUSNETID (use 'i/all' for all students) a/ASSIGNMENT`
 
 Examples:
 * `delete_hw i/E1234567 a/1` deletes assignment 1 for the student with NUSNET ID `E1234567`.
+<img width="3198" height="1895" alt="image" src="https://github.com/user-attachments/assets/707f5907-f158-4ce0-9183-bd4666475680" />
+
 * `delete_hw i/all a/2` deletes assignment 2 for all students.
+<img width="3199" height="1900" alt="image" src="https://github.com/user-attachments/assets/0671e0aa-fdc1-432e-ab9a-7f589519be3a" />
 
 > [!NOTE]
 > Only adding and deleting homework can be done to all student. Marking homework cannot be done for all students, since tutors are expected to mark each student's homework one by one. 
