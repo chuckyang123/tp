@@ -197,7 +197,7 @@ How the `deletehomework` command works:
 
 ### Mark Homework Feature
 
-The mark homework feature allows users to update the status (e.g., `done`, `pending`) of a homework assignment for a specific student.
+The mark homework feature allows users to update the status (e.g., `complete`, `incomplete`, 'late') of a homework assignment for a specific student.
 
 The sequence diagram below illustrates the interactions within the `Logic` component for marking homework:
 
@@ -263,7 +263,7 @@ How the `markAllAttendance` command works:
 3. `MarkAllAttendanceCommandParser` validates and parses the GroupId, week number, and attendance status.
 4. A `MarkAllAttendanceCommand` object is created and executed.
 5. `MarkAllAttendanceCommand` checks whether the specified group exists.
-6. If exits, the attendance status of students of the group in the specified week is updated to the status.
+6. If exists, the attendance status of students of the group in the specified week is updated to the status.
 7. The updated address book is saved to storage.
 
 ---
@@ -573,7 +573,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **MSS**
 
 1. User enters a command to create a new homework numbered 1 to 3 for a student using their NUSNET ID.
-2. Homework Tracker locates the student record.
+2. Homework Tracker locates the student homework record.
 3. Homework Tracker validates the assignment ID.
 4. Homework Tracker creates the new assignment with an initial status of `incomplete`.
 5. Homework Tracker displays a success message.
@@ -583,17 +583,17 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **Extensions**
 * 2a. Student with the given NUSNET ID does not exist
   
-    * 2a1. Homework Tracker displays an error: `Student not found`.
+    * 2a1. Homework Tracker displays an error message.
 
       Use case ends.
 * 3a. Homework ID already exists for this student
   
-  * 3a1. Homework Tracker displays an error: `Assignment ID already exists`.
+  * 3a1. Homework Tracker displays an error message.
 
     Use case ends.
-* 3b. Homework ID is invalid (not between 1–3)
+* 3b. Homework ID is invalid (not between 1–13)
   
-  * 3b1. Homework Tracker displays an error: `Assignment ID must be between 1 and 3`.
+  * 3b1. Homework Tracker displays an error message.
 
     Use case ends.
     
@@ -603,7 +603,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **MSS**
 
 1. User requests to mark a homework status for a student using their NUSNET ID.
-2. Homework Tracker locates the student record.
+2. Homework Tracker locates the student homework record.
 3. Homework Tracker verifies the homework ID.
 4. Homework Tracker updates the homework status (complete / incomplete / late).
 5. Homework Tracker shows a confirmation message.
@@ -622,13 +622,13 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
   
       Use case ends.
 
-* 3a. The given assignment ID is invalid (not between 1-3).
+* 3a. The given assignment ID is invalid (not between 1-13).
   
-    * 3a1. Homework Tracker shows error message: `Assignment ID must be between 1 and 3`.
+    * 3a1. Homework Tracker shows error message.
   
       Use case ends.
 * 4a. The given status is invalid (not one of complete / incomplete / late).
-    * 4a1. Homework Tracker shows error message: `Please enter complete/incomplete/late only`.
+    * 4a1. Homework Tracker shows error message.
   
       Use case ends.
 * 4b. The student already has a status recorded for this assignment.
@@ -642,7 +642,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **MSS**
 
 1. User requests to delete a homework for a student using their NUSNET ID.  
-2. Homework Tracker locates the student record.  
+2. Homework Tracker locates the student homework record.  
 3. Homework Tracker verifies the homework ID.  
 4. Homework Tracker removes the corresponding homework record from the student’s tracker.  
 5. Homework Tracker shows a confirmation message.  
@@ -656,25 +656,20 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     Use case ends.  
 
 * 2a. The student with the given NUSNET ID does not exist.  
-    * 2a1. Homework Tracker shows error message: `Student not found`.  
+    * 2a1. Homework Tracker shows error message.  
 
       Use case ends.  
 
 * 3a. The given assignment ID is invalid.  
-    * 3a1. Homework Tracker shows error message: `Assignment ID must be between 1 and 3`.  
+    * 3a1. Homework Tracker shows error message.  
 
       Use case ends.  
 
 * 4a. The specified homework does not exist for the student.  
-    * 4a1. Homework Tracker shows error message: `Assignment not found for this student`.  
+    * 4a1. Homework Tracker shows error message.  
 
       Use case ends.  
 
-* 1b. User requests to delete homework for all students.  
-    * 1b1. Homework Tracker iterates through all student records and removes the specified homework from each valid record.  
-    * 1b2. Homework Tracker shows a confirmation message summarizing the deletions.  
-
-      Use case ends.  
 
 **Use case:** UC07 - Add a consultation
 **User**: TA
@@ -1059,6 +1054,7 @@ This section provides step-by-step, comprehensive instructions for performing **
 
 2. **Re-launch Application:**
 
+### Deleting a person
    * Open the `soctassist.jar` file again.
    * **Expected Result:**
      * The window should reopen **at the same size and position** as before.
@@ -1140,3 +1136,266 @@ This section provides step-by-step, comprehensive instructions for performing **
 * Try adding invalid characters.
 * Test compatibility on different operating systems (Windows, macOS, Linux).
 
+### Add homework
+1. Add homework to a single student
+   1. Setup: Ensure that there is at least one student in the system with NUSNET ID `E1234567`.
+   2. Execute the command:
+      `add_hw i/E1234567 a/1`
+   3. **Expected:**
+   - Success message is displayed:  
+     ```
+     Added assignment 1 for <STUDENT_NAME> (default incomplete).
+     ```
+   - The student’s homework tracker now includes homework **1**, marked as **incomplete** by default.
+   - The command box is cleared and ready for the next input.
+
+2. Add homework to all students
+   1. Setup: Ensure multiple students are present in the system.
+   2. Execute the command:
+      `add_hw i/all a/2`
+   3. **Expected:**
+   - Success message is displayed:  
+     ```
+     Added assignment 2 for all students (default incomplete).
+     ```
+   - All students’ homework trackers now contain homework **2**.
+  
+3. Add homework (Student not found)
+   1. Setup: Ensure the student with the NUSNET ID E0000000 is not present in the system.
+   2. Execute the command:
+      `add_hw i/E0000000 a/3`
+   3. **Expected:**
+   - Error message is displayed:  
+     ```
+     Student not found.
+     ```
+   - No homework is added.
+
+4. Add homework (Missing parameters)
+   1. Execute the command:
+      `add_hw a/1`
+   2. **Expected:**
+   - Error message is displayed:  
+     ```
+     Invalid command format! <With the rest of helping information>
+     ```
+   - No homework is added.
+
+5. Add homework (Invalid homework ID: out of range)
+   1. Execute the command:
+      `add_hw i/E1234567 a/100`
+   2. **Expected:**
+   - Error message is displayed:  
+     ```
+     Homework id must be between 1 and 13.
+     ```
+   - No homework is added.
+
+6. Add homework (Duplicate prefixes)
+   1. Setup: Make sure that the person with NUSNET ID E1234567 already has homework 1
+   2. Execute the command:
+      `add_hw i/E1234567 a/1`
+   3. **Expected:**
+   - Error message is displayed:  
+     ```
+     Homework 1 already exists for <STUDNET_NAME>.
+     ```
+   - No homework is added.
+
+**Summary of Expected Results**
+
+| Test Case | Command | Expected Outcome |
+|------------|----------|------------------|
+| 1 | `add_hw i/E1234567 a/1` | ✅ Homework 1 added to student E1234567 |
+| 2 | `add_hw i/all a/2` | ✅ Homework 2 added to all students |
+| 3 | `add_hw i/E0000000 a/3` | ❌ Student not found |
+| 4 | `add_hw a/4` | ❌ Missing NUSNET ID |
+| 5 | `add_hw i/E1234567 a/14` | ❌ Homework ID out of range |
+| 6 | `add_hw i/E1234567 i/E7654321 a/1` | ❌ Duplicate prefixes |
+
+### Delete homework
+1. Delete homework from a single student  
+   1. Setup: Ensure that there is at least one student in the system with NUSNET ID `E1234567`, and that the student already has homework **1** assigned.  
+   2. Execute the command:  
+      `delete_hw i/E1234567 a/1`  
+   3. **Expected:**  
+   - Success message is displayed:  
+     ```
+     Deleted homework 1 for <STUDENT_NAME>.
+     ```
+   - Homework **1** is removed from the student’s homework tracker.
+   - The command box is cleared and ready for the next input.
+
+2. Delete homework from all students  
+   1. Setup: Ensure multiple students are present in the system, each with homework **2** assigned.  
+   2. Execute the command:  
+      `delete_hw i/all a/2`  
+   3. **Expected:**  
+   - Success message is displayed:  
+     ```
+     Deleted homework 2 for all students.
+     ```
+   - Homework **2** is removed from every student’s homework tracker.
+
+3. Delete homework (Student not found)  
+   1. Setup: Ensure that there is no student with the NUSNET ID `E0000000` in the system.  
+   2. Execute the command:  
+      `delete_hw i/E0000000 a/1`  
+   3. **Expected:**  
+   - Error message is displayed:  
+     ```
+     Invalid NUSNET ID format.
+     ```
+   - No homework is deleted.
+
+4. Delete homework (Missing parameters)  
+   1. Execute the command:  
+      `delete_hw a/1`  
+   2. **Expected:**  
+   - Error message is displayed:  
+     ```
+     Invalid command format! <With the rest of helping information>
+     ```
+   - No homework is deleted.
+
+5. Delete homework (Invalid homework ID: out of range)  
+   1. Execute the command:  
+      `delete_hw i/E1234567 a/100`  
+   2. **Expected:**  
+   - Error message is displayed:  
+     ```
+     Homework id must be between 1 and 13.
+     ```
+   - No homework is deleted.
+
+6. Delete homework (Homework not found)  
+   1. Setup: Ensure that the student with NUSNET ID `E1234567` **does not** have homework **3** assigned.  
+   2. Execute the command:  
+      `delete_hw i/E1234567 a/3`  
+   3. **Expected:**  
+   - Error message is displayed:  
+     ```
+     Homework 3 not found for Alex Yeoh.
+     ```
+   - No homework is deleted.
+
+7. Delete homework (Duplicate prefixes)  
+   1. Execute the command:  
+      `delete_hw i/E1234567 i/E7654321 a/1`  
+   2. **Expected:**  
+   - Error message is displayed:  
+     ```
+     Invalid command format! <With the rest of helping information>
+     ```
+   - No homework is deleted.
+
+**Summary of Expected Results**
+
+| Test Case | Command | Expected Outcome |
+|------------|----------|------------------|
+| 1 | `delete_hw i/E1234567 a/1` | ✅ Homework 1 deleted from student E1234567 |
+| 2 | `delete_hw i/all a/2` | ✅ Homework 2 deleted from all students |
+| 3 | `delete_hw i/E0000000 a/1` | ❌ Student not found |
+| 4 | `delete_hw a/1` | ❌ Missing NUSNET ID |
+| 5 | `delete_hw i/E1234567 a/100` | ❌ Homework ID out of range |
+| 6 | `delete_hw i/E1234567 a/3` | ❌ Homework does not exist |
+| 7 | `delete_hw i/E1234567 i/E7654321 a/1` | ❌ Duplicate prefixes |
+
+### Mark homework### Mark homework
+1. Mark homework as completed for a single student  
+   1. Setup: Ensure that there is at least one student in the system with NUSNET ID `E1234567`, and that the student has homework **1** assigned.  
+   2. Execute the command:  
+      `mark_hw i/E1234567 a/1 status/complete`  
+   3. **Expected:**  
+   - Success message is displayed:  
+     ```
+    Assignment 1 for <STUDENT_NAME> marked complete.
+     ```
+   - Homework **1** is now marked as **completed** in the student’s homework tracker.
+   - The command box is cleared and ready for the next input.
+
+2. Mark homework as incomplete for a single student  
+   1. Setup: Ensure homework **1** for student `E1234567` is currently marked as **completed**.  
+   2. Execute the command:  
+      `mark_hw i/E1234567 a/1 status/incomplete`  
+   3. **Expected:**  
+   - Success message is displayed:  
+     ```
+     Assignment 1 for <STUDENT_NAME> marked incomplete.
+     ```
+   - Homework **1** is now marked as **incomplete** in the student’s homework tracker.
+
+3. Mark homework as late for a single student  
+   1. Setup: Ensure homework **2** is assigned to student `E1234567`.  
+   2. Execute the command:  
+      `mark_hw i/E1234567 a/2 status/late`  
+   3. **Expected:**  
+   - Success message is displayed:  
+     ```
+     Assignment 1 for <STUDENT_NAME> marked late.
+     ```
+   - Homework **2** is now marked as **late** in the student’s homework tracker.
+
+4. Mark homework (Student not found)  
+   1. Execute the command:  
+      `mark_hw i/E0000000 a/1 status/complete`  
+   2. **Expected:**  
+   - Error message is displayed:  
+     ```
+     Student not found
+     ```
+   - No homework is updated.
+
+5. Mark homework (Homework not assigned)  
+   1. Setup: Ensure that student `E1234567` **does not** have homework **3** assigned.  
+   2. Execute the command:  
+      `mark_hw i/E1234567 a/3 status/complete`  
+   3. **Expected:**  
+   - Error message is displayed:  
+     ```
+     Homework 3 does not exist for <STUDENT_NAME>. Add it first using 'add_hw'.
+     ```
+   - No homework is updated.
+
+6. Mark homework (Invalid status)  
+   1. Execute the command:  
+      `mark_hw i/E1234567 a/1 status/done`  
+   2. **Expected:**  
+   - Error message is displayed:  
+     ```
+     Status must be one of: complete, incomplete, late.
+     ```
+   - No homework is updated.
+
+7. Mark homework (Missing parameters)  
+   1. Execute the command:  
+      `mark_hw i/E1234567 a/1`  
+   2. **Expected:**  
+   - Error message is displayed:  
+     ```
+     Invalid command format! <With the rest of helping information>
+     ```
+   - No homework is updated.
+
+8. Mark homework (Duplicate prefixes)  
+   1. Execute the command:  
+      `mark_hw i/E1234567 i/E7654321 a/1 status/complete`  
+   2. **Expected:**  
+   - Error message is displayed:  
+     ```
+     Multiple values specified for the following single-valued field(s): i/
+     ```
+   - No homework is updated.
+
+**Summary of Expected Results**
+
+| Test Case | Command | Expected Outcome |
+|------------|----------|------------------|
+| 1 | `mark_hw i/E1234567 a/1 status/completed` | ✅ Homework 1 marked completed |
+| 2 | `mark_hw i/E1234567 a/1 status/incomplete` | ✅ Homework 1 marked incomplete |
+| 3 | `mark_hw i/E1234567 a/2 status/late` | ✅ Homework 2 marked late |
+| 4 | `mark_hw i/E0000000 a/1 status/completed` | ❌ Invalid NUSNET ID |
+| 5 | `mark_hw i/E1234567 a/3 status/completed` | ❌ Homework does not exist |
+| 6 | `mark_hw i/E1234567 a/1 status/done` | ❌ Invalid status |
+| 7 | `mark_hw i/E1234567 a/1` | ❌ Missing status parameter |
+| 8 | `mark_hw i/E1234567 i/E7654321 a/1 status/completed` | ❌ Duplicate prefixes |

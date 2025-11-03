@@ -331,8 +331,8 @@ public class ModelManager implements Model {
     @Override
     public void addHomework(Nusnetid nusnetId, int assignmentId) throws CommandException {
         List<String> errors = new ArrayList<>();
-        if (assignmentId < 1 || assignmentId > 3) {
-            errors.add("Homework ID must be between 1 and 3.");
+        if (assignmentId < 1 || assignmentId > 13) {
+            errors.add("Homework ID must be between 1 and 13.");
         }
 
         if (nusnetId != null) {
@@ -345,19 +345,31 @@ public class ModelManager implements Model {
         }
 
         if (nusnetId == null) {
-            // add homework to all students
-            for (Person p : addressBook.getUniquePersonList()) {
-                if (p.getHomeworkTracker().contains(assignmentId)) {
-                    throw new CommandException(
-                            String.format("Homework %d already exists for some student(s).", assignmentId)
-                    );
+            List<Person> allStudents = addressBook.getUniquePersonList();
+            boolean allHaveHomework = true;
+
+            // Check if every student already has this homework
+            for (Person p : allStudents) {
+                if (!p.getHomeworkTracker().contains(assignmentId)) {
+                    allHaveHomework = false;
+                    break;
                 }
             }
-            for (Person p : this.addressBook.getUniquePersonList()) {
+
+            if (allHaveHomework) {
+                throw new CommandException(
+                        String.format("All students already have homework %d.", assignmentId)
+                );
+            }
+
+            // Otherwise, add homework for everyone (even those who already have it)
+            for (Person p : allStudents) {
                 setPerson(p, p.withAddedHomework(assignmentId));
             }
+
             return;
         }
+
 
         Person target;
         try {
@@ -378,15 +390,20 @@ public class ModelManager implements Model {
     public void deleteHomework(Nusnetid nusnetId, int assignmentId) throws CommandException {
         if (nusnetId == null) {
             // delete homework for all students
+            boolean allDontHave = true;
             for (Person p : addressBook.getUniquePersonList()) {
-                if (!p.getHomeworkTracker().contains(assignmentId)) {
-                    throw new CommandException(
-                            String.format("Homework %d does not exist for some students.", assignmentId)
-                    );
+                if (p.getHomeworkTracker().contains(assignmentId)) {
+                    allDontHave = false;
+                    break;
                 }
             }
+            if (allDontHave) {
+                throw new CommandException(String.format("No student has homework %d.", assignmentId));
+            }
             for (Person p : addressBook.getUniquePersonList()) {
-                setPerson(p, p.withDeletedHomework(assignmentId));
+                if (p.getHomeworkTracker().contains(assignmentId)) {
+                    setPerson(p, p.withDeletedHomework(assignmentId));
+                }
             }
             return;
         }

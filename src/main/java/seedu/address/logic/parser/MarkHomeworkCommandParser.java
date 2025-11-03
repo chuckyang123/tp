@@ -60,10 +60,10 @@ public class MarkHomeworkCommandParser implements Parser<MarkHomeworkCommand> {
         try {
             assignmentId = Integer.parseInt(assignmentRaw);
         } catch (NumberFormatException e) {
-            throw new ParseException("Homework id must be an integer between 1 and 3.");
+            throw new ParseException("Homework id must be an integer between 1 and 13.");
         }
-        if (assignmentId < 1 || assignmentId > 3) {
-            throw new ParseException("Homework id must be between 1 and 3.");
+        if (assignmentId < 1 || assignmentId > 13) {
+            throw new ParseException("Homework id must be between 1 and 13.");
         }
 
         String status = argMultimap.getValue(PREFIX_STATUS)
