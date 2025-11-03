@@ -279,10 +279,14 @@ Format: `mark_hw i/NUSNETID a/ASSIGNMENT status/STATUS`
 
 Examples:
 * `mark_hw i/E1234567 a/1 status/complete` marks assignment 1 as complete for student `E1234567`.
-<img width="3199" height="1900" alt="image" src="https://github.com/user-attachments/assets/d17b54dc-421b-4cef-beb0-435b3b2551b7" />
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/d17b54dc-421b-4cef-beb0-435b3b2551b7" alt="mark_hw1" width="70%" />
+</p>
 
 * `mark_hw i/E1234568 a/2 status/late` marks assignment 2 as late for student `E1234568`.
-<img width="3199" height="1898" alt="image" src="https://github.com/user-attachments/assets/699fcea0-d1e1-443c-b391-5006f29e8d8a" />
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/699fcea0-d1e1-443c-b391-5006f29e8d8a" alt="mark_hw2" width="70%" />
+</p>
 
 
 ### Deleting homework : `delete_hw`
@@ -301,12 +305,16 @@ Format: `delete_hw i/NUSNETID (use 'i/all' for all students) a/ASSIGNMENT`
 
 Examples:
 * `delete_hw i/E1234567 a/1` deletes assignment 1 for the student with NUSNET ID `E1234567`.
-<img width="3198" height="1895" alt="image" src="https://github.com/user-attachments/assets/707f5907-f158-4ce0-9183-bd4666475680" />
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/707f5907-f158-4ce0-9183-bd4666475680" alt="delete_hw1" width="70%" />
+</p>
 
 * `delete_hw i/all a/2` deletes assignment 2 for all students.
-<img width="3199" height="1900" alt="image" src="https://github.com/user-attachments/assets/0671e0aa-fdc1-432e-ab9a-7f589519be3a" />
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/0671e0aa-fdc1-432e-ab9a-7f589519be3a" alt="delete_hw2" width="70%" />
+</p>
 
-> [!NOTE]
+> [!IMPORTANT]
 > Only adding and deleting homework can be done to all student. Marking homework cannot be done for all students, since tutors are expected to mark each student's homework one by one. 
 
 ---
