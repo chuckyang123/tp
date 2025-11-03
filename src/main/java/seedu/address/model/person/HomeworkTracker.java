@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.TreeMap;
 
 /**
  * Represents a homework tracker for a single person.
@@ -34,7 +35,7 @@ public class HomeworkTracker {
      * Constructs an empty {@code HomeworkTracker} with no recorded homework statuses.
      */
     public HomeworkTracker() {
-        this.statuses = new HashMap<>();
+        this.statuses = new TreeMap<>();
     }
 
     /**
@@ -47,7 +48,7 @@ public class HomeworkTracker {
      * @throws NullPointerException if {@code statuses} is {@code null}
      */
     public HomeworkTracker(Map<Integer, Homework> statuses) {
-        this.statuses = new HashMap<>(Objects.requireNonNull(statuses));
+        this.statuses = new TreeMap<>(Objects.requireNonNull(statuses));
     }
 
     /** Add a new homework with status incomplete by default. */

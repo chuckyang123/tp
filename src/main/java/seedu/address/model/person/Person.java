@@ -154,7 +154,7 @@ public class Person {
         HomeworkTracker updated = homeworkTracker.addHomework(assignmentId);
         requireNonNull(homeworkTracker);
         if (homeworkTracker.contains(assignmentId)) {
-            throw new IllegalArgumentException("Duplicate assignment");
+            return this;
         }
         HomeworkTracker updatedTracker = homeworkTracker.addHomework(assignmentId);
         return new Person(name, phone, email, nusnetid, telegram, groupId, updatedTracker, this.attendanceSheet,
@@ -272,9 +272,9 @@ public class Person {
                 && email.equals(otherPerson.email)
                 && nusnetid.equals(otherPerson.nusnetid)
                 && telegram.equals(otherPerson.telegram)
-                && groupId.equals(otherPerson.groupId)
-                && homeworkTracker.equals(otherPerson.homeworkTracker);
+                && groupId.equals(otherPerson.groupId);
     }
+
     @Override
     public int hashCode() {
         return Objects.hash(name, phone, email, nusnetid, telegram, groupId, homeworkTracker);
